@@ -324,6 +324,7 @@ int disastrOS_destroyResource(int resource_id) {
 
 /** MSG QUEUE SYSCALLS IMPLEMENTATION **/
 
+// Prende in input il nome della coda di messaggi da creare
 int disastrOS_msgQueueCreate(const char *name) {
     return disastrOS_syscall(DSOS_CALL_MQ_CREATE, name);
 }
