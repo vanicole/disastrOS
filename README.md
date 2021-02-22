@@ -42,8 +42,8 @@ Modificando MAX_NUM_MESSAGES_PER_MSG_QUEUE è possibile testare l'errore causato
 
 
 4. In **disastrOS_syscalls.h** vengono dichiarate le implementazioni delle syscalls:
-  - void internal_msgQueueOpen();
-  - void internal_msgQueueCreate();
+  - void internal_msgQueueCreate(): prende in input il nome della coda di messaggi da creare. Sarà del tipo /name. Alloca le subqueue che compongono la coda e la coda stessa. 
+  - void internal_msgQueueOpen(): prende in input il nome della coda da aprire. Alloca il descrittore associato alla coda di messaggi aperta. 
   - void internal_msgQueueClose();
   - void internal_msgQueueUnlink();
   - void internal_msgQueueRead();
