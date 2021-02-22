@@ -57,8 +57,7 @@ Modificando MAX_NUM_MESSAGES_PER_MSG_QUEUE è possibile testare l'errore causato
 	- **disastrOS_msgQueueUnlink.c**
 
 
-5. In **disastrOS.c** vengono installate le nuove syscalls: vengono aggiunte al vettore delle syscall del sistema operativo (syscall_vector)e viene specificato il numero di argomenti ed il loro ordine nel vettore degli argomenti (syscall_numarg).
-In questo file viene inoltre dichiarata, inizializzata e stampata una lista di code di messaggi (msg_queues_list). Vengono inizializzate le nuove strutture associate alla coda (riga 152 - 156). Infine vengono implementate le syscalls:
+5. In **disastrOS.c** vengono installate le nuove syscalls: vengono aggiunte al vettore delle syscall del sistema operativo (syscall_vector)e viene specificato il numero di argomenti ed il loro ordine nel vettore degli argomenti (syscall_numarg); viene dichiarata, inizializzata e stampata una lista di code di messaggi (msg_queues_list); vengono inizializzate le nuove strutture associate alla coda (riga 152 - 156); vengono implementate le syscalls:
   - int disastrOS_msgQueueCreate(const char *name) {
       return disastrOS_syscall(DSOS_CALL_MQ_CREATE, name);
     }
