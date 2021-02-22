@@ -5,7 +5,7 @@ E' stato implementato un sistema IPC (Inter-Process Communication) basato su cod
 ************************************************************************************
 Modifiche apportate alla struttura base di disastrOS:
 
-1. E' stata creato un file **disastrOS_msg_queue.h** che contiene tutte le strutture dati necessarie per implementare una coda di messaggi: Text, Message, Subqueue, MsgQueue e MsgQueuePtr. Vengono allocate tramite pool allocator. Inoltre viene aggiunta una funzione er ricercare la coda tramite il nome: MsgQueuePtr * MsgQueuePtrList_findByName(MsgQueuePtrList *l, const char *name)_. Tutte le funzioni ivi dichiarate vengono implementate in **disastrOS_msg_queue.c**. 
+1. E' stata creato un file **disastrOS_msg_queue.h** che contiene tutte le strutture dati necessarie per implementare una coda di messaggi: Text, Message, Subqueue, MsgQueue e MsgQueuePtr. Vengono allocate tramite pool allocator. Inoltre viene aggiunta una funzione er ricercare la coda tramite il nome: MsgQueuePtr * MsgQueuePtrList_findByName(MsgQueuePtrList *l, const char *name). Tutte le funzioni ivi dichiarate vengono implementate in **disastrOS_msg_queue.c**. 
 
 2. Sono state implementate delle nuove syscalls per gestire la message queue: 
 	- **disastrOS_msgQueueCreate.c**
