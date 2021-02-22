@@ -10,6 +10,7 @@
 void producer() {
     char buf[256];
     printf("[PRODUCER pid = %d] Start!\n", disastrOS_getpid());
+    printf("[PRODUCER pid = %d] Allocation of the descriptor associated with the message queue\n", disastrOS_getpid());
     int mqdes = disastrOS_msgQueueOpen("/mq");
 
     printf("[PRODUCER pid = %d] Msg queue with fd = %d opened \n", disastrOS_getpid(), mqdes);
@@ -65,9 +66,12 @@ void consumer() {
     char buf[256];
     printf("[CONSUMER pid = %d] Start!\n", disastrOS_getpid());
 
+    printf("[CONSUMER pid = %d] Allocation of the descriptor associated with the message queue\n", disastrOS_getpid());
     int mqdes = disastrOS_msgQueueOpen("/mq");
     printf("[CONSUMER pid = %d] Msg queue (fd = %d) opened \n", disastrOS_getpid(), mqdes);
+
     disastrOS_printStatus();
+
     printf("[CONSUMER pid = %d] preempt: CPU to PRODUCER \n\n", disastrOS_getpid());
     printf("[PRODUCER] in running\n");
     disastrOS_preempt();

@@ -21,8 +21,8 @@ void internal_msgQueueOpen() {
     }
     // create the descriptor for the resource in this process, and add it to
     // the process descriptor list. Assign to the resource a new fd
+    //printf("[msgQueueOpen: allocation the descriptor (fd = %d]\n", running->last_fd);
     Descriptor *desc = Descriptor_alloc(running->last_fd, (Resource*) mq, running);
-    printf("[msgQueueOpen --> DESCRIPTOR ALLOCATED]");
     if (!desc) {
         running->syscall_retvalue = DSOS_EMQ_NOFD;
         return;
@@ -30,7 +30,6 @@ void internal_msgQueueOpen() {
 
     running->last_fd++; // we increment the fd value for the next call
     DescriptorPtr *descPtr = DescriptorPtr_alloc(desc);
-        printf("[msgQueueOpen --> DESCRIPTOR PTR ALLOCATED]");
     List_insert(&running->descriptors, running->descriptors.last, (ListItem *) desc);
 
     // add to the resource, in the descriptor ptr list, a pointer to the newly created descriptor
