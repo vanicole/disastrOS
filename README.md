@@ -21,11 +21,12 @@ Tutte le funzioni ivi dichiarate vengono implementate in **disastrOS_msg_queue.c
 
 
 4. In **disastrOS_constants.h** vengono aggiunte una serie di costanti:
- - macro relative ai messaggi: 
+- macro relative ai messaggi: 
   - MAX_TEXT_LEN
   - MAX_NUM_MESSAGES
   - MAX_NUM_MESSAGE_PER_MSG_QUEUE 
   - MAX_NUM_PRIORITIES. 
+
 Modificando MAX_NUM_MESSAGES_PER_MSG_QUEUE è possibile testare l'errore causato dal tentativo di scrivere in una coda piena; invece MAX_NUM_PRIORITIES definisce il numero di sotto code che verranno create nella coda di messaggi.
 
 - gli error code associati alle operazioni sulla coda di messaggi:
