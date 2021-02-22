@@ -8,7 +8,7 @@ E' stato implementato un sistema IPC (Inter-Process Communication) basato su cod
 Modifiche apportate alla struttura base di disastrOS:
 
 1. In **disastrOS_resource.h** viene aggiunto il campo 'name' alla struct Resource.
-Di conseguenza viene modificato **disastrOS_open_resource.c** (riga 12), 
+Di conseguenza viene modificato **disastrOS_open_resource.c** (riga 12). 
 
 2. **disastrOS_msg_queue.h** contiene tutte le strutture dati necessarie per implementare una coda di messaggi: Text, Message, Subqueue, MsgQueue e MsgQueuePtr. Vengono allocate tramite pool allocator. 
 Viene aggiunta una funzione per ricercare la coda tramite il nome: MsgQueuePtr * MsgQueuePtrList_findByName(MsgQueuePtrList *l, const char *name).
@@ -20,7 +20,7 @@ Tutte le funzioni ivi dichiarate vengono implementate in **disastrOS_msg_queue.c
   - MAX_TEXT_LEN
   - MAX_NUM_MESSAGES
   - MAX_NUM_MESSAGE_PER_MSG_QUEUE 
-  - MAX_NUM_PRIORITIES. 
+  - MAX_NUM_PRIORITIES 
 
 Modificando MAX_NUM_MESSAGES_PER_MSG_QUEUE è possibile testare l'errore causato dal tentativo di scrivere in una coda piena; invece MAX_NUM_PRIORITIES definisce il numero di sotto code che verranno create nella coda di messaggi.
 
@@ -30,7 +30,7 @@ Modificando MAX_NUM_MESSAGES_PER_MSG_QUEUE è possibile testare l'errore causato
   - DSOS_EMQ_CLOSE
   - DSOS_EMQ_UNLINK
   - DSOS_EMQ_NOFD 
-  - DSOS_EMQ_NOEXIST. 
+  - DSOS_EMQ_NOEXIST
 
 - numeri di syscalls: 
   - DSOS_CALL_MQ_CREATE 
@@ -38,7 +38,7 @@ Modificando MAX_NUM_MESSAGES_PER_MSG_QUEUE è possibile testare l'errore causato
   - DSOS_CALL_MQ_CLOSE
   - DSOS_CALL_MQ_UNLINK
   - DSOS_CALL_MQ_READ 
-  - DSOS_CALL_MQ_WRITE.
+  - DSOS_CALL_MQ_WRITE
 
 
 4. In **disastrOS_syscalls.h** vengono dichiarate le implementazioni delle syscalls:

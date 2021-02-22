@@ -196,7 +196,6 @@ int Subqueue_free(Subqueue* msg) {
         printf("[ERROR] Failed to deallocate message subqueue!\n");
         return -1;
     }
-    printf("Message subqueue deallocated correctly!\n");
     return 0;
 }
 
@@ -252,13 +251,13 @@ MsgQueue* MsgQueue_alloc(const char *name, int id, PCB *pcb) {
 int MsgQueue_free(MsgQueue *q) {
     for (unsigned priority = 0; priority < MAX_NUM_PRIORITIES; ++priority) {
         Subqueue_free(q->subqueues[priority]);
+        printf(">> Subqueue with priority %d deallocated correctly!\n", priority);
     }
     PoolAllocatorResult res = PoolAllocator_releaseBlock(&_msg_queues_allocator, q);
     if (res != Success) {
         printf("[ERROR] Failed to deallocate message queue!\n");
         return -1;
     }
-    printf("Message queue deallocated correctly!\n");
     return 0;
 }
 
@@ -300,7 +299,6 @@ void MsgQueuePtr_init() {
 MsgQueuePtr* MsgQueuePtr_alloc(MsgQueue *q) {
     MsgQueuePtr *mq = (MsgQueuePtr*)PoolAllocator_getBlock(&_msg_queue_ptrs_allocator);
     mq->msgQueuePtr = q;
-    //printf("Allocated msg queue ptr for the msg queue created!\n");
     return mq;
 }
 
@@ -311,7 +309,6 @@ int MsgQueuePtr_free(MsgQueuePtr *q) {
         printf("[ERROR] Failed to deallocate message queue ptr!\n");
         return -1;
     }
-    printf("Message queue ptr for the message queue deallocated correctly!\n");
     return 0;
 }
 
@@ -345,4 +342,4 @@ void MsgQueuePtrList_print(MsgQueuePtrList *l) {
     }
     printf("}\n");
 }
-//https://man7.org/linux/man-pages/man7/mq_overview.7.html
+
