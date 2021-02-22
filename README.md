@@ -3,6 +3,8 @@
 E' stato implementato un sistema IPC (Inter-Process Communication) basato su code di messaggi in disastrOS in modo da consentire la comunicazione asincrona tra i processi.
 
 ************************************************************************************
+************************************************************************************
+
 Modifiche apportate alla struttura base di disastrOS:
 
 1. In **disastrOS_resource.h** viene aggiunto il campo 'name' alla struct Resource.
@@ -87,7 +89,8 @@ Modificando MAX_NUM_MESSAGES_PER_MSG_QUEUE è possibile testare l'errore causato
   - int disastrOS_msgQueueWrite(int mqdes, const char *msg_ptr, unsigned msg_len, unsigned priority);
 
 
-
+7. in **disastrOS_test.c** viene implementata la comunicazione tra un producer ed un consumer.
+E' definita una costante ITERATIONS per settare il numero di iterazioni.  
 
 
 

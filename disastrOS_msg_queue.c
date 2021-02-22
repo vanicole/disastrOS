@@ -178,7 +178,7 @@ Subqueue* Subqueue_alloc(unsigned priority) {
     m->list.prev = m->list.next = NULL;
     List_init(&(m->messages));              // List_init(&r->descriptors_ptrs);
     m->priority = priority;
-    printf("Message subqueue allocated correctly!\n");
+    printf("Message subqueue with priority %d allocated correctly!\n", priority);
     return m;
 }
 
@@ -244,7 +244,7 @@ MsgQueue* MsgQueue_alloc(const char *name, int id, PCB *pcb) {
 
     q->pcb = pcb;
     q->size = 0;
-    printf("Message queue allocated correctly!\n");
+    printf("Message queue with name %s allocated correctly!\n", name);
     return q;
 }
 

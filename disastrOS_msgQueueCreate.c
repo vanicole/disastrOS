@@ -7,7 +7,7 @@
 #include "disastrOS_msg_queue.h"
 #include "disastrOS_descriptor.h"
 
-// Prende in input il nome della coda di messaggi da creare
+
 void internal_msgQueueCreate() {
 
     const char *name = (const char*)running->syscall_args[0];
@@ -22,4 +22,3 @@ void internal_msgQueueCreate() {
 
     running->syscall_retvalue = 0;
 }
-
