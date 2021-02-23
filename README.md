@@ -43,12 +43,12 @@ Modificando MAX_NUM_MESSAGES_PER_MSG_QUEUE è possibile testare l'errore causato
 
 
 4. In **disastrOS_syscalls.h** vengono dichiarate le implementazioni delle syscalls:
-  - void internal_msgQueueCreate();
-  - void internal_msgQueueOpen();
-  - void internal_msgQueueClose();
-  - void internal_msgQueueUnlink();
-  - void internal_msgQueueRead();
-  - void internal_msgQueueWrite();
+   - void internal_msgQueueCreate();
+   - void internal_msgQueueOpen();
+   - void internal_msgQueueClose();
+   - void internal_msgQueueUnlink();
+   - void internal_msgQueueRead();
+   - void internal_msgQueueWrite();
 
 
 5. Sono stati creati dei file C con l'implementazione delle nuove syscalls per gestire la message queue: 
