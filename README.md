@@ -62,22 +62,22 @@ Modificando MAX_NUM_MESSAGES_PER_MSG_QUEUE è possibile testare l'errore causato
 
 5. In **disastrOS.c** vengono installate le nuove syscalls: vengono aggiunte al vettore delle syscall del sistema operativo (syscall_vector)e viene specificato il numero di argomenti ed il loro ordine nel vettore degli argomenti (syscall_numarg); viene dichiarata, inizializzata e stampata una lista di code di messaggi (msg_queues_list); vengono inizializzate le nuove strutture associate alla coda (riga 152 - 156); vengono implementate le syscalls:
 
-  - int disastrOS_msgQueueCreate(const char *name) {
+   - int disastrOS_msgQueueCreate(const char *name) {
       return disastrOS_syscall(DSOS_CALL_MQ_CREATE, name);
     }
-  - int disastrOS_msgQueueOpen(const char *name) {
+   - int disastrOS_msgQueueOpen(const char *name) {
       return disastrOS_syscall(DSOS_CALL_MQ_OPEN, name);
     }
-  - int disastrOS_msgQueueClose(int mqdes) {
+   - int disastrOS_msgQueueClose(int mqdes) {
       return disastrOS_syscall(DSOS_CALL_MQ_CLOSE, mqdes);
     }
-  - int disastrOS_msgQueueUnlink(const char *name) {
+   - int disastrOS_msgQueueUnlink(const char *name) {
       return disastrOS_syscall(DSOS_CALL_MQ_UNLINK, name);
     }
-  - int disastrOS_msgQueueRead(int mqdes, char *msg_ptr, unsigned msg_len) {
+   - int disastrOS_msgQueueRead(int mqdes, char *msg_ptr, unsigned msg_len) {
       return disastrOS_syscall(DSOS_CALL_MQ_READ, mqdes, msg_ptr, msg_len);
     }
-  - int disastrOS_msgQueueWrite(int mqdes, const char *msg_ptr, unsigned msg_len, unsigned int priority) {
+   - int disastrOS_msgQueueWrite(int mqdes, const char *msg_ptr, unsigned msg_len, unsigned int priority) {
       return disastrOS_syscall(DSOS_CALL_MQ_WRITE, mqdes, msg_ptr, msg_len, priority);
     }
 
