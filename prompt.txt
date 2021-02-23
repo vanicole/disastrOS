@@ -1,0 +1,1185 @@
+
+*********************** IPC with MESSAGE QUEUE ***********************
+
+Start! 
+Initializing system structures
+[init (pid = 0)] Start! 
+[init (pid = 0)] Spawning childFunc
+
+****************** DisastrOS *****************************************
+Running: [pid: 0, child: (1)]
+
+Resources: {
+}
+
+Message Queues: {
+}
+
+Ready: {
+	[pid: 1, child: ()]
+}
+
+Waiting: {
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+init goes on waiting list: waiting for termination of childFunc
+[childFunc pid = 1] Start! 
+[childFunc pid = 1] Spawning consumer 
+
+****************** DisastrOS *****************************************
+Running: [pid: 1, child: (2)]
+
+Resources: {
+}
+
+Message Queues: {
+}
+
+Ready: {
+	[pid: 2, child: ()]
+}
+
+Waiting: {
+	[pid: 0, child: (1)]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[childFunc pid = 1] Spawning producer 
+
+****************** DisastrOS *****************************************
+Running: [pid: 1, child: (2, 3)]
+
+Resources: {
+}
+
+Message Queues: {
+}
+
+Ready: {
+	[pid: 2, child: ()],
+	[pid: 3, child: ()]
+}
+
+Waiting: {
+	[pid: 0, child: (1)]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[childFunc pid = 1] Allocating subqueues and message queue
+
+>> Message subqueue with priority 0 allocated correctly!
+>> Message subqueue with priority 1 allocated correctly!
+>> Message subqueue with priority 2 allocated correctly!
+>> Message subqueue with priority 3 allocated correctly!
+>> Message subqueue with priority 4 allocated correctly!
+>> Message subqueue with priority 5 allocated correctly!
+>> Message subqueue with priority 6 allocated correctly!
+>> Message subqueue with priority 7 allocated correctly!
+>> Message subqueue with priority 8 allocated correctly!
+>> Message subqueue with priority 9 allocated correctly!
+>> Message queue with name /mq allocated correctly!
+>> Inserted message queue (rid = 0) in resources list
+>> Inserted ptr to the msg queue in msg queues list
+
+****************** DisastrOS *****************************************
+Running: [pid: 1, child: (2, 3)]
+
+Resources: {
+	id: 0, type:1, pids:[]
+}
+
+Message Queues: {
+	[name: '/mq', 
+	 resource id: 0, 
+	 descriptors: [],  
+	 subqueues: 
+		 {priority: 0, messages: {}, count: 0},
+
+		 {priority: 1, messages: {}, count: 0},
+
+		 {priority: 2, messages: {}, count: 0},
+
+		 {priority: 3, messages: {}, count: 0},
+
+		 {priority: 4, messages: {}, count: 0},
+
+		 {priority: 5, messages: {}, count: 0},
+
+		 {priority: 6, messages: {}, count: 0},
+
+		 {priority: 7, messages: {}, count: 0},
+
+		 {priority: 8, messages: {}, count: 0},
+
+		 {priority: 9, messages: {}, count: 0}
+	]
+}
+
+Ready: {
+	[pid: 2, child: ()],
+	[pid: 3, child: ()]
+}
+
+Waiting: {
+	[pid: 0, child: (1)]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[childFunc pid = 1] Goes to waiting list: waiting for termination of child process
+
+[CONSUMER pid = 2] Start!
+[CONSUMER pid = 2] Allocation of the descriptor associated with the message queue
+[CONSUMER pid = 2] Msg queue (fd = 0) opened 
+
+****************** DisastrOS *****************************************
+Running: [pid: 2, child: ()]
+
+Resources: {
+	id: 0, type:1, pids:[(pid: 2, fd: 0)]
+}
+
+Message Queues: {
+	[name: '/mq', 
+	 resource id: 0, 
+	 descriptors: [(pid: 2, fd: 0)],  
+	 subqueues: 
+		 {priority: 0, messages: {}, count: 0},
+
+		 {priority: 1, messages: {}, count: 0},
+
+		 {priority: 2, messages: {}, count: 0},
+
+		 {priority: 3, messages: {}, count: 0},
+
+		 {priority: 4, messages: {}, count: 0},
+
+		 {priority: 5, messages: {}, count: 0},
+
+		 {priority: 6, messages: {}, count: 0},
+
+		 {priority: 7, messages: {}, count: 0},
+
+		 {priority: 8, messages: {}, count: 0},
+
+		 {priority: 9, messages: {}, count: 0}
+	]
+}
+
+Ready: {
+	[pid: 3, child: ()]
+}
+
+Waiting: {
+	[pid: 0, child: (1)],
+	[pid: 1, child: (2, 3)]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[CONSUMER pid = 2] preempt: CPU to PRODUCER 
+
+[PRODUCER] in running
+[PRODUCER pid = 3] Start!
+[PRODUCER pid = 3] Allocation of the descriptor associated with the message queue
+[PRODUCER pid = 3] Msg queue with fd = 0 opened 
+
+****************** DisastrOS *****************************************
+Running: [pid: 3, child: ()]
+
+Resources: {
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+}
+
+Message Queues: {
+	[name: '/mq', 
+	 resource id: 0, 
+	 descriptors: [(pid: 2, fd: 0), (pid: 3, fd: 0)],  
+	 subqueues: 
+		 {priority: 0, messages: {}, count: 0},
+
+		 {priority: 1, messages: {}, count: 0},
+
+		 {priority: 2, messages: {}, count: 0},
+
+		 {priority: 3, messages: {}, count: 0},
+
+		 {priority: 4, messages: {}, count: 0},
+
+		 {priority: 5, messages: {}, count: 0},
+
+		 {priority: 6, messages: {}, count: 0},
+
+		 {priority: 7, messages: {}, count: 0},
+
+		 {priority: 8, messages: {}, count: 0},
+
+		 {priority: 9, messages: {}, count: 0}
+	]
+}
+
+Ready: {
+	[pid: 2, child: ()]
+}
+
+Waiting: {
+	[pid: 0, child: (1)],
+	[pid: 1, child: (2, 3)]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[PRODUCER pid = 3] preempt(): CPU to CONSUMER 
+
+[CONSUMER] Running!
+
+****************** DisastrOS *****************************************
+Running: [pid: 2, child: ()]
+
+Resources: {
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+}
+
+Message Queues: {
+	[name: '/mq', 
+	 resource id: 0, 
+	 descriptors: [(pid: 2, fd: 0), (pid: 3, fd: 0)],  
+	 subqueues: 
+		 {priority: 0, messages: {}, count: 0},
+
+		 {priority: 1, messages: {}, count: 0},
+
+		 {priority: 2, messages: {}, count: 0},
+
+		 {priority: 3, messages: {}, count: 0},
+
+		 {priority: 4, messages: {}, count: 0},
+
+		 {priority: 5, messages: {}, count: 0},
+
+		 {priority: 6, messages: {}, count: 0},
+
+		 {priority: 7, messages: {}, count: 0},
+
+		 {priority: 8, messages: {}, count: 0},
+
+		 {priority: 9, messages: {}, count: 0}
+	]
+}
+
+Ready: {
+	[pid: 3, child: ()]
+}
+
+Waiting: {
+	[pid: 0, child: (1)],
+	[pid: 1, child: (2, 3)]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[CONSUMER pid = 2] Reading first msg
+
+****************** DisastrOS *****************************************
+Running: [pid: 2, child: ()]
+
+Resources: {
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+}
+
+Message Queues: {
+	[name: '/mq', 
+	 resource id: 0, 
+	 descriptors: [(pid: 2, fd: 0), (pid: 3, fd: 0)],  
+	 subqueues: 
+		 {priority: 0, messages: {}, count: 0},
+
+		 {priority: 1, messages: {}, count: 0},
+
+		 {priority: 2, messages: {}, count: 0},
+
+		 {priority: 3, messages: {}, count: 0},
+
+		 {priority: 4, messages: {}, count: 0},
+
+		 {priority: 5, messages: {}, count: 0},
+
+		 {priority: 6, messages: {}, count: 0},
+
+		 {priority: 7, messages: {}, count: 0},
+
+		 {priority: 8, messages: {}, count: 0},
+
+		 {priority: 9, messages: {}, count: 0}
+	]
+}
+
+Ready: {
+	[pid: 3, child: ()]
+}
+
+Waiting: {
+	[pid: 0, child: (1)],
+	[pid: 1, child: (2, 3)]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[CONSUMER pid = 2] Readind second msg
+
+****************** DisastrOS *****************************************
+Running: [pid: 2, child: ()]
+
+Resources: {
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+}
+
+Message Queues: {
+	[name: '/mq', 
+	 resource id: 0, 
+	 descriptors: [(pid: 2, fd: 0), (pid: 3, fd: 0)],  
+	 subqueues: 
+		 {priority: 0, messages: {}, count: 0},
+
+		 {priority: 1, messages: {}, count: 0},
+
+		 {priority: 2, messages: {}, count: 0},
+
+		 {priority: 3, messages: {}, count: 0},
+
+		 {priority: 4, messages: {}, count: 0},
+
+		 {priority: 5, messages: {}, count: 0},
+
+		 {priority: 6, messages: {}, count: 0},
+
+		 {priority: 7, messages: {}, count: 0},
+
+		 {priority: 8, messages: {}, count: 0},
+
+		 {priority: 9, messages: {}, count: 0}
+	]
+}
+
+Ready: {
+	[pid: 3, child: ()]
+}
+
+Waiting: {
+	[pid: 0, child: (1)],
+	[pid: 1, child: (2, 3)]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[CONSUMER pid = 2] Reading third msg
+
+****************** DisastrOS *****************************************
+Running: [pid: 2, child: ()]
+
+Resources: {
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+}
+
+Message Queues: {
+	[name: '/mq', 
+	 resource id: 0, 
+	 descriptors: [(pid: 2, fd: 0), (pid: 3, fd: 0)],  
+	 subqueues: 
+		 {priority: 0, messages: {}, count: 0},
+
+		 {priority: 1, messages: {}, count: 0},
+
+		 {priority: 2, messages: {}, count: 0},
+
+		 {priority: 3, messages: {}, count: 0},
+
+		 {priority: 4, messages: {}, count: 0},
+
+		 {priority: 5, messages: {}, count: 0},
+
+		 {priority: 6, messages: {}, count: 0},
+
+		 {priority: 7, messages: {}, count: 0},
+
+		 {priority: 8, messages: {}, count: 0},
+
+		 {priority: 9, messages: {}, count: 0}
+	]
+}
+
+Ready: {
+	[pid: 3, child: ()]
+}
+
+Waiting: {
+	[pid: 0, child: (1)],
+	[pid: 1, child: (2, 3)]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[CONSUMER pid = 2] preempt(): CPU to PRODUCER
+[PRODUCER] in running
+
+****************** DisastrOS *****************************************
+Running: [pid: 3, child: ()]
+
+Resources: {
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+}
+
+Message Queues: {
+	[name: '/mq', 
+	 resource id: 0, 
+	 descriptors: [(pid: 2, fd: 0), (pid: 3, fd: 0)],  
+	 subqueues: 
+		 {priority: 0, messages: {}, count: 0},
+
+		 {priority: 1, messages: {}, count: 0},
+
+		 {priority: 2, messages: {}, count: 0},
+
+		 {priority: 3, messages: {}, count: 0},
+
+		 {priority: 4, messages: {}, count: 0},
+
+		 {priority: 5, messages: {}, count: 0},
+
+		 {priority: 6, messages: {}, count: 0},
+
+		 {priority: 7, messages: {}, count: 0},
+
+		 {priority: 8, messages: {}, count: 0},
+
+		 {priority: 9, messages: {}, count: 0}
+	]
+}
+
+Ready: {
+	[pid: 2, child: ()]
+}
+
+Waiting: {
+	[pid: 0, child: (1)],
+	[pid: 1, child: (2, 3)]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[PRODUCER pid = 3] Writing msg: 'Msg #1', priority: 3
+
+>> Allocating the message in the subqueue with priority 3
+>> Message Msg #1 allocated correctly!
+>> Message written!
+
+****************** DisastrOS *****************************************
+Running: [pid: 3, child: ()]
+
+Resources: {
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+}
+
+Message Queues: {
+	[name: '/mq', 
+	 resource id: 0, 
+	 descriptors: [(pid: 2, fd: 0), (pid: 3, fd: 0)],  
+	 subqueues: 
+		 {priority: 0, messages: {}, count: 0},
+
+		 {priority: 1, messages: {}, count: 0},
+
+		 {priority: 2, messages: {}, count: 0},
+
+		 {priority: 3, messages: {(msg: 'Msg #1', size: 6) }, count: 1},
+
+		 {priority: 4, messages: {}, count: 0},
+
+		 {priority: 5, messages: {}, count: 0},
+
+		 {priority: 6, messages: {}, count: 0},
+
+		 {priority: 7, messages: {}, count: 0},
+
+		 {priority: 8, messages: {}, count: 0},
+
+		 {priority: 9, messages: {}, count: 0}
+	]
+}
+
+Ready: {
+	[pid: 2, child: ()]
+}
+
+Waiting: {
+	[pid: 0, child: (1)],
+	[pid: 1, child: (2, 3)]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[PRODUCER pid = 3] Writing msg: 'Msg #2', priority: 6
+
+>> Allocating the message in the subqueue with priority 6
+>> Message Msg #2 allocated correctly!
+>> Message written!
+
+****************** DisastrOS *****************************************
+Running: [pid: 3, child: ()]
+
+Resources: {
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+}
+
+Message Queues: {
+	[name: '/mq', 
+	 resource id: 0, 
+	 descriptors: [(pid: 2, fd: 0), (pid: 3, fd: 0)],  
+	 subqueues: 
+		 {priority: 0, messages: {}, count: 0},
+
+		 {priority: 1, messages: {}, count: 0},
+
+		 {priority: 2, messages: {}, count: 0},
+
+		 {priority: 3, messages: {(msg: 'Msg #1', size: 6) }, count: 1},
+
+		 {priority: 4, messages: {}, count: 0},
+
+		 {priority: 5, messages: {}, count: 0},
+
+		 {priority: 6, messages: {(msg: 'Msg #2', size: 6) }, count: 1},
+
+		 {priority: 7, messages: {}, count: 0},
+
+		 {priority: 8, messages: {}, count: 0},
+
+		 {priority: 9, messages: {}, count: 0}
+	]
+}
+
+Ready: {
+	[pid: 2, child: ()]
+}
+
+Waiting: {
+	[pid: 0, child: (1)],
+	[pid: 1, child: (2, 3)]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[PRODUCER pid = 3] Writing msg: 'Msg #3', priority: 7
+
+>> Allocating the message in the subqueue with priority 7
+>> Message Msg #3 allocated correctly!
+>> Message written!
+
+****************** DisastrOS *****************************************
+Running: [pid: 3, child: ()]
+
+Resources: {
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+}
+
+Message Queues: {
+	[name: '/mq', 
+	 resource id: 0, 
+	 descriptors: [(pid: 2, fd: 0), (pid: 3, fd: 0)],  
+	 subqueues: 
+		 {priority: 0, messages: {}, count: 0},
+
+		 {priority: 1, messages: {}, count: 0},
+
+		 {priority: 2, messages: {}, count: 0},
+
+		 {priority: 3, messages: {(msg: 'Msg #1', size: 6) }, count: 1},
+
+		 {priority: 4, messages: {}, count: 0},
+
+		 {priority: 5, messages: {}, count: 0},
+
+		 {priority: 6, messages: {(msg: 'Msg #2', size: 6) }, count: 1},
+
+		 {priority: 7, messages: {(msg: 'Msg #3', size: 6) }, count: 1},
+
+		 {priority: 8, messages: {}, count: 0},
+
+		 {priority: 9, messages: {}, count: 0}
+	]
+}
+
+Ready: {
+	[pid: 2, child: ()]
+}
+
+Waiting: {
+	[pid: 0, child: (1)],
+	[pid: 1, child: (2, 3)]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[PRODUCER pid = 3] preempt(): CPU to CONSUMER
+
+[CONSUMER] in running
+[CONSUMER pid = 2] Reading first msg
+
+****************** DisastrOS *****************************************
+Running: [pid: 2, child: ()]
+
+Resources: {
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+}
+
+Message Queues: {
+	[name: '/mq', 
+	 resource id: 0, 
+	 descriptors: [(pid: 2, fd: 0), (pid: 3, fd: 0)],  
+	 subqueues: 
+		 {priority: 0, messages: {}, count: 0},
+
+		 {priority: 1, messages: {}, count: 0},
+
+		 {priority: 2, messages: {}, count: 0},
+
+		 {priority: 3, messages: {(msg: 'Msg #1', size: 6) }, count: 1},
+
+		 {priority: 4, messages: {}, count: 0},
+
+		 {priority: 5, messages: {}, count: 0},
+
+		 {priority: 6, messages: {(msg: 'Msg #2', size: 6) }, count: 1},
+
+		 {priority: 7, messages: {(msg: 'Msg #3', size: 6) }, count: 1},
+
+		 {priority: 8, messages: {}, count: 0},
+
+		 {priority: 9, messages: {}, count: 0}
+	]
+}
+
+Ready: {
+	[pid: 3, child: ()]
+}
+
+Waiting: {
+	[pid: 0, child: (1)],
+	[pid: 1, child: (2, 3)]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[CONSUMER pid = 2] Readind second msg
+
+****************** DisastrOS *****************************************
+Running: [pid: 2, child: ()]
+
+Resources: {
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+}
+
+Message Queues: {
+	[name: '/mq', 
+	 resource id: 0, 
+	 descriptors: [(pid: 2, fd: 0), (pid: 3, fd: 0)],  
+	 subqueues: 
+		 {priority: 0, messages: {}, count: 0},
+
+		 {priority: 1, messages: {}, count: 0},
+
+		 {priority: 2, messages: {}, count: 0},
+
+		 {priority: 3, messages: {(msg: 'Msg #1', size: 6) }, count: 1},
+
+		 {priority: 4, messages: {}, count: 0},
+
+		 {priority: 5, messages: {}, count: 0},
+
+		 {priority: 6, messages: {(msg: 'Msg #2', size: 6) }, count: 1},
+
+		 {priority: 7, messages: {(msg: 'Msg #3', size: 6) }, count: 1},
+
+		 {priority: 8, messages: {}, count: 0},
+
+		 {priority: 9, messages: {}, count: 0}
+	]
+}
+
+Ready: {
+	[pid: 3, child: ()]
+}
+
+Waiting: {
+	[pid: 0, child: (1)],
+	[pid: 1, child: (2, 3)]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[CONSUMER pid = 2] Reading third msg
+
+****************** DisastrOS *****************************************
+Running: [pid: 2, child: ()]
+
+Resources: {
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+}
+
+Message Queues: {
+	[name: '/mq', 
+	 resource id: 0, 
+	 descriptors: [(pid: 2, fd: 0), (pid: 3, fd: 0)],  
+	 subqueues: 
+		 {priority: 0, messages: {}, count: 0},
+
+		 {priority: 1, messages: {}, count: 0},
+
+		 {priority: 2, messages: {}, count: 0},
+
+		 {priority: 3, messages: {(msg: 'Msg #1', size: 6) }, count: 1},
+
+		 {priority: 4, messages: {}, count: 0},
+
+		 {priority: 5, messages: {}, count: 0},
+
+		 {priority: 6, messages: {(msg: 'Msg #2', size: 6) }, count: 1},
+
+		 {priority: 7, messages: {(msg: 'Msg #3', size: 6) }, count: 1},
+
+		 {priority: 8, messages: {}, count: 0},
+
+		 {priority: 9, messages: {}, count: 0}
+	]
+}
+
+Ready: {
+	[pid: 3, child: ()]
+}
+
+Waiting: {
+	[pid: 0, child: (1)],
+	[pid: 1, child: (2, 3)]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[CONSUMER pid = 2] preempt(): CPU to PRODUCER
+[PRODUCER] in running
+[PRODUCER pid = 3] Writing msg: 'Msg #1', priority: 5
+
+>> Allocating the message in the subqueue with priority 5
+>> Message Msg #1 allocated correctly!
+>> Message written!
+
+****************** DisastrOS *****************************************
+Running: [pid: 3, child: ()]
+
+Resources: {
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+}
+
+Message Queues: {
+	[name: '/mq', 
+	 resource id: 0, 
+	 descriptors: [(pid: 2, fd: 0), (pid: 3, fd: 0)],  
+	 subqueues: 
+		 {priority: 0, messages: {}, count: 0},
+
+		 {priority: 1, messages: {}, count: 0},
+
+		 {priority: 2, messages: {}, count: 0},
+
+		 {priority: 3, messages: {(msg: 'Msg #1', size: 6) }, count: 1},
+
+		 {priority: 4, messages: {}, count: 0},
+
+		 {priority: 5, messages: {(msg: 'Msg #1', size: 6) }, count: 1},
+
+		 {priority: 6, messages: {(msg: 'Msg #2', size: 6) }, count: 1},
+
+		 {priority: 7, messages: {(msg: 'Msg #3', size: 6) }, count: 1},
+
+		 {priority: 8, messages: {}, count: 0},
+
+		 {priority: 9, messages: {}, count: 0}
+	]
+}
+
+Ready: {
+	[pid: 2, child: ()]
+}
+
+Waiting: {
+	[pid: 0, child: (1)],
+	[pid: 1, child: (2, 3)]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[PRODUCER pid = 3] Writing msg: 'Msg #2', priority: 3
+
+>> Allocating the message in the subqueue with priority 3
+>> Message Msg #2 allocated correctly!
+>> Message written!
+
+****************** DisastrOS *****************************************
+Running: [pid: 3, child: ()]
+
+Resources: {
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+}
+
+Message Queues: {
+	[name: '/mq', 
+	 resource id: 0, 
+	 descriptors: [(pid: 2, fd: 0), (pid: 3, fd: 0)],  
+	 subqueues: 
+		 {priority: 0, messages: {}, count: 0},
+
+		 {priority: 1, messages: {}, count: 0},
+
+		 {priority: 2, messages: {}, count: 0},
+
+		 {priority: 3, messages: {(msg: 'Msg #1', size: 6) ,(msg: 'Msg #2', size: 6) }, count: 2},
+
+		 {priority: 4, messages: {}, count: 0},
+
+		 {priority: 5, messages: {(msg: 'Msg #1', size: 6) }, count: 1},
+
+		 {priority: 6, messages: {(msg: 'Msg #2', size: 6) }, count: 1},
+
+		 {priority: 7, messages: {(msg: 'Msg #3', size: 6) }, count: 1},
+
+		 {priority: 8, messages: {}, count: 0},
+
+		 {priority: 9, messages: {}, count: 0}
+	]
+}
+
+Ready: {
+	[pid: 2, child: ()]
+}
+
+Waiting: {
+	[pid: 0, child: (1)],
+	[pid: 1, child: (2, 3)]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[PRODUCER pid = 3] Writing msg: 'Msg #3', priority: 5
+
+>> Allocating the message in the subqueue with priority 5
+>> Message Msg #3 allocated correctly!
+>> Message written!
+
+****************** DisastrOS *****************************************
+Running: [pid: 3, child: ()]
+
+Resources: {
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+}
+
+Message Queues: {
+	[name: '/mq', 
+	 resource id: 0, 
+	 descriptors: [(pid: 2, fd: 0), (pid: 3, fd: 0)],  
+	 subqueues: 
+		 {priority: 0, messages: {}, count: 0},
+
+		 {priority: 1, messages: {}, count: 0},
+
+		 {priority: 2, messages: {}, count: 0},
+
+		 {priority: 3, messages: {(msg: 'Msg #1', size: 6) ,(msg: 'Msg #2', size: 6) }, count: 2},
+
+		 {priority: 4, messages: {}, count: 0},
+
+		 {priority: 5, messages: {(msg: 'Msg #1', size: 6) ,(msg: 'Msg #3', size: 6) }, count: 2},
+
+		 {priority: 6, messages: {(msg: 'Msg #2', size: 6) }, count: 1},
+
+		 {priority: 7, messages: {(msg: 'Msg #3', size: 6) }, count: 1},
+
+		 {priority: 8, messages: {}, count: 0},
+
+		 {priority: 9, messages: {}, count: 0}
+	]
+}
+
+Ready: {
+	[pid: 2, child: ()]
+}
+
+Waiting: {
+	[pid: 0, child: (1)],
+	[pid: 1, child: (2, 3)]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[PRODUCER pid = 3] preempt(): CPU to CONSUMER
+
+[CONSUMER] in running
+[CONSUMER pid = 2] Msg queue (fd = 0) closed
+
+****************** DisastrOS *****************************************
+Running: [pid: 2, child: ()]
+
+Resources: {
+	id: 0, type:1, pids:[(pid: 3, fd: 0)]
+}
+
+Message Queues: {
+	[name: '/mq', 
+	 resource id: 0, 
+	 descriptors: [(pid: 3, fd: 0)],  
+	 subqueues: 
+		 {priority: 0, messages: {}, count: 0},
+
+		 {priority: 1, messages: {}, count: 0},
+
+		 {priority: 2, messages: {}, count: 0},
+
+		 {priority: 3, messages: {(msg: 'Msg #1', size: 6) ,(msg: 'Msg #2', size: 6) }, count: 2},
+
+		 {priority: 4, messages: {}, count: 0},
+
+		 {priority: 5, messages: {(msg: 'Msg #1', size: 6) ,(msg: 'Msg #3', size: 6) }, count: 2},
+
+		 {priority: 6, messages: {(msg: 'Msg #2', size: 6) }, count: 1},
+
+		 {priority: 7, messages: {(msg: 'Msg #3', size: 6) }, count: 1},
+
+		 {priority: 8, messages: {}, count: 0},
+
+		 {priority: 9, messages: {}, count: 0}
+	]
+}
+
+Ready: {
+	[pid: 3, child: ()]
+}
+
+Waiting: {
+	[pid: 0, child: (1)],
+	[pid: 1, child: (2, 3)]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[CONSUMER pid = 2] exit(0)
+[childFunc pid = 1] wait(0, NULL) -> reads retvalue of terminated child
+
+****************** DisastrOS *****************************************
+Running: [pid: 1, child: (3)]
+
+Resources: {
+	id: 0, type:1, pids:[(pid: 3, fd: 0)]
+}
+
+Message Queues: {
+	[name: '/mq', 
+	 resource id: 0, 
+	 descriptors: [(pid: 3, fd: 0)],  
+	 subqueues: 
+		 {priority: 0, messages: {}, count: 0},
+
+		 {priority: 1, messages: {}, count: 0},
+
+		 {priority: 2, messages: {}, count: 0},
+
+		 {priority: 3, messages: {(msg: 'Msg #1', size: 6) ,(msg: 'Msg #2', size: 6) }, count: 2},
+
+		 {priority: 4, messages: {}, count: 0},
+
+		 {priority: 5, messages: {(msg: 'Msg #1', size: 6) ,(msg: 'Msg #3', size: 6) }, count: 2},
+
+		 {priority: 6, messages: {(msg: 'Msg #2', size: 6) }, count: 1},
+
+		 {priority: 7, messages: {(msg: 'Msg #3', size: 6) }, count: 1},
+
+		 {priority: 8, messages: {}, count: 0},
+
+		 {priority: 9, messages: {}, count: 0}
+	]
+}
+
+Ready: {
+	[pid: 3, child: ()]
+}
+
+Waiting: {
+	[pid: 0, child: (1)]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[childFunc pid = 1] Goes to waiting list: waiting for termination of next child process
+
+[PRODUCER (pid = 3)] Deallocating subqueues and msg queue. Closing msg queue (fd = 0)
+All descriptors associated with the message queue have been closed: the queue will be unlinked!
+
+>> Subqueue with priority 0 deallocated correctly!
+>> Subqueue with priority 1 deallocated correctly!
+>> Subqueue with priority 2 deallocated correctly!
+>> Message Msg #1 deallocated correctly!
+>> Message Msg #2 deallocated correctly!
+>> Subqueue with priority 3 deallocated correctly!
+>> Subqueue with priority 4 deallocated correctly!
+>> Message Msg #1 deallocated correctly!
+>> Message Msg #3 deallocated correctly!
+>> Subqueue with priority 5 deallocated correctly!
+>> Message Msg #2 deallocated correctly!
+>> Subqueue with priority 6 deallocated correctly!
+>> Message Msg #3 deallocated correctly!
+>> Subqueue with priority 7 deallocated correctly!
+>> Subqueue with priority 8 deallocated correctly!
+>> Subqueue with priority 9 deallocated correctly!
+Message queue (fd = 0) closed and unlinked
+
+****************** DisastrOS *****************************************
+Running: [pid: 3, child: ()]
+
+Resources: {
+}
+
+Message Queues: {
+}
+
+Ready: {
+}
+
+Waiting: {
+	[pid: 0, child: (1)],
+	[pid: 1, child: (3)]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[PRODUCER pid = 3] exit(0)
+[childFunc pid = 1] wait(0, NULL) -> reads the retvalue of terminated child
+
+****************** DisastrOS *****************************************
+Running: [pid: 1, child: ()]
+
+Resources: {
+}
+
+Message Queues: {
+}
+
+Ready: {
+}
+
+Waiting: {
+	[pid: 0, child: (1)]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[childFunc pid = 1] Trying to unlink the message queue
+[ERROR] Now doesn't exist message queue with name '/mq'! It has already been unlinked!
+
+[childFunc pid = 1] exit(0)
+[init] wait(0, NULL) --> reads the retvalue of terminated childFunc
+
+****************** DisastrOS *****************************************
+Running: [pid: 0, child: ()]
+
+Resources: {
+}
+
+Message Queues: {
+}
+
+Ready: {
+}
+
+Waiting: {
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[init] Shutdown!
+

@@ -107,8 +107,9 @@ void Message_init() {
 Message* Message_alloc(const char *msg, unsigned size) {
     char *txt = Text_alloc();
     Message *new_msg = (Message*) PoolAllocator_getBlock(&_messages_allocator);
-    if (new_msg == NULL) {
-        printf("[ERROR] Failed to allocate ew message!\n");
+
+    if (!new_msg) {
+        printf("[ERROR] Failed to allocate the message!\n");
         Text_free(txt);
         return NULL;
     }
@@ -117,9 +118,9 @@ Message* Message_alloc(const char *msg, unsigned size) {
 
     strcpy(txt, msg);
 
-    new_msg->msg_ptr = txt;                 // r->id=id;
-    new_msg->msg_len = size;                 // r->type=type;
-    printf("Message allocated correctly!");
+    new_msg->msg_ptr = txt;                     // r->id=id;
+    new_msg->msg_len = size;                    // r->type=type;
+    printf(">> Message %s allocated correctly!\n", txt);
     return new_msg;
 }
 
@@ -130,7 +131,7 @@ int Message_free(Message *msg) {
         printf("[ERROR] Failed to deallocate message!\n");
         return -1;
     }
-    printf("Message deallocated correctly!\n");
+    printf(">> Message %s deallocated correctly!\n", msg->msg_ptr);
     return 0;
 }
 

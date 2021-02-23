@@ -26,7 +26,7 @@ void producer() {
 
         priority = rand() % 10; // MODIFICARE per impostare priorità precisa
         sprintf(buf, "Msg #%u", 1);
-        printf("[PRODUCER pid = %d] Write msg: '%s', priority: %u\n",disastrOS_getpid(), buf, priority);
+        printf("[PRODUCER pid = %d] Writing msg: '%s', priority: %u\n\n",disastrOS_getpid(), buf, priority);
         disastrOS_msgQueueWrite(mqdes, buf, strlen(buf), priority);
         disastrOS_printStatus();
 
@@ -34,7 +34,7 @@ void producer() {
 
         priority = rand() % 10; // MODIFICARE per impostare priorità precisa
         sprintf(buf, "Msg #%u", 2);
-        printf("[PRODUCER pid = %d] Write msg: '%s', priority: %u\n", disastrOS_getpid(), buf, priority);
+        printf("[PRODUCER pid = %d] Writing msg: '%s', priority: %u\n\n", disastrOS_getpid(), buf, priority);
         disastrOS_msgQueueWrite(mqdes, buf, strlen(buf), priority);
         disastrOS_printStatus();
 
@@ -42,7 +42,7 @@ void producer() {
 
         priority = rand() % 10; // MODIFICARE per impostare priorità precisa
         sprintf(buf, "Msg #%u", 3);
-        printf("[PRODUCER pid = %d] Write msg: '%s', priority: %u\n", disastrOS_getpid(), buf, priority);
+        printf("[PRODUCER pid = %d] Writing msg: '%s', priority: %u\n\n", disastrOS_getpid(), buf, priority);
         disastrOS_msgQueueWrite(mqdes, buf, strlen(buf), priority);
         disastrOS_printStatus();
 
@@ -119,7 +119,7 @@ void childFunc(void *argsPtr) {
     printf("[childFunc pid = %d] Spawning producer \n", disastrOS_getpid());
     disastrOS_printStatus();
 
-    printf("[childFunc pid = %d] Allocating subqueues and message queue\n", disastrOS_getpid());
+    printf("[childFunc pid = %d] Allocating subqueues and message queue\n\n", disastrOS_getpid());
     disastrOS_msgQueueCreate("/mq");
     disastrOS_printStatus();
 

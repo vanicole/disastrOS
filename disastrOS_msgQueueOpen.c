@@ -21,7 +21,8 @@ void internal_msgQueueOpen() {
     }
     // create the descriptor for the resource in this process, and add it to
     // the process descriptor list. Assign to the resource a new fd
-    //printf("[msgQueueOpen: allocation the descriptor (fd = %d]\n", running->last_fd);
+
+    //printf("Allocation the descriptor fd = %d \n", running->last_fd);
     Descriptor *desc = Descriptor_alloc(running->last_fd, (Resource*) mq, running);
     if (!desc) {
         running->syscall_retvalue = DSOS_EMQ_NOFD;
@@ -36,7 +37,7 @@ void internal_msgQueueOpen() {
     desc->ptr = descPtr;
     List_insert(&(mq->resource.descriptors_ptrs), mq->resource.descriptors_ptrs.last, (ListItem *) descPtr);
 
-    disastrOS_debug("Message queue with name '%s' opened!\n", name);
+    //printf("Message queue with name '%s' opened!\n", name);
 
     // return the FD of the new descriptor to the process
     running->syscall_retvalue = desc->fd;

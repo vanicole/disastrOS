@@ -12,13 +12,15 @@ void internal_msgQueueCreate() {
 
     const char *name = (const char*)running->syscall_args[0];
 
-    if (name == NULL) {
+    int rid = last_rid++;
+
+    if (!name) {
         printf("[ERROR] 'name' must be different from NULL!\n");
         running->syscall_retvalue = DSOS_EMQ_CREATE;
         return;
     }
 
-    MsgQueue *mqdes = MsgQueue_alloc(name, last_rid++, running);
+    MsgQueue *mqdes = MsgQueue_alloc(name, rid, running);
     if (!mqdes) {
         printf("[ERROR] Unable to allocate a new msg queue %s\n", name);
         running->syscall_retvalue = DSOS_EMQ_CREATE;
@@ -32,12 +34,12 @@ void internal_msgQueueCreate() {
         return;
     }
 
-    printf("Inserimento di mqdes nella resources list\n");
+    printf(">> Inserted message queue (rid = %d) in resources list\n", rid);
     List_insert(&resources_list, resources_list.last, (ListItem *)mqdes);
-    printf("Inserimento del ptr alla msg queue nella msg queues list\n");
+    printf(">> Inserted ptr to the msg queue in msg queues list\n");
     List_insert(&msg_queues_list, msg_queues_list.last, (ListItem *)mqPtr);
 
-    disastrOS_debug("Message queue with name '%s' created!\n", name);
+    //printf("Message queue with name '%s' created!\n", name);
 
     running->syscall_retvalue = 0;
 }
