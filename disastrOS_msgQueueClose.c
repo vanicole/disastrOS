@@ -20,31 +20,29 @@ void internal_msgQueueClose() {
         return;
     }
 
-    MsgQueue *mqdesc = (MsgQueue*) desc->resource;
+    MsgQueue *mqdesc = (MsgQueue*)desc->resource;
 
-    List_detach(&(mqdesc->resource.descriptors_ptrs), (ListItem *) descPtr);
-    List_detach(&(running->descriptors), (ListItem *) desc);
+    List_detach(&mqdesc->resource.descriptors_ptrs, (ListItem *) descPtr);
+    List_detach(&running->descriptors, (ListItem *) desc);
 
     if (DescriptorPtr_free(descPtr) != 0) {
-        printf("[ERROR] Failed to deallocate the descriptor ptr (fd = %d)!\n", fd);
+        disastrOS_debug("[ERROR] Failed to deallocate the descriptor ptr (fd = %d)!\n", fd);
         running->syscall_retvalue = DSOS_EMQ_CLOSE;
         return;
     }
     if (Descriptor_free(desc) != 0) {
-        printf("[ERROR] Failed to deallocate the descriptor with fd %d!\n", fd);
+        disastrOS_debug("[ERROR] Failed to deallocate the descriptor with fd %d!\n", fd);
         running->syscall_retvalue = DSOS_EMQ_CLOSE;
         return;
     }
-    //printf("Message queue (fd %d) closed!\n", fd);
 
     // La coda verrà distrutta una volta che tutti i processi che l'hanno aperta chiudono
     // i propri descrittori associati ad essa
-
     if (mqdesc->resource.descriptors_ptrs.size == 0) {
-        disastrOS_debug("All descriptors are closed: msg queue (fd = %d) unlinked!\n", fd);
-
+        printf("All descriptors associated with the message queue have been closed: the queue will be unlinked!\n\n");
         running->syscall_args[0] = (long) mqdesc->resource.name;
         internal_msgQueueUnlink();
+        printf("Message queue (fd = %d) closed and unlinked\n", fd);
         if (running->syscall_retvalue == DSOS_EMQ_CLOSE)
             return;
     }

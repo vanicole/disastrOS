@@ -36,10 +36,11 @@
 #define DSOS_EMQ_NOEXIST -15
 
 // errors msg queue
-#define DSOS_EMQ_READ   -16
-#define DSOS_EMQ_WRITE  -17
-#define DSOS_EMQ_CLOSE  -18
-#define DSOS_EMQ_UNLINK -19
+#define DSOS_EMQ_CREATE -16
+#define DSOS_EMQ_READ   -17
+#define DSOS_EMQ_WRITE  -18
+#define DSOS_EMQ_CLOSE  -19
+#define DSOS_EMQ_UNLINK -20
 
 // syscall numbers
 #define DSOS_MAX_SYSCALLS 32

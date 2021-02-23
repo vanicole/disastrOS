@@ -143,7 +143,7 @@ void disastrOS_trap(){
 void disastrOS_start(void (*f)(void*), void* f_args, char* logfile){
     /* INITIALIZATION OF SYSTEM STRUCTURES*/
     disastrOS_debug("initializing system structures\n");
-    printf("iInitializing system structures\n");
+    printf("Initializing system structures\n");
     PCB_init();
     Timer_init();
     Resource_init();

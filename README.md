@@ -25,6 +25,7 @@ Tutte le funzioni ivi dichiarate vengono implementate in **disastrOS_msg_queue.c
 Modificando MAX_NUM_MESSAGES_PER_MSG_QUEUE è possibile testare l'errore causato dal tentativo di scrivere in una coda piena; invece MAX_NUM_PRIORITIES definisce il numero di sotto code che verranno create nella coda di messaggi.
 
 - gli error code associati alle operazioni sulla coda di messaggi:
+  - DSOS_EMQ_CREATE
   - DSOS_EMQ_READ 
   - DSOS_EMQ_WRITE
   - DSOS_EMQ_CLOSE
@@ -42,8 +43,8 @@ Modificando MAX_NUM_MESSAGES_PER_MSG_QUEUE è possibile testare l'errore causato
 
 
 4. In **disastrOS_syscalls.h** vengono dichiarate le implementazioni delle syscalls:
-  - void internal_msgQueueCreate(): prende in input il nome della coda di messaggi da creare. Sarà del tipo /name. Alloca le subqueue che compongono la coda e la coda stessa. 
-  - void internal_msgQueueOpen(): prende in input il nome della coda da aprire. Alloca il descrittore associato alla coda di messaggi aperta. 
+  - void internal_msgQueueCreate();
+  - void internal_msgQueueOpen();
   - void internal_msgQueueClose();
   - void internal_msgQueueUnlink();
   - void internal_msgQueueRead();
@@ -60,6 +61,7 @@ Modificando MAX_NUM_MESSAGES_PER_MSG_QUEUE è possibile testare l'errore causato
 
 
 5. In **disastrOS.c** vengono installate le nuove syscalls: vengono aggiunte al vettore delle syscall del sistema operativo (syscall_vector)e viene specificato il numero di argomenti ed il loro ordine nel vettore degli argomenti (syscall_numarg); viene dichiarata, inizializzata e stampata una lista di code di messaggi (msg_queues_list); vengono inizializzate le nuove strutture associate alla coda (riga 152 - 156); vengono implementate le syscalls:
+
   - int disastrOS_msgQueueCreate(const char *name) {
       return disastrOS_syscall(DSOS_CALL_MQ_CREATE, name);
     }
@@ -81,22 +83,22 @@ Modificando MAX_NUM_MESSAGES_PER_MSG_QUEUE è possibile testare l'errore causato
 
 
 6. In **disastrOS.h** vengono dichiarate le funzioni chiamabili dal processo:
-  - int disastrOS_msgQueueCreate(const char *name);
-  - int disastrOS_msgQueueOpen(const char *name);
-  - int disastrOS_msgQueueClose(int mqdes);
-  - int disastrOS_msgQueueUnlink(const char *name);
-  - int disastrOS_msgQueueRead(int mqdes, char *msg_ptr, unsigned msg_len);
-  - int disastrOS_msgQueueWrite(int mqdes, const char *msg_ptr, unsigned msg_len, unsigned priority);
+
+  - **int disastrOS_msgQueueCreate(const char *name)**: prende in input il nome della coda di messaggi da creare (sarà del tipo /name) e alloca le subqueue che compongono la coda e la coda stessa. Ritorna 0 in caso di successo, DSOS_EMQ_CREATE altrimenti.
+
+  - **int disastrOS_msgQueueOpen(const char *name)**: prende in input il nome della coda da aprire e alloca il descrittore associato alla coda di messaggi aperta. Ritorna il file descriptor associato al descrittore del processo in caso di successo, altrimenti un codice di errore (DSOS_EMQ_NOFD e DSOS_EMQ_NOEXIST).
+
+  - **int disastrOS_msgQueueClose(int mqdes)**: prende in input il descrittore mqdes associato alla coda di messaggi da chiudere. Ritorna 0 in caso di successo, DSOS_EMQ_CLOSE altrimenti.
+
+  - **int disastrOS_msgQueueUnlink(const char *name)**: prende in input il nome della coda di messaggi da rimuovere immediatamente. La coda verrà distrutta una volta che tutti i processi che l'hanno aperta chiudono i propri descrittori associati alla coda. Ritorna 0 in caso di successo, DSOS_EMQ_UNLINK altrimenti.
+
+  - **int disastrOS_msgQueueRead(int mqdes, char *msg_ptr, unsigned msg_len)**: rimuove il messaggio con priorità più alta dalla coda di messaggi identificata da mqdes e lo inserisce nel buffer a cui punta msg_ptr. Viene specificata la dimensione del buffer puntato da msg_ptr.
+
+  - **int disastrOS_msgQueueWrite(int mqdes, const char *msg_ptr, unsigned msg_len, unsigned priority)**: aggiunge il messaggio puntato da msg_ptr nella coda di messaggi identificata dal descrittore mqdes. Viene specificata la lunghezza del messaggio puntato da msg_ptr e la priorità assegnata al messaggio.
 
 
 7. in **disastrOS_test.c** viene implementata la comunicazione tra un producer ed un consumer.
-E' definita una costante ITERATIONS per settare il numero di iterazioni.  
-
-
-
-
-
-
+E' definita una costante ITERATIONS per settare il numero di iterazioni.
 
 
 

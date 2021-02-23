@@ -53,9 +53,9 @@ void producer() {
 
     }
 
-    printf("[PRODUCER (pid = %d) Deallocating subqueues and msg queue]\n", disastrOS_getpid());
+    printf("[PRODUCER (pid = %d)] Deallocating subqueues and msg queue. Closing msg queue (fd = %d)\n", disastrOS_getpid(), mqdes);
     disastrOS_msgQueueClose(mqdes);
-    printf("[PRODUCER pid = %d] Msg queue (fd = %d) closed \n", disastrOS_getpid(), mqdes);
+    //printf("[PRODUCER pid = %d] Msg queue (fd = %d) closed \n", disastrOS_getpid(), mqdes);
     disastrOS_printStatus();
 
     printf("[PRODUCER pid = %d] exit(0)\n", disastrOS_getpid());
@@ -123,21 +123,22 @@ void childFunc(void *argsPtr) {
     disastrOS_msgQueueCreate("/mq");
     disastrOS_printStatus();
 
-    printf("[childFunc pid = %d] Go to waiting list: waiting termination of child process\n", disastrOS_getpid());
+    printf("[childFunc pid = %d] Goes to waiting list: waiting for termination of child process\n\n", disastrOS_getpid());
 
     disastrOS_wait(0, NULL);  // attende terminazione di uno qualsiasi dei figli
-    printf("[childFunc pid = %d] wait(0) -> read retvalue of terminated child\n", disastrOS_getpid());
+    printf("[childFunc pid = %d] wait(0, NULL) -> reads retvalue of terminated child\n", disastrOS_getpid());
     disastrOS_printStatus();
 
-    printf("[childFunc pid = %d] Go to waiting list: Waiting termination of next child process\n\n", disastrOS_getpid());
+    printf("[childFunc pid = %d] Goes to waiting list: waiting for termination of next child process\n\n", disastrOS_getpid());
 
     disastrOS_wait(0, NULL);
-    printf("[childFunc pid = %d] wait(0) -> read retvalue of terminated child\n", disastrOS_getpid());
+    printf("[childFunc pid = %d] wait(0, NULL) -> reads the retvalue of terminated child\n", disastrOS_getpid());
     disastrOS_printStatus();
 
-    printf("[childFunc pid = %d] Unlinking msg queue]\n", disastrOS_getpid());
+    // prova a scollegare la coda ma è già stato fatto
+    printf("[childFunc pid = %d] Trying to unlink the message queue\n", disastrOS_getpid());
     disastrOS_msgQueueUnlink("/mq");
-    disastrOS_printStatus();
+    //disastrOS_printStatus();
 
     printf("[childFunc pid = %d] exit(0)\n", disastrOS_getpid());
     disastrOS_exit(0);
@@ -152,9 +153,9 @@ void initFunc(void *argsPtr) {
 
     disastrOS_printStatus();
 
-    printf("init put in waiting list: waiting termination of childFunc\n");
+    printf("init goes on waiting list: waiting for termination of childFunc\n");
     disastrOS_wait(0, NULL);
-    printf("[init] wait(0) --> read retvalue of childFunc\n");
+    printf("[init] wait(0, NULL) --> reads the retvalue of terminated childFunc\n");
 
     disastrOS_printStatus();
 
