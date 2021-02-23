@@ -84,17 +84,17 @@ Modificando MAX_NUM_MESSAGES_PER_MSG_QUEUE è possibile testare l'errore causato
 
 6. In **disastrOS.h** vengono dichiarate le funzioni chiamabili dal processo:
 
-  - **int disastrOS_msgQueueCreate(const char *name)**: prende in input il nome della coda di messaggi da creare (sarà del tipo /name) e alloca le subqueue che compongono la coda e la coda stessa. Ritorna 0 in caso di successo, DSOS_EMQ_CREATE altrimenti.
+   - **int disastrOS_msgQueueCreate(const char *name)**: prende in input il nome della coda di messaggi da creare (sarà del tipo /name) e alloca le subqueue che compongono la coda e la coda stessa. Ritorna 0 in caso di successo, DSOS_EMQ_CREATE altrimenti.
 
-  - **int disastrOS_msgQueueOpen(const char *name)**: prende in input il nome della coda da aprire e alloca il descrittore associato alla coda di messaggi aperta. Ritorna il file descriptor associato al descrittore del processo in caso di successo, altrimenti un codice di errore (DSOS_EMQ_NOFD e DSOS_EMQ_NOEXIST).
+   - **int disastrOS_msgQueueOpen(const char *name)**: prende in input il nome della coda da aprire e alloca il descrittore associato alla coda di messaggi aperta. Ritorna il file descriptor associato al descrittore del processo in caso di successo, altrimenti un codice di errore (DSOS_EMQ_NOFD e DSOS_EMQ_NOEXIST).
 
-  - **int disastrOS_msgQueueClose(int mqdes)**: prende in input il descrittore mqdes associato alla coda di messaggi da chiudere. Ritorna 0 in caso di successo, DSOS_EMQ_CLOSE altrimenti.
+   - **int disastrOS_msgQueueClose(int mqdes)**: prende in input il descrittore mqdes associato alla coda di messaggi da chiudere. Ritorna 0 in caso di successo, DSOS_EMQ_CLOSE altrimenti.
 
-  - **int disastrOS_msgQueueUnlink(const char *name)**: prende in input il nome della coda di messaggi da rimuovere immediatamente. La coda verrà distrutta una volta che tutti i processi che l'hanno aperta chiudono i propri descrittori associati alla coda. Ritorna 0 in caso di successo, DSOS_EMQ_UNLINK altrimenti.
+   - **int disastrOS_msgQueueUnlink(const char *name)**: prende in input il nome della coda di messaggi da rimuovere immediatamente. La coda verrà distrutta una volta che tutti i processi che l'hanno aperta chiudono i propri descrittori associati alla coda. Ritorna 0 in caso di successo, DSOS_EMQ_UNLINK altrimenti.
 
-  - **int disastrOS_msgQueueRead(int mqdes, char *msg_ptr, unsigned msg_len)**: rimuove il messaggio con priorità più alta dalla coda di messaggi identificata da mqdes e lo inserisce nel buffer a cui punta msg_ptr. Viene specificata la dimensione del buffer puntato da msg_ptr.
+   - **int disastrOS_msgQueueRead(int mqdes, char *msg_ptr, unsigned msg_len)**: rimuove il messaggio con priorità più alta dalla coda di messaggi identificata da mqdes e lo inserisce nel buffer a cui punta msg_ptr. Viene specificata la dimensione del buffer puntato da msg_ptr.
 
-  - **int disastrOS_msgQueueWrite(int mqdes, const char *msg_ptr, unsigned msg_len, unsigned priority)**: aggiunge il messaggio puntato da msg_ptr nella coda di messaggi identificata dal descrittore mqdes. Viene specificata la lunghezza del messaggio puntato da msg_ptr e la priorità assegnata al messaggio.
+   - **int disastrOS_msgQueueWrite(int mqdes, const char *msg_ptr, unsigned msg_len, unsigned priority)**: aggiunge il messaggio puntato da msg_ptr nella coda di messaggi identificata dal descrittore mqdes. Viene specificata la lunghezza del messaggio puntato da msg_ptr e la priorità assegnata al messaggio.
 
 
 7. in **disastrOS_test.c** viene implementata la comunicazione tra un producer ed un consumer.
