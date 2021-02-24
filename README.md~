@@ -24,7 +24,7 @@ Tutte le funzioni ivi dichiarate vengono implementate in [**disastrOS_msg_queue.
   	MAX_NUM_PRIORITIES
 ```
 
-In particolare, modificando MAX_NUM_MESSAGES_PER_MSG_QUEUE è possibile testare l'errore causato dal tentativo di scrivere in una coda piena; MAX_NUM_PRIORITIES imposta il numero di sotto code che verranno create nella coda di messaggi; Invece impostando MAX_TEXT_LEN ad un valore inferiore a 6 (dimensione dei messaggi che vengono scritti) è possibile testare gli errori di scrittura (vedi riga 35 in [disastrOS_msgQueueWrite.c](https://github.com/vanicole/disastrOS/blob/main/disastrOS_msgQueueWrite.c)).
+In particolare, modificando MAX_NUM_MESSAGES_PER_MSG_QUEUE è possibile testare l'errore causato dal tentativo di scrivere in una coda piena (vedi riga 29 in [disastrOS_msgQueueWrite.c](https://github.com/vanicole/disastrOS/blob/main/disastrOS_msgQueueWrite.c)) ; MAX_NUM_PRIORITIES imposta il numero di sotto code che verranno create nella coda di messaggi; Invece impostando MAX_TEXT_LEN ad un valore inferiore a 6 (dimensione dei messaggi che vengono scritti) è possibile testare gli errori di scrittura (vedi riga 35 in [disastrOS_msgQueueWrite.c](https://github.com/vanicole/disastrOS/blob/main/disastrOS_msgQueueWrite.c)).
 
 - gli error code associati alle operazioni sulla coda di messaggi:
 ```c
@@ -109,7 +109,7 @@ E' definita una costante ITERATIONS per settare il numero di iterazioni.
 ****************************************************************************************************************
 ****************************************************************************************************************
 
-Per testare il funzionamento:
+Per testare il funzionamento eseguire i seguenti passi:
 >> `git clone https://github.com/vanicole/disastrOS.git`
 >> `cd disastrOS`
 >> `make`
