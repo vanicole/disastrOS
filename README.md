@@ -79,7 +79,7 @@ Modificando MAX_NUM_MESSAGES_PER_MSG_QUEUE è possibile testare l'errore causato
     }
    - int disastrOS_msgQueueWrite(int mqdes, const char *msg_ptr, unsigned msg_len, unsigned int priority) {
       return disastrOS_syscall(DSOS_CALL_MQ_WRITE, mqdes, msg_ptr, msg_len, priority);
-    }
+   }
 
 
 6. In **disastrOS.h** vengono dichiarate le funzioni chiamabili dal processo:
@@ -94,8 +94,8 @@ Modificando MAX_NUM_MESSAGES_PER_MSG_QUEUE è possibile testare l'errore causato
 
    - **int disastrOS_msgQueueRead(int mqdes, char *msg_ptr, unsigned msg_len)**: rimuove il messaggio con priorità più alta dalla coda di messaggi identificata da mqdes e lo inserisce nel buffer a cui punta msg_ptr. Viene specificata la dimensione del buffer puntato da msg_ptr.
 
-   - **int disastrOS_msgQueueWrite(int mqdes, const char *msg_ptr, unsigned msg_len, unsigned priority)**: aggiunge il messaggio puntato da msg_ptr nella coda di messaggi identificata dal descrittore mqdes. Viene specificata la lunghezza del messaggio puntato da msg_ptr e la priorità assegnata al messaggio.
-
+   - **int disastrOS_msgQueueWrite(int mqdes, const char *msg_ptr, unsigned msg_len, unsigned priority)**: prende in input il messaggio, puntato da msg_ptr, da inserire nella coda di messaggi identificata dal descrittore mqdes; viene specificata la lunghezza del messaggio puntato da msg_ptr e la priorità assegnata al messaggio. Ritorna la lunghezza del messaggio in caso di successo, DSOS_EMQ_WRITE altrimenti.
+In particolare, viene allocato il messaggio tramite Message_alloc (vedi @disastrOS_msgQueue.c) e inserito nella lista di messaggi associata alla sottocoda con quella priorità tramite List_insert (vedi @linked_list.c).
 
 7. in **disastrOS_test.c** viene implementata la comunicazione tra un producer ed un consumer.
 E' definita una costante ITERATIONS per settare il numero di iterazioni.
