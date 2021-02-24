@@ -57,11 +57,11 @@ Modificando MAX_NUM_MESSAGES_PER_MSG_QUEUE è possibile testare l'errore causato
 
 5. Sono stati creati dei file C con l'implementazione delle nuove syscalls per gestire la message queue: 
 	- [**disastrOS_msgQueueCreate.c**](https://github.com/vanicole/disastrOS/blob/main/disastrOS_msgQueueCreate.c)
-	- [**disastrOS_msgQueueOpen.c**] (https://github.com/vanicole/disastrOS/blob/main/disastrOS_msgQueueOpen.c)
-	- [**disastrOS_msgQueueRead.c**] (https://github.com/vanicole/disastrOS/blob/main/disastrOS_msgQueueRead.c)
-	- [**disastrOS_msgQueueWrite.c**] (https://github.com/vanicole/disastrOS/blob/main/disastrOS_msgQueueWrite.c)
-	- [**disastrOS_msgQueueClose.c**] (https://github.com/vanicole/disastrOS/blob/main/disastrOS_msgQueueClose.c) 
-	- [**disastrOS_msgQueueUnlink.c**] (https://github.com/vanicole/disastrOS/blob/main/disastrOS_msgQueueUnlink.c)
+	- [**disastrOS_msgQueueOpen.c**](https://github.com/vanicole/disastrOS/blob/main/disastrOS_msgQueueOpen.c)
+	- [**disastrOS_msgQueueRead.c**](https://github.com/vanicole/disastrOS/blob/main/disastrOS_msgQueueRead.c)
+	- [**disastrOS_msgQueueWrite.c**](https://github.com/vanicole/disastrOS/blob/main/disastrOS_msgQueueWrite.c)
+	- [**disastrOS_msgQueueClose.c**](https://github.com/vanicole/disastrOS/blob/main/disastrOS_msgQueueClose.c) 
+	- [**disastrOS_msgQueueUnlink.c**](https://github.com/vanicole/disastrOS/blob/main/disastrOS_msgQueueUnlink.c)
 
 
 5. In **disastrOS.c** vengono installate le nuove syscalls: vengono aggiunte al vettore delle syscall del sistema operativo (syscall_vector)e viene specificato il numero di argomenti ed il loro ordine nel vettore degli argomenti (syscall_numarg); viene dichiarata, inizializzata e stampata una lista di code di messaggi (msg_queues_list); vengono inizializzate le nuove strutture associate alla coda (riga 152 - 156).
