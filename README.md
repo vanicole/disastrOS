@@ -43,16 +43,16 @@ Modificando MAX_NUM_MESSAGES_PER_MSG_QUEUE è possibile testare l'errore causato
 
 
 4. In **disastrOS_syscalls.h** vengono dichiarate le implementazioni delle syscalls:
-   - void internal_msgQueueCreate();
-   - void internal_msgQueueOpen();
-   - void internal_msgQueueClose();
-   - void internal_msgQueueUnlink();
-   - void internal_msgQueueRead();
-   - void internal_msgQueueWrite();
+   - void internal_msgQueueCreate()
+   - void internal_msgQueueOpen()
+   - void internal_msgQueueClose()
+   - void internal_msgQueueUnlink()
+   - void internal_msgQueueRead()
+   - void internal_msgQueueWrite()
 
 
 5. Sono stati creati dei file C con l'implementazione delle nuove syscalls per gestire la message queue: 
-	- **disastrOS_msgQueueCreate.c**
+	- [**disastrOS_msgQueueCreate.c**](https://github.com/vanicole/disastrOS/blob/main/disastrOS_msgQueueCreate.c)
 	- **disastrOS_msgQueueOpen.c**
 	- **disastrOS_msgQueueRead.c**
 	- **disastrOS_msgQueueWrite.c**
@@ -60,8 +60,10 @@ Modificando MAX_NUM_MESSAGES_PER_MSG_QUEUE è possibile testare l'errore causato
 	- **disastrOS_msgQueueUnlink.c**
 
 
-5. In **disastrOS.c** vengono installate le nuove syscalls: vengono aggiunte al vettore delle syscall del sistema operativo (syscall_vector)e viene specificato il numero di argomenti ed il loro ordine nel vettore degli argomenti (syscall_numarg); viene dichiarata, inizializzata e stampata una lista di code di messaggi (msg_queues_list); vengono inizializzate le nuove strutture associate alla coda (riga 152 - 156); vengono implementate le syscalls:
+5. In **disastrOS.c** vengono installate le nuove syscalls: vengono aggiunte al vettore delle syscall del sistema operativo (syscall_vector)e viene specificato il numero di argomenti ed il loro ordine nel vettore degli argomenti (syscall_numarg); viene dichiarata, inizializzata e stampata una lista di code di messaggi (msg_queues_list); vengono inizializzate le nuove strutture associate alla coda (riga 152 - 156).
+Vengono implementate le syscalls:
 
+```c
    - int disastrOS_msgQueueCreate(const char *name) {
       return disastrOS_syscall(DSOS_CALL_MQ_CREATE, name);
     }
@@ -80,7 +82,7 @@ Modificando MAX_NUM_MESSAGES_PER_MSG_QUEUE è possibile testare l'errore causato
    - int disastrOS_msgQueueWrite(int mqdes, const char *msg_ptr, unsigned msg_len, unsigned int priority) {
       return disastrOS_syscall(DSOS_CALL_MQ_WRITE, mqdes, msg_ptr, msg_len, priority);
    }
-
+```
 
 6. In **disastrOS.h** vengono dichiarate le funzioni chiamabili dal processo:
 
