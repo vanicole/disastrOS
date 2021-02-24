@@ -106,6 +106,27 @@ In particolare, viene allocato il messaggio tramite Message_alloc (vedi [*disast
 7. in [**disastrOS_test.c**](https://github.com/vanicole/disastrOS/blob/main/disastrOS_test.c) viene implementata la comunicazione tra un producer ed un consumer.
 E' definita una costante ITERATIONS per settare il numero di iterazioni.
 
+****************************************************************************************************************
+****************************************************************************************************************
+
+Per testare il funzionamento eseguire i seguenti passi:
+>> `git clone https://github.com/vanicole/disastrOS.git`
+>> `cd disastrOS`
+>> `make`
+>> `./disastrOS_test`
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
