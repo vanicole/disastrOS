@@ -23,7 +23,8 @@ Tutte le funzioni ivi dichiarate vengono implementate in [**disastrOS_msg_queue.
   	MAX_NUM_MESSAGE_PER_MSG_QUEUE
   	MAX_NUM_PRIORITIES
 ```
-	Modificando MAX_NUM_MESSAGES_PER_MSG_QUEUE è possibile testare l'errore causato dal tentativo di scrivere in una coda piena; MAX_NUM_PRIORITIES definisce il numero di sotto code che verranno create nella coda di messaggi; Impostando MAX_TEXT_LEN ad un valore inferiore di 6 è possibile testare gli errori di scrittura (vedi riga 35 in [*disastrOS_msgQueueWrite.c*](https://github.com/vanicole/disastrOS/blob/main/disastrOS_msgQueueWrite.c)).
+
+In particolare, modificando MAX_NUM_MESSAGES_PER_MSG_QUEUE è possibile testare l'errore causato dal tentativo di scrivere in una coda piena; MAX_NUM_PRIORITIES imposta il numero di sotto code che verranno create nella coda di messaggi; Invece impostando MAX_TEXT_LEN ad un valore inferiore a 6 (dimensione dei messaggi che vengono scritti) è possibile testare gli errori di scrittura (vedi riga 35 in [disastrOS_msgQueueWrite.c](https://github.com/vanicole/disastrOS/blob/main/disastrOS_msgQueueWrite.c)).
 
 - gli error code associati alle operazioni sulla coda di messaggi:
 ```c
