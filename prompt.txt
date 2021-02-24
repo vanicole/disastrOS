@@ -145,8 +145,7 @@ Zombie: {
 [childFunc pid = 1] Goes to waiting list: waiting for termination of child process
 
 [CONSUMER pid = 2] Start!
-[CONSUMER pid = 2] Allocation of the descriptor associated with the message queue
-[CONSUMER pid = 2] Msg queue (fd = 0) opened 
+[CONSUMER pid = 2] Msg queue with fd = 0 opened. Descriptor mqdes allocated. 
 
 ****************** DisastrOS *****************************************
 Running: [pid: 2, child: ()]
@@ -200,8 +199,7 @@ Zombie: {
 
 [PRODUCER] in running
 [PRODUCER pid = 3] Start!
-[PRODUCER pid = 3] Allocation of the descriptor associated with the message queue
-[PRODUCER pid = 3] Msg queue with fd = 0 opened 
+[PRODUCER pid = 3] Msg queue with fd = 0 opened. Descriptor mqdes allocated. 
 
 ****************** DisastrOS *****************************************
 Running: [pid: 3, child: ()]
@@ -303,7 +301,8 @@ Zombie: {
 
 **********************************************************************
 
-[CONSUMER pid = 2] Reading first msg
+[CONSUMER pid = 2] Reading first msg in the message queue
+[ERROR] Unable to read msg: the msg queue (fd = 0) is empty!
 
 ****************** DisastrOS *****************************************
 Running: [pid: 2, child: ()]
@@ -353,7 +352,8 @@ Zombie: {
 
 **********************************************************************
 
-[CONSUMER pid = 2] Readind second msg
+[CONSUMER pid = 2] Readind second msg in the message queue
+[ERROR] Unable to read msg: the msg queue (fd = 0) is empty!
 
 ****************** DisastrOS *****************************************
 Running: [pid: 2, child: ()]
@@ -403,7 +403,8 @@ Zombie: {
 
 **********************************************************************
 
-[CONSUMER pid = 2] Reading third msg
+[CONSUMER pid = 2] Reading third msg in the message queue
+[ERROR] Unable to read msg: the msg queue (fd = 0) is empty!
 
 ****************** DisastrOS *****************************************
 Running: [pid: 2, child: ()]
@@ -504,11 +505,11 @@ Zombie: {
 
 **********************************************************************
 
-[PRODUCER pid = 3] Writing msg: 'Msg #1', priority: 3
+[PRODUCER pid = 3] Writing msg: 'Msg #1', priority: 3, size: 6
 
->> Allocating the message in the subqueue with priority 3
->> Message Msg #1 allocated correctly!
->> Message written!
+>> Allocating a new msg message in the subqueue with priority 3
+>> Message 'Msg #1' allocated correctly!
+>> Message 'Msg #1' written!
 
 ****************** DisastrOS *****************************************
 Running: [pid: 3, child: ()]
@@ -558,11 +559,11 @@ Zombie: {
 
 **********************************************************************
 
-[PRODUCER pid = 3] Writing msg: 'Msg #2', priority: 6
+[PRODUCER pid = 3] Writing msg: 'Msg #2', priority: 6, size: 6
 
->> Allocating the message in the subqueue with priority 6
->> Message Msg #2 allocated correctly!
->> Message written!
+>> Allocating a new msg message in the subqueue with priority 6
+>> Message 'Msg #2' allocated correctly!
+>> Message 'Msg #2' written!
 
 ****************** DisastrOS *****************************************
 Running: [pid: 3, child: ()]
@@ -612,11 +613,11 @@ Zombie: {
 
 **********************************************************************
 
-[PRODUCER pid = 3] Writing msg: 'Msg #3', priority: 7
+[PRODUCER pid = 3] Writing msg: 'Msg #3', priority: 7, size: 6 
 
->> Allocating the message in the subqueue with priority 7
->> Message Msg #3 allocated correctly!
->> Message written!
+>> Allocating a new msg message in the subqueue with priority 7
+>> Message 'Msg #3' allocated correctly!
+>> Message 'Msg #3' written!
 
 ****************** DisastrOS *****************************************
 Running: [pid: 3, child: ()]
@@ -669,7 +670,9 @@ Zombie: {
 [PRODUCER pid = 3] preempt(): CPU to CONSUMER
 
 [CONSUMER] in running
-[CONSUMER pid = 2] Reading first msg
+[CONSUMER pid = 2] Reading first msg in the message queue
+>> Message 'Msg #1' read!
+>> Message 'Msg #1' deallocated correctly!
 
 ****************** DisastrOS *****************************************
 Running: [pid: 2, child: ()]
@@ -689,7 +692,7 @@ Message Queues: {
 
 		 {priority: 2, messages: {}, count: 0},
 
-		 {priority: 3, messages: {(msg: 'Msg #1', size: 6) }, count: 1},
+		 {priority: 3, messages: {}, count: 0},
 
 		 {priority: 4, messages: {}, count: 0},
 
@@ -719,7 +722,9 @@ Zombie: {
 
 **********************************************************************
 
-[CONSUMER pid = 2] Readind second msg
+[CONSUMER pid = 2] Readind second msg in the message queue
+>> Message 'Msg #2' read!
+>> Message 'Msg #2' deallocated correctly!
 
 ****************** DisastrOS *****************************************
 Running: [pid: 2, child: ()]
@@ -739,13 +744,13 @@ Message Queues: {
 
 		 {priority: 2, messages: {}, count: 0},
 
-		 {priority: 3, messages: {(msg: 'Msg #1', size: 6) }, count: 1},
+		 {priority: 3, messages: {}, count: 0},
 
 		 {priority: 4, messages: {}, count: 0},
 
 		 {priority: 5, messages: {}, count: 0},
 
-		 {priority: 6, messages: {(msg: 'Msg #2', size: 6) }, count: 1},
+		 {priority: 6, messages: {}, count: 0},
 
 		 {priority: 7, messages: {(msg: 'Msg #3', size: 6) }, count: 1},
 
@@ -769,7 +774,9 @@ Zombie: {
 
 **********************************************************************
 
-[CONSUMER pid = 2] Reading third msg
+[CONSUMER pid = 2] Reading third msg in the message queue
+>> Message 'Msg #3' read!
+>> Message 'Msg #3' deallocated correctly!
 
 ****************** DisastrOS *****************************************
 Running: [pid: 2, child: ()]
@@ -789,15 +796,15 @@ Message Queues: {
 
 		 {priority: 2, messages: {}, count: 0},
 
-		 {priority: 3, messages: {(msg: 'Msg #1', size: 6) }, count: 1},
+		 {priority: 3, messages: {}, count: 0},
 
 		 {priority: 4, messages: {}, count: 0},
 
 		 {priority: 5, messages: {}, count: 0},
 
-		 {priority: 6, messages: {(msg: 'Msg #2', size: 6) }, count: 1},
+		 {priority: 6, messages: {}, count: 0},
 
-		 {priority: 7, messages: {(msg: 'Msg #3', size: 6) }, count: 1},
+		 {priority: 7, messages: {}, count: 0},
 
 		 {priority: 8, messages: {}, count: 0},
 
@@ -821,11 +828,11 @@ Zombie: {
 
 [CONSUMER pid = 2] preempt(): CPU to PRODUCER
 [PRODUCER] in running
-[PRODUCER pid = 3] Writing msg: 'Msg #1', priority: 5
+[PRODUCER pid = 3] Writing msg: 'Msg #1', priority: 5, size: 6
 
->> Allocating the message in the subqueue with priority 5
->> Message Msg #1 allocated correctly!
->> Message written!
+>> Allocating a new msg message in the subqueue with priority 5
+>> Message 'Msg #1' allocated correctly!
+>> Message 'Msg #1' written!
 
 ****************** DisastrOS *****************************************
 Running: [pid: 3, child: ()]
@@ -845,15 +852,15 @@ Message Queues: {
 
 		 {priority: 2, messages: {}, count: 0},
 
-		 {priority: 3, messages: {(msg: 'Msg #1', size: 6) }, count: 1},
+		 {priority: 3, messages: {}, count: 0},
 
 		 {priority: 4, messages: {}, count: 0},
 
 		 {priority: 5, messages: {(msg: 'Msg #1', size: 6) }, count: 1},
 
-		 {priority: 6, messages: {(msg: 'Msg #2', size: 6) }, count: 1},
+		 {priority: 6, messages: {}, count: 0},
 
-		 {priority: 7, messages: {(msg: 'Msg #3', size: 6) }, count: 1},
+		 {priority: 7, messages: {}, count: 0},
 
 		 {priority: 8, messages: {}, count: 0},
 
@@ -875,11 +882,11 @@ Zombie: {
 
 **********************************************************************
 
-[PRODUCER pid = 3] Writing msg: 'Msg #2', priority: 3
+[PRODUCER pid = 3] Writing msg: 'Msg #2', priority: 3, size: 6
 
->> Allocating the message in the subqueue with priority 3
->> Message Msg #2 allocated correctly!
->> Message written!
+>> Allocating a new msg message in the subqueue with priority 3
+>> Message 'Msg #2' allocated correctly!
+>> Message 'Msg #2' written!
 
 ****************** DisastrOS *****************************************
 Running: [pid: 3, child: ()]
@@ -899,15 +906,15 @@ Message Queues: {
 
 		 {priority: 2, messages: {}, count: 0},
 
-		 {priority: 3, messages: {(msg: 'Msg #1', size: 6) ,(msg: 'Msg #2', size: 6) }, count: 2},
+		 {priority: 3, messages: {(msg: 'Msg #2', size: 6) }, count: 1},
 
 		 {priority: 4, messages: {}, count: 0},
 
 		 {priority: 5, messages: {(msg: 'Msg #1', size: 6) }, count: 1},
 
-		 {priority: 6, messages: {(msg: 'Msg #2', size: 6) }, count: 1},
+		 {priority: 6, messages: {}, count: 0},
 
-		 {priority: 7, messages: {(msg: 'Msg #3', size: 6) }, count: 1},
+		 {priority: 7, messages: {}, count: 0},
 
 		 {priority: 8, messages: {}, count: 0},
 
@@ -929,11 +936,11 @@ Zombie: {
 
 **********************************************************************
 
-[PRODUCER pid = 3] Writing msg: 'Msg #3', priority: 5
+[PRODUCER pid = 3] Writing msg: 'Msg #3', priority: 5, size: 6 
 
->> Allocating the message in the subqueue with priority 5
->> Message Msg #3 allocated correctly!
->> Message written!
+>> Allocating a new msg message in the subqueue with priority 5
+>> Message 'Msg #3' allocated correctly!
+>> Message 'Msg #3' written!
 
 ****************** DisastrOS *****************************************
 Running: [pid: 3, child: ()]
@@ -953,19 +960,342 @@ Message Queues: {
 
 		 {priority: 2, messages: {}, count: 0},
 
-		 {priority: 3, messages: {(msg: 'Msg #1', size: 6) ,(msg: 'Msg #2', size: 6) }, count: 2},
+		 {priority: 3, messages: {(msg: 'Msg #2', size: 6) }, count: 1},
 
 		 {priority: 4, messages: {}, count: 0},
 
 		 {priority: 5, messages: {(msg: 'Msg #1', size: 6) ,(msg: 'Msg #3', size: 6) }, count: 2},
 
-		 {priority: 6, messages: {(msg: 'Msg #2', size: 6) }, count: 1},
+		 {priority: 6, messages: {}, count: 0},
 
-		 {priority: 7, messages: {(msg: 'Msg #3', size: 6) }, count: 1},
+		 {priority: 7, messages: {}, count: 0},
 
 		 {priority: 8, messages: {}, count: 0},
 
 		 {priority: 9, messages: {}, count: 0}
+	]
+}
+
+Ready: {
+	[pid: 2, child: ()]
+}
+
+Waiting: {
+	[pid: 0, child: (1)],
+	[pid: 1, child: (2, 3)]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[PRODUCER pid = 3] preempt(): CPU to CONSUMER
+
+[CONSUMER] in running
+[CONSUMER pid = 2] Reading first msg in the message queue
+>> Message 'Msg #2' read!
+>> Message 'Msg #2' deallocated correctly!
+
+****************** DisastrOS *****************************************
+Running: [pid: 2, child: ()]
+
+Resources: {
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+}
+
+Message Queues: {
+	[name: '/mq', 
+	 resource id: 0, 
+	 descriptors: [(pid: 2, fd: 0), (pid: 3, fd: 0)],  
+	 subqueues: 
+		 {priority: 0, messages: {}, count: 0},
+
+		 {priority: 1, messages: {}, count: 0},
+
+		 {priority: 2, messages: {}, count: 0},
+
+		 {priority: 3, messages: {}, count: 0},
+
+		 {priority: 4, messages: {}, count: 0},
+
+		 {priority: 5, messages: {(msg: 'Msg #1', size: 6) ,(msg: 'Msg #3', size: 6) }, count: 2},
+
+		 {priority: 6, messages: {}, count: 0},
+
+		 {priority: 7, messages: {}, count: 0},
+
+		 {priority: 8, messages: {}, count: 0},
+
+		 {priority: 9, messages: {}, count: 0}
+	]
+}
+
+Ready: {
+	[pid: 3, child: ()]
+}
+
+Waiting: {
+	[pid: 0, child: (1)],
+	[pid: 1, child: (2, 3)]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[CONSUMER pid = 2] Readind second msg in the message queue
+>> Message 'Msg #1' read!
+>> Message 'Msg #1' deallocated correctly!
+
+****************** DisastrOS *****************************************
+Running: [pid: 2, child: ()]
+
+Resources: {
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+}
+
+Message Queues: {
+	[name: '/mq', 
+	 resource id: 0, 
+	 descriptors: [(pid: 2, fd: 0), (pid: 3, fd: 0)],  
+	 subqueues: 
+		 {priority: 0, messages: {}, count: 0},
+
+		 {priority: 1, messages: {}, count: 0},
+
+		 {priority: 2, messages: {}, count: 0},
+
+		 {priority: 3, messages: {}, count: 0},
+
+		 {priority: 4, messages: {}, count: 0},
+
+		 {priority: 5, messages: {(msg: 'Msg #3', size: 6) }, count: 1},
+
+		 {priority: 6, messages: {}, count: 0},
+
+		 {priority: 7, messages: {}, count: 0},
+
+		 {priority: 8, messages: {}, count: 0},
+
+		 {priority: 9, messages: {}, count: 0}
+	]
+}
+
+Ready: {
+	[pid: 3, child: ()]
+}
+
+Waiting: {
+	[pid: 0, child: (1)],
+	[pid: 1, child: (2, 3)]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[CONSUMER pid = 2] Reading third msg in the message queue
+>> Message 'Msg #3' read!
+>> Message 'Msg #3' deallocated correctly!
+
+****************** DisastrOS *****************************************
+Running: [pid: 2, child: ()]
+
+Resources: {
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+}
+
+Message Queues: {
+	[name: '/mq', 
+	 resource id: 0, 
+	 descriptors: [(pid: 2, fd: 0), (pid: 3, fd: 0)],  
+	 subqueues: 
+		 {priority: 0, messages: {}, count: 0},
+
+		 {priority: 1, messages: {}, count: 0},
+
+		 {priority: 2, messages: {}, count: 0},
+
+		 {priority: 3, messages: {}, count: 0},
+
+		 {priority: 4, messages: {}, count: 0},
+
+		 {priority: 5, messages: {}, count: 0},
+
+		 {priority: 6, messages: {}, count: 0},
+
+		 {priority: 7, messages: {}, count: 0},
+
+		 {priority: 8, messages: {}, count: 0},
+
+		 {priority: 9, messages: {}, count: 0}
+	]
+}
+
+Ready: {
+	[pid: 3, child: ()]
+}
+
+Waiting: {
+	[pid: 0, child: (1)],
+	[pid: 1, child: (2, 3)]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[CONSUMER pid = 2] preempt(): CPU to PRODUCER
+[PRODUCER] in running
+[PRODUCER pid = 3] Writing msg: 'Msg #1', priority: 6, size: 6
+
+>> Allocating a new msg message in the subqueue with priority 6
+>> Message 'Msg #1' allocated correctly!
+>> Message 'Msg #1' written!
+
+****************** DisastrOS *****************************************
+Running: [pid: 3, child: ()]
+
+Resources: {
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+}
+
+Message Queues: {
+	[name: '/mq', 
+	 resource id: 0, 
+	 descriptors: [(pid: 2, fd: 0), (pid: 3, fd: 0)],  
+	 subqueues: 
+		 {priority: 0, messages: {}, count: 0},
+
+		 {priority: 1, messages: {}, count: 0},
+
+		 {priority: 2, messages: {}, count: 0},
+
+		 {priority: 3, messages: {}, count: 0},
+
+		 {priority: 4, messages: {}, count: 0},
+
+		 {priority: 5, messages: {}, count: 0},
+
+		 {priority: 6, messages: {(msg: 'Msg #1', size: 6) }, count: 1},
+
+		 {priority: 7, messages: {}, count: 0},
+
+		 {priority: 8, messages: {}, count: 0},
+
+		 {priority: 9, messages: {}, count: 0}
+	]
+}
+
+Ready: {
+	[pid: 2, child: ()]
+}
+
+Waiting: {
+	[pid: 0, child: (1)],
+	[pid: 1, child: (2, 3)]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[PRODUCER pid = 3] Writing msg: 'Msg #2', priority: 2, size: 6
+
+>> Allocating a new msg message in the subqueue with priority 2
+>> Message 'Msg #2' allocated correctly!
+>> Message 'Msg #2' written!
+
+****************** DisastrOS *****************************************
+Running: [pid: 3, child: ()]
+
+Resources: {
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+}
+
+Message Queues: {
+	[name: '/mq', 
+	 resource id: 0, 
+	 descriptors: [(pid: 2, fd: 0), (pid: 3, fd: 0)],  
+	 subqueues: 
+		 {priority: 0, messages: {}, count: 0},
+
+		 {priority: 1, messages: {}, count: 0},
+
+		 {priority: 2, messages: {(msg: 'Msg #2', size: 6) }, count: 1},
+
+		 {priority: 3, messages: {}, count: 0},
+
+		 {priority: 4, messages: {}, count: 0},
+
+		 {priority: 5, messages: {}, count: 0},
+
+		 {priority: 6, messages: {(msg: 'Msg #1', size: 6) }, count: 1},
+
+		 {priority: 7, messages: {}, count: 0},
+
+		 {priority: 8, messages: {}, count: 0},
+
+		 {priority: 9, messages: {}, count: 0}
+	]
+}
+
+Ready: {
+	[pid: 2, child: ()]
+}
+
+Waiting: {
+	[pid: 0, child: (1)],
+	[pid: 1, child: (2, 3)]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[PRODUCER pid = 3] Writing msg: 'Msg #3', priority: 9, size: 6 
+
+>> Allocating a new msg message in the subqueue with priority 9
+>> Message 'Msg #3' allocated correctly!
+>> Message 'Msg #3' written!
+
+****************** DisastrOS *****************************************
+Running: [pid: 3, child: ()]
+
+Resources: {
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+}
+
+Message Queues: {
+	[name: '/mq', 
+	 resource id: 0, 
+	 descriptors: [(pid: 2, fd: 0), (pid: 3, fd: 0)],  
+	 subqueues: 
+		 {priority: 0, messages: {}, count: 0},
+
+		 {priority: 1, messages: {}, count: 0},
+
+		 {priority: 2, messages: {(msg: 'Msg #2', size: 6) }, count: 1},
+
+		 {priority: 3, messages: {}, count: 0},
+
+		 {priority: 4, messages: {}, count: 0},
+
+		 {priority: 5, messages: {}, count: 0},
+
+		 {priority: 6, messages: {(msg: 'Msg #1', size: 6) }, count: 1},
+
+		 {priority: 7, messages: {}, count: 0},
+
+		 {priority: 8, messages: {}, count: 0},
+
+		 {priority: 9, messages: {(msg: 'Msg #3', size: 6) }, count: 1}
 	]
 }
 
@@ -1004,21 +1334,21 @@ Message Queues: {
 
 		 {priority: 1, messages: {}, count: 0},
 
-		 {priority: 2, messages: {}, count: 0},
+		 {priority: 2, messages: {(msg: 'Msg #2', size: 6) }, count: 1},
 
-		 {priority: 3, messages: {(msg: 'Msg #1', size: 6) ,(msg: 'Msg #2', size: 6) }, count: 2},
+		 {priority: 3, messages: {}, count: 0},
 
 		 {priority: 4, messages: {}, count: 0},
 
-		 {priority: 5, messages: {(msg: 'Msg #1', size: 6) ,(msg: 'Msg #3', size: 6) }, count: 2},
+		 {priority: 5, messages: {}, count: 0},
 
-		 {priority: 6, messages: {(msg: 'Msg #2', size: 6) }, count: 1},
+		 {priority: 6, messages: {(msg: 'Msg #1', size: 6) }, count: 1},
 
-		 {priority: 7, messages: {(msg: 'Msg #3', size: 6) }, count: 1},
+		 {priority: 7, messages: {}, count: 0},
 
 		 {priority: 8, messages: {}, count: 0},
 
-		 {priority: 9, messages: {}, count: 0}
+		 {priority: 9, messages: {(msg: 'Msg #3', size: 6) }, count: 1}
 	]
 }
 
@@ -1055,21 +1385,21 @@ Message Queues: {
 
 		 {priority: 1, messages: {}, count: 0},
 
-		 {priority: 2, messages: {}, count: 0},
+		 {priority: 2, messages: {(msg: 'Msg #2', size: 6) }, count: 1},
 
-		 {priority: 3, messages: {(msg: 'Msg #1', size: 6) ,(msg: 'Msg #2', size: 6) }, count: 2},
+		 {priority: 3, messages: {}, count: 0},
 
 		 {priority: 4, messages: {}, count: 0},
 
-		 {priority: 5, messages: {(msg: 'Msg #1', size: 6) ,(msg: 'Msg #3', size: 6) }, count: 2},
+		 {priority: 5, messages: {}, count: 0},
 
-		 {priority: 6, messages: {(msg: 'Msg #2', size: 6) }, count: 1},
+		 {priority: 6, messages: {(msg: 'Msg #1', size: 6) }, count: 1},
 
-		 {priority: 7, messages: {(msg: 'Msg #3', size: 6) }, count: 1},
+		 {priority: 7, messages: {}, count: 0},
 
 		 {priority: 8, messages: {}, count: 0},
 
-		 {priority: 9, messages: {}, count: 0}
+		 {priority: 9, messages: {(msg: 'Msg #3', size: 6) }, count: 1}
 	]
 }
 
@@ -1093,19 +1423,16 @@ All descriptors associated with the message queue have been closed: the queue wi
 
 >> Subqueue with priority 0 deallocated correctly!
 >> Subqueue with priority 1 deallocated correctly!
+>> Message 'Msg #2' deallocated correctly!
 >> Subqueue with priority 2 deallocated correctly!
->> Message Msg #1 deallocated correctly!
->> Message Msg #2 deallocated correctly!
 >> Subqueue with priority 3 deallocated correctly!
 >> Subqueue with priority 4 deallocated correctly!
->> Message Msg #1 deallocated correctly!
->> Message Msg #3 deallocated correctly!
 >> Subqueue with priority 5 deallocated correctly!
->> Message Msg #2 deallocated correctly!
+>> Message 'Msg #1' deallocated correctly!
 >> Subqueue with priority 6 deallocated correctly!
->> Message Msg #3 deallocated correctly!
 >> Subqueue with priority 7 deallocated correctly!
 >> Subqueue with priority 8 deallocated correctly!
+>> Message 'Msg #3' deallocated correctly!
 >> Subqueue with priority 9 deallocated correctly!
 Message queue (fd = 0) closed and unlinked
 

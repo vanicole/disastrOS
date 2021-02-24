@@ -6,15 +6,15 @@
 #include <poll.h>
 #include "disastrOS.h"
 
-#define ITERATIONS 2
+#define ITERATIONS 3
 void producer() {
     char buf[256];
     printf("[PRODUCER pid = %d] Start!\n", disastrOS_getpid());
-    printf("[PRODUCER pid = %d] Allocation of the descriptor associated with the message queue\n", disastrOS_getpid());
-    int mqdes = disastrOS_msgQueueOpen("/mq");
 
-    printf("[PRODUCER pid = %d] Msg queue with fd = %d opened \n", disastrOS_getpid(), mqdes);
+    int mqdes = disastrOS_msgQueueOpen("/mq");
+    printf("[PRODUCER pid = %d] Msg queue with fd = %d opened. Descriptor mqdes allocated. \n", disastrOS_getpid(), mqdes);
     disastrOS_printStatus();
+
     printf("[PRODUCER pid = %d] preempt(): CPU to CONSUMER \n\n", disastrOS_getpid());
     printf("[CONSUMER] Running!\n");disastrOS_preempt();
     disastrOS_printStatus();
@@ -25,24 +25,24 @@ void producer() {
         memset(buf, 0, 256);
 
         priority = rand() % 10; // MODIFICARE per impostare priorità precisa
-        sprintf(buf, "Msg #%u", 1);
-        printf("[PRODUCER pid = %d] Writing msg: '%s', priority: %u\n\n",disastrOS_getpid(), buf, priority);
+        sprintf(buf, "Msg #%d", 1);
+        printf("[PRODUCER pid = %d] Writing msg: '%s', priority: %u, size: %d\n\n",disastrOS_getpid(), buf, priority, (int)strlen(buf));
         disastrOS_msgQueueWrite(mqdes, buf, strlen(buf), priority);
         disastrOS_printStatus();
 
         memset(buf, 0, 256);
 
         priority = rand() % 10; // MODIFICARE per impostare priorità precisa
-        sprintf(buf, "Msg #%u", 2);
-        printf("[PRODUCER pid = %d] Writing msg: '%s', priority: %u\n\n", disastrOS_getpid(), buf, priority);
+        sprintf(buf, "Msg #%d", 2);
+        printf("[PRODUCER pid = %d] Writing msg: '%s', priority: %u, size: %d\n\n", disastrOS_getpid(), buf, priority, (int)strlen(buf));
         disastrOS_msgQueueWrite(mqdes, buf, strlen(buf), priority);
         disastrOS_printStatus();
 
         memset(buf, 0, 256);
 
         priority = rand() % 10; // MODIFICARE per impostare priorità precisa
-        sprintf(buf, "Msg #%u", 3);
-        printf("[PRODUCER pid = %d] Writing msg: '%s', priority: %u\n\n", disastrOS_getpid(), buf, priority);
+        sprintf(buf, "Msg #%d", 3);
+        printf("[PRODUCER pid = %d] Writing msg: '%s', priority: %u, size: %d \n\n", disastrOS_getpid(), buf, priority, (int)strlen(buf));
         disastrOS_msgQueueWrite(mqdes, buf, strlen(buf), priority);
         disastrOS_printStatus();
 
@@ -67,9 +67,8 @@ void consumer() {
     char buf[256];
     printf("[CONSUMER pid = %d] Start!\n", disastrOS_getpid());
 
-    printf("[CONSUMER pid = %d] Allocation of the descriptor associated with the message queue\n", disastrOS_getpid());
     int mqdes = disastrOS_msgQueueOpen("/mq");
-    printf("[CONSUMER pid = %d] Msg queue (fd = %d) opened \n", disastrOS_getpid(), mqdes);
+    printf("[CONSUMER pid = %d] Msg queue with fd = %d opened. Descriptor mqdes allocated. \n", disastrOS_getpid(), mqdes);
 
     disastrOS_printStatus();
 
@@ -81,17 +80,17 @@ void consumer() {
     for (unsigned i = 0; i < ITERATIONS; ++i) {
 
         memset(buf, 0, 256);
-        printf("[CONSUMER pid = %d] Reading first msg\n", disastrOS_getpid());
+        printf("[CONSUMER pid = %d] Reading first msg in the message queue\n", disastrOS_getpid());
         disastrOS_msgQueueRead(mqdes, buf, 256);
         disastrOS_printStatus();
 
         memset(buf, 0, 256);
-        printf("[CONSUMER pid = %d] Readind second msg\n", disastrOS_getpid());
+        printf("[CONSUMER pid = %d] Readind second msg in the message queue\n", disastrOS_getpid());
         disastrOS_msgQueueRead(mqdes, buf, 256);
         disastrOS_printStatus();
 
         memset(buf, 0, 256);
-        printf("[CONSUMER pid = %d] Reading third msg\n", disastrOS_getpid());
+        printf("[CONSUMER pid = %d] Reading third msg in the message queue\n", disastrOS_getpid());
         disastrOS_msgQueueRead(mqdes, buf, 256);
         disastrOS_printStatus();
 
