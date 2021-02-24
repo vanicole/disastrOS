@@ -43,13 +43,14 @@ Modificando MAX_NUM_MESSAGES_PER_MSG_QUEUE è possibile testare l'errore causato
 
 
 4. In **disastrOS_syscalls.h** vengono dichiarate le implementazioni delle syscalls:
-   - void internal_msgQueueCreate()
-   - void internal_msgQueueOpen()
-   - void internal_msgQueueClose()
-   - void internal_msgQueueUnlink()
-   - void internal_msgQueueRead()
-   - void internal_msgQueueWrite()
-
+```c
+   - void internal_msgQueueCreate();
+   - void internal_msgQueueOpen();
+   - void internal_msgQueueClose();
+   - void internal_msgQueueUnlink();
+   - void internal_msgQueueRead();
+   - void internal_msgQueueWrite();
+```
 
 5. Sono stati creati dei file C con l'implementazione delle nuove syscalls per gestire la message queue: 
 	- [**disastrOS_msgQueueCreate.c**](https://github.com/vanicole/disastrOS/blob/main/disastrOS_msgQueueCreate.c)
@@ -63,7 +64,7 @@ Modificando MAX_NUM_MESSAGES_PER_MSG_QUEUE è possibile testare l'errore causato
 5. In **disastrOS.c** vengono installate le nuove syscalls: vengono aggiunte al vettore delle syscall del sistema operativo (syscall_vector)e viene specificato il numero di argomenti ed il loro ordine nel vettore degli argomenti (syscall_numarg); viene dichiarata, inizializzata e stampata una lista di code di messaggi (msg_queues_list); vengono inizializzate le nuove strutture associate alla coda (riga 152 - 156).
 Vengono implementate le syscalls:
 
-```
+```c
    - int disastrOS_msgQueueCreate(const char *name) {
       return disastrOS_syscall(DSOS_CALL_MQ_CREATE, name);
     }

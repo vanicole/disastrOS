@@ -17,14 +17,16 @@ Tutte le funzioni ivi dichiarate vengono implementate in **disastrOS_msg_queue.c
 
 3. In **disastrOS_constants.h** vengono aggiunte una serie di costanti:
 - macro relative ai messaggi: 
+```c
   - MAX_TEXT_LEN
   - MAX_NUM_MESSAGES
   - MAX_NUM_MESSAGE_PER_MSG_QUEUE 
   - MAX_NUM_PRIORITIES 
-
+```c
 Modificando MAX_NUM_MESSAGES_PER_MSG_QUEUE è possibile testare l'errore causato dal tentativo di scrivere in una coda piena; invece MAX_NUM_PRIORITIES definisce il numero di sotto code che verranno create nella coda di messaggi.
 
 - gli error code associati alle operazioni sulla coda di messaggi:
+```c
   - DSOS_EMQ_CREATE
   - DSOS_EMQ_READ 
   - DSOS_EMQ_WRITE
@@ -40,24 +42,25 @@ Modificando MAX_NUM_MESSAGES_PER_MSG_QUEUE è possibile testare l'errore causato
   - DSOS_CALL_MQ_UNLINK
   - DSOS_CALL_MQ_READ 
   - DSOS_CALL_MQ_WRITE
-
+```c
 
 4. In **disastrOS_syscalls.h** vengono dichiarate le implementazioni delle syscalls:
-   - void internal_msgQueueCreate()
-   - void internal_msgQueueOpen()
-   - void internal_msgQueueClose()
-   - void internal_msgQueueUnlink()
-   - void internal_msgQueueRead()
-   - void internal_msgQueueWrite()
-
+```c
+   - void internal_msgQueueCreate();
+   - void internal_msgQueueOpen();
+   - void internal_msgQueueClose();
+   - void internal_msgQueueUnlink();
+   - void internal_msgQueueRead();
+   - void internal_msgQueueWrite();
+```
 
 5. Sono stati creati dei file C con l'implementazione delle nuove syscalls per gestire la message queue: 
 	- [**disastrOS_msgQueueCreate.c**](https://github.com/vanicole/disastrOS/blob/main/disastrOS_msgQueueCreate.c)
-	- **disastrOS_msgQueueOpen.c**
-	- **disastrOS_msgQueueRead.c**
-	- **disastrOS_msgQueueWrite.c**
-	- **disastrOS_msgQueueClose.c**
-	- **disastrOS_msgQueueUnlink.c**
+	- [**disastrOS_msgQueueOpen.c**] (https://github.com/vanicole/disastrOS/blob/main/disastrOS_msgQueueOpen.c)
+	- [**disastrOS_msgQueueRead.c**] (https://github.com/vanicole/disastrOS/blob/main/disastrOS_msgQueueRead.c)
+	- [**disastrOS_msgQueueWrite.c**] (https://github.com/vanicole/disastrOS/blob/main/disastrOS_msgQueueWrite.c)
+	- [**disastrOS_msgQueueClose.c**] (https://github.com/vanicole/disastrOS/blob/main/disastrOS_msgQueueClose.c) 
+	- [**disastrOS_msgQueueUnlink.c**] (https://github.com/vanicole/disastrOS/blob/main/disastrOS_msgQueueUnlink.c)
 
 
 5. In **disastrOS.c** vengono installate le nuove syscalls: vengono aggiunte al vettore delle syscall del sistema operativo (syscall_vector)e viene specificato il numero di argomenti ed il loro ordine nel vettore degli argomenti (syscall_numarg); viene dichiarata, inizializzata e stampata una lista di code di messaggi (msg_queues_list); vengono inizializzate le nuove strutture associate alla coda (riga 152 - 156).
