@@ -48,8 +48,6 @@ void internal_msgQueueRead() {
         running->syscall_retvalue = DSOS_EMQ_READ;
         return;
     }
-    //printf("msg_ptr: %s, msg->msg_ptr: %s\n", msg_ptr, msg->msg_ptr);
-
     // inserisce msg->msg_ptr nel buffer puntato da msg_ptr
     strcpy(msg_ptr, msg->msg_ptr);
 
@@ -62,6 +60,5 @@ void internal_msgQueueRead() {
     Message_free(msg);
 
     running->syscall_retvalue = msg->msg_len;
-    //printf("syscall_retvalue = msg->msg_len = %d\n", running->syscall_retvalue);
 
 }

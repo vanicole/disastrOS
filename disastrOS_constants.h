@@ -6,7 +6,7 @@
 #define MAX_NUM_DESCRIPTORS_PER_PROCESS 32
 
 // messages
-#define MAX_TEXT_LEN                     4        // dimensione massima del messaggio (se si imposta ad un valore inferiore a 6 è possibile testare errori)
+#define MAX_TEXT_LEN                     255        // dimensione massima del messaggio (se si imposta ad un valore inferiore a 6 è possibile testare errori)
 #define MAX_NUM_MESSAGES                1024
 #define MAX_NUM_MESSAGES_PER_MSG_QUEUE    64        // numero massimo di messaggi nella coda (modificare per testare coda piena)
 #define MAX_NUM_PRIORITIES                10        // numero di subqueue della msg queue (modificare per testare vari errori)

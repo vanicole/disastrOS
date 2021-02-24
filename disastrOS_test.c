@@ -134,9 +134,10 @@ void childFunc(void *argsPtr) {
     printf("[childFunc pid = %d] wait(0, NULL) -> reads the retvalue of terminated child\n", disastrOS_getpid());
     disastrOS_printStatus();
 
-    // prova a scollegare la coda ma è già stato fatto
-    printf("[childFunc pid = %d] Trying to unlink the message queue\n", disastrOS_getpid());
-    disastrOS_msgQueueUnlink("/mq");
+    // testing unlink
+
+    //printf("[childFunc pid = %d] Trying to unlink the message queue\n", disastrOS_getpid());
+    //disastrOS_msgQueueUnlink("/mq");
     //disastrOS_printStatus();
 
     printf("[childFunc pid = %d] exit(0)\n", disastrOS_getpid());

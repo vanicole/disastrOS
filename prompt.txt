@@ -1482,9 +1482,6 @@ Zombie: {
 
 **********************************************************************
 
-[childFunc pid = 1] Trying to unlink the message queue
-[ERROR] Now doesn't exist message queue with name '/mq'! It has already been unlinked!
-
 [childFunc pid = 1] exit(0)
 [init] wait(0, NULL) --> reads the retvalue of terminated childFunc
 
