@@ -108,12 +108,13 @@ E' definita una costante ITERATIONS per settare il numero di iterazioni.
 
 ****************************************************************************************************************
 ****************************************************************************************************************
+## Esecuzione
 
 Per testare il funzionamento eseguire i seguenti passi:
->> `git clone https://github.com/vanicole/disastrOS.git`
->> `cd disastrOS`
->> `make`
->> `./disastrOS_test`
+* `git clone https://github.com/vanicole/disastrOS.git`
+* `cd disastrOS`
+* `make`
+* `./disastrOS_test`
 
 
 

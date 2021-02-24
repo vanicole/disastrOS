@@ -1,11 +1,11 @@
 # disastrOS
 
-E' stato implementato un sistema IPC (Inter-Process Communication) basato su code di messaggi in disastrOS in modo da consentire la comunicazione asincrona tra i processi.
+### E' stato implementato un sistema IPC (Inter-Process Communication) basato su code di messaggi in disastrOS in modo da consentire la comunicazione asincrona tra i processi.
 
 ************************************************************************************
 ************************************************************************************
 
-Modifiche apportate alla struttura base di disastrOS:
+#### Modifiche apportate alla struttura base di disastrOS:
 
 1. In [**disastrOS_resource.h**](https://github.com/vanicole/disastrOS/blob/main/disastrOS_resource.h) viene aggiunto il campo 'name' alla struct Resource.
 Di conseguenza viene modificato [**disastrOS_open_resource.c**](https://github.com/vanicole/disastrOS/blob/main/disastrOS_open_resource.c) (riga 12).
