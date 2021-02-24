@@ -22,7 +22,7 @@ Tutte le funzioni ivi dichiarate vengono implementate in **disastrOS_msg_queue.c
   - MAX_NUM_MESSAGES
   - MAX_NUM_MESSAGE_PER_MSG_QUEUE 
   - MAX_NUM_PRIORITIES 
-```c
+```
 Modificando MAX_NUM_MESSAGES_PER_MSG_QUEUE è possibile testare l'errore causato dal tentativo di scrivere in una coda piena; invece MAX_NUM_PRIORITIES definisce il numero di sotto code che verranno create nella coda di messaggi.
 
 - gli error code associati alle operazioni sulla coda di messaggi:
@@ -34,15 +34,16 @@ Modificando MAX_NUM_MESSAGES_PER_MSG_QUEUE è possibile testare l'errore causato
   - DSOS_EMQ_UNLINK
   - DSOS_EMQ_NOFD 
   - DSOS_EMQ_NOEXIST
-
+```
 - numeri di syscalls: 
+```c
   - DSOS_CALL_MQ_CREATE 
   - DSOS_CALL_MQ_OPEN 
   - DSOS_CALL_MQ_CLOSE
   - DSOS_CALL_MQ_UNLINK
   - DSOS_CALL_MQ_READ 
   - DSOS_CALL_MQ_WRITE
-```c
+```
 
 4. In **disastrOS_syscalls.h** vengono dichiarate le implementazioni delle syscalls:
 ```c
