@@ -15,8 +15,8 @@ int Text_free(char *s);
 // Definisce messaggio
 typedef struct Message {
     ListItem list;
-    char *msg_ptr; // text ptr
-    unsigned msg_len; // length
+    char *msg_ptr;                                  // text ptr
+    unsigned msg_len;                               // length
 } Message;
 
 void Message_init();
@@ -33,8 +33,8 @@ void MessageList_print(MessageList *list);
 // Definisce sottocoda di messaggi con priorità fissata
 typedef struct Subqueue {
     ListItem list;
-    MessageList messages;
-    unsigned priority;
+    MessageList messages;                           // lista di messaggi
+    unsigned priority;                              // priorità della sottocoda
 } Subqueue;
 
 void Subqueue_init();
@@ -46,7 +46,7 @@ void Subqueue_print(const Subqueue *msg);
 
 // definisce coda di messaggi
 typedef struct MsgQueue {
-    Resource resource;
+    Resource resource;                              // la msg queue è una risorsa, identificata univocamente tramite il /name
     Subqueue *subqueues[MAX_NUM_PRIORITIES];
     PCB* pcb;                                       // identifica processo running che alloca msg queue
     int size;                                       // numero di messaggi che compongono la coda
@@ -62,7 +62,7 @@ void MsgQueue_print(const MsgQueue *q);
 // Definisce un riferimento alla coda di msg
 typedef struct MsgQueuePtr {
     ListItem list;
-    MsgQueue *msgQueuePtr;
+    MsgQueue *msgQueuePtr;                          // ptr alla coda di msg
 } MsgQueuePtr;
 
 void MsgQueuePtr_init();
@@ -72,7 +72,8 @@ void MsgQueuePtr_print(const MsgQueuePtr *q);
 
 // Definisce lista di riferimenti alle code di msg
 typedef ListHead MsgQueuePtrList;
-
-// Ricerca per nome
-MsgQueuePtr * MsgQueuePtrList_findByName(MsgQueuePtrList *l, const char *name);
 void MsgQueuePtrList_print(MsgQueuePtrList *l);
+
+// Ricerca della coda per nome
+MsgQueuePtr * MsgQueuePtrList_findByName(MsgQueuePtrList *l, const char *name);
+

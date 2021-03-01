@@ -11,6 +11,8 @@
 #include "disastrOS_constants.h"
 #include "linked_list.h"
 
+#define DSOS_MSG_QUEUE_RESOURCE 3 // tipo di risorsa coda
+
 // macro associate al Text del messaggio
 #define TEXT_SIZE sizeof((MAX_TEXT_LEN + 1) * sizeof(char))
 #define TEXT_MEM_SIZE (TEXT_SIZE + sizeof(int))
@@ -114,12 +116,11 @@ Message* Message_alloc(const char *msg, unsigned size) {
         return NULL;
     }
 
-    new_msg->list.prev = new_msg->list.next = NULL;    // r->list.prev = r->list.next = 0;
-
+    new_msg->list.prev = new_msg->list.next = NULL;     // r->list.prev = r->list.next = 0;
     strcpy(txt, msg);
+    new_msg->msg_ptr = txt;                             // r->id=id;
+    new_msg->msg_len = size;                            // r->type=type;
 
-    new_msg->msg_ptr = txt;                     // r->id=id;
-    new_msg->msg_len = size;                    // r->type=type;
     printf(">> Message '%s' allocated correctly!\n", txt);
     return new_msg;
 }
@@ -189,7 +190,7 @@ int Subqueue_free(Subqueue* msg) {
         Message *oldMsg = (Message*)currMsg;
         currMsg = currMsg->next;
         List_detach(&msg->messages, (ListItem*)oldMsg);
-        Message_free(oldMsg);
+        Message_free(oldMsg);   // dealloca eventuali messaggi ancora presenti nella coda
     }
 
     PoolAllocatorResult res = PoolAllocator_releaseBlock(&_subqueues_allocator, msg);
@@ -235,10 +236,10 @@ MsgQueue* MsgQueue_alloc(const char *name, int id, PCB *pcb) {
     q->resource.list.prev = q->resource.list.next = NULL;
     q->resource.name = name;
     q->resource.rid = id;
-    q->resource.type = DSOS_MSG_QUEUE_RESOURCE;
+    q->resource.type = DSOS_MSG_QUEUE_RESOURCE; // impostato a 3 senza un motivo specifico
 
     List_init(&(q->resource.descriptors_ptrs));
-    for (unsigned priority = 0; priority < MAX_NUM_PRIORITIES; ++priority) {
+    for (unsigned int priority = 0; priority < MAX_NUM_PRIORITIES; ++priority) {
         q->subqueues[priority] = Subqueue_alloc(priority);
     }
 
@@ -250,7 +251,7 @@ MsgQueue* MsgQueue_alloc(const char *name, int id, PCB *pcb) {
 
 // int Resource_free(Resource* resource)
 int MsgQueue_free(MsgQueue *q) {
-    for (unsigned priority = 0; priority < MAX_NUM_PRIORITIES; ++priority) {
+    for (unsigned int priority = 0; priority < MAX_NUM_PRIORITIES; ++priority) {
         Subqueue_free(q->subqueues[priority]);
         printf(">> Subqueue with priority %d deallocated correctly!\n", priority);
     }

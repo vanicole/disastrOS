@@ -51,7 +51,7 @@ Resource* ResourceList_byId(ResourceList* l, int id) {
 }
 
 void Resource_print(Resource* r) {
-  printf("id: %d, type:%d, pids:", r->rid, r->type);
+  printf("id: %d, type: %d, pids:", r->rid, r->type);
   DescriptorPtrList_print(&r->descriptors_ptrs);
 }
 

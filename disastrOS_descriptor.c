@@ -103,11 +103,4 @@ void DescriptorPtrList_print(ListHead* l){
     printf("]");
 }
 
-/* NUOVA */
-DescriptorPtr * DescriptorPtrList_findByPCB(DescriptorPtrList *listPtr, PCB *pcbPtr) {
-    for (ListItem *currNodePtr = listPtr->first; currNodePtr != NULL; currNodePtr = currNodePtr->next) {
-        if (pcbPtr == ((DescriptorPtr*) currNodePtr)->descriptor->pcb)
-            return (DescriptorPtr*) currNodePtr;
-    }
-    return NULL;
-}
+

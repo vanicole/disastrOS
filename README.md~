@@ -1,22 +1,22 @@
 # disastrOS
 
-E' stato implementato un sistema IPC (Inter-Process Communication) basato su code di messaggi in disastrOS in modo da consentire la comunicazione asincrona tra i processi.
+### E' stato implementato un sistema IPC (Inter-Process Communication) basato su code di messaggi in disastrOS in modo da consentire la comunicazione asincrona tra i processi.
 
 ************************************************************************************
 ************************************************************************************
 
-Modifiche apportate alla struttura base di disastrOS:
+#### Modifiche apportate alla struttura base di disastrOS:
 
-1. In [**disastrOS_resource.h**](https://github.com/vanicole/disastrOS/blob/main/disastrOS_resource.h) viene aggiunto il campo 'name' alla struct Resource.
-Di conseguenza viene modificato [**disastrOS_open_resource.c**](https://github.com/vanicole/disastrOS/blob/main/disastrOS_open_resource.c) (riga 12).
+1. In [**disastrOS_resource.h**](https://github.com/vanicole/disastrOS/blob/main/disastrOS_resource.h) viene aggiunto il campo 'name' alla struct Resource. Di conseguenza viene modificato il file [**disastrOS_open_resource.c**](https://github.com/vanicole/disastrOS/blob/main/disastrOS_open_resource.c).
+
 
 2. [**disastrOS_msg_queue.h**](https://github.com/vanicole/disastrOS/blob/main/disastrOS_msg_queue.h) contiene tutte le strutture dati necessarie per implementare una coda di messaggi: Text, Message, Subqueue, MsgQueue e MsgQueuePtr. Vengono allocate tramite pool allocator.
-Viene aggiunta una funzione per ricercare la coda tramite il nome: MsgQueuePtr * MsgQueuePtrList_findByName(MsgQueuePtrList *l, const char *name).
-Tutte le funzioni ivi dichiarate vengono implementate in [**disastrOS_msg_queue.c**](https://github.com/vanicole/disastrOS/blob/main/disastrOS_msg_queue.c).
+Viene aggiunta una funzione per ricercare la coda tramite il nome: `MsgQueuePtr * MsgQueuePtrList_findByName(MsgQueuePtrList *l, const char *name)`.
+Tutte le funzioni ivi dichiarate vengono implementate in [**disastrOS_msg_queue.c**](https://github.com/vanicole/disastrOS/blob/main/disastrOS_msg_queue.c). Qua viene inserita la costante DSOS_MSG_QUEUE_RESOURCE per impostare il tipo di risorsa.
 
 
 3. In [**disastrOS_constants.h**](https://github.com/vanicole/disastrOS/blob/main/disastrOS_constants.h) vengono aggiunte una serie di costanti:
-- macro relative ai messaggi:
+  - macro relative ai messaggi:
 ```c
 	MAX_TEXT_LEN
   	MAX_NUM_MESSAGES
@@ -24,9 +24,10 @@ Tutte le funzioni ivi dichiarate vengono implementate in [**disastrOS_msg_queue.
   	MAX_NUM_PRIORITIES
 ```
 
-In particolare, modificando MAX_NUM_MESSAGES_PER_MSG_QUEUE è possibile testare l'errore causato dal tentativo di scrivere in una coda piena (vedi riga 29 in [disastrOS_msgQueueWrite.c](https://github.com/vanicole/disastrOS/blob/main/disastrOS_msgQueueWrite.c)) ; MAX_NUM_PRIORITIES imposta il numero di sotto code che verranno create nella coda di messaggi; Invece impostando MAX_TEXT_LEN ad un valore inferiore a 6 (dimensione dei messaggi che vengono scritti) è possibile testare gli errori di scrittura (vedi riga 35 in [disastrOS_msgQueueWrite.c](https://github.com/vanicole/disastrOS/blob/main/disastrOS_msgQueueWrite.c)).
+In particolare, MAX_NUM_MESSAGES_PER_MSG_QUEUE rappresenta il numero massimo di messaggi contenuti nella message queue: impostando un valore inferiore a 3 è possibile testare l'errore causato dal tentativo di scrivere in una coda piena (vedi riga 29 in [disastrOS_msgQueueWrite.c](https://github.com/vanicole/disastrOS/blob/main/disastrOS_msgQueueWrite.c)); MAX_NUM_PRIORITIES indica il numero di sotto-code che verranno create nella coda di messaggi; MAX_TEXT_LEN rappresenta la dimensione del messaggio scritto: settando un valore inferiore a 6 è possibile testare gli errori di scrittura (vedi riga 35 in [disastrOS_msgQueueWrite.c](https://github.com/vanicole/disastrOS/blob/main/disastrOS_msgQueueWrite.c)); infine MAX_NUM_MESSAGES indica il numero massimo di messaggi che si possono scrivere: se il valore è inferiore a 9 causerà segmentation fault nel momento in cui cerca di allocare l'ultimo messaggio.
 
-- gli error code associati alle operazioni sulla coda di messaggi:
+
+  - gli error code associati alle operazioni sulla coda di messaggi:
 ```c
 	DSOS_EMQ_CREATE
   	DSOS_EMQ_READ
@@ -36,7 +37,7 @@ In particolare, modificando MAX_NUM_MESSAGES_PER_MSG_QUEUE è possibile testare 
   	DSOS_EMQ_NOFD
   	DSOS_EMQ_NOEXIST
 ```
-- numeri di syscalls:
+  - numeri di syscalls:
 ```c
   	DSOS_CALL_MQ_CREATE
   	DSOS_CALL_MQ_OPEN
