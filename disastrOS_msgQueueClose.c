@@ -22,19 +22,12 @@ void internal_msgQueueClose() {
 
     MsgQueue *mqdesc = (MsgQueue*)desc->resource;
 
+    // rimozione del descrittore associato alla coda da descriptors nel PCB del processo running
     List_detach(&mqdesc->resource.descriptors_ptrs, (ListItem *) descPtr);
     List_detach(&running->descriptors, (ListItem *) desc);
 
-    if (DescriptorPtr_free(descPtr) != 0) {
-        disastrOS_debug("[ERROR] Failed to deallocate the descriptor ptr (fd = %d)!\n", fd);
-        running->syscall_retvalue = DSOS_EMQ_CLOSE;
-        return;
-    }
-    if (Descriptor_free(desc) != 0) {
-        disastrOS_debug("[ERROR] Failed to deallocate the descriptor with fd %d!\n", fd);
-        running->syscall_retvalue = DSOS_EMQ_CLOSE;
-        return;
-    }
+    DescriptorPtr_free(descPtr);
+    Descriptor_free(desc);
 
     // La coda verrà distrutta una volta che tutti i processi che l'hanno aperta chiudono
     // i propri descrittori associati ad essa

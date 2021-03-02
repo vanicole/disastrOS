@@ -11,7 +11,7 @@ void internal_msgQueueUnlink() {
 
     const char *name = (const char *) running->syscall_args[0];
 
-    // ricerca tramite il nome
+    // ricerca ptr alla msg queue tramite il nome
     MsgQueuePtr *mqPtr = MsgQueuePtrList_findByName(&msg_queues_list, name);
     MsgQueue *mqdesc = NULL;
 
@@ -33,20 +33,13 @@ void internal_msgQueueUnlink() {
         return;
     }
 
+    // rimuove ptr a msg queue da lista msg_queues_list
     List_detach(&msg_queues_list, (ListItem *) mqPtr);
+    // rimuove descrittore associato alla coda da resources_list
     List_detach(&resources_list, (ListItem *) mqdesc);
 
-    if (MsgQueuePtr_free(mqPtr) != 0) {
-        disastrOS_debug("[ERROR] Failed to deallocate the message queue ptr for the message queue '%s'\n!", name);
-        running->syscall_retvalue = DSOS_EMQ_UNLINK;
-        return;
-    }
-
-    if (MsgQueue_free(mqdesc) != 0) {
-        disastrOS_debug("[ERROR] Failed to deallocate the message queue '%s'!\n", name);
-        running->syscall_retvalue = DSOS_EMQ_UNLINK;
-        return;
-    }
+    MsgQueuePtr_free(mqPtr);
+    MsgQueue_free(mqdesc);
 
     disastrOS_debug("Message queue with name '%s' destroyed!\n", name);
     running->syscall_retvalue = 0;

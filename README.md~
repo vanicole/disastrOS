@@ -10,8 +10,8 @@
 1. In [**disastrOS_resource.h**](https://github.com/vanicole/disastrOS/blob/main/disastrOS_resource.h) viene aggiunto il campo 'name' alla struct Resource. Di conseguenza viene modificato il file [**disastrOS_open_resource.c**](https://github.com/vanicole/disastrOS/blob/main/disastrOS_open_resource.c).
 
 
-2. [**disastrOS_msg_queue.h**](https://github.com/vanicole/disastrOS/blob/main/disastrOS_msg_queue.h) contiene tutte le strutture dati necessarie per implementare una coda di messaggi: Text, Message, Subqueue, MsgQueue e MsgQueuePtr. Vengono allocate tramite pool allocator.
-Viene aggiunta una funzione per ricercare la coda tramite il nome: `MsgQueuePtr * MsgQueuePtrList_findByName(MsgQueuePtrList *l, const char *name)`.
+2. [**disastrOS_msg_queue.h**](https://github.com/vanicole/disastrOS/blob/main/disastrOS_msg_queue.h) contiene tutte le strutture dati necessarie per implementare una coda di messaggi: Text, Message, Subqueue, MsgQueue e MsgQueuePtr. Vengono allocate tramite SLAB allocator.
+Viene aggiunta una funzione per ricercare la coda tramite il nome: `MsgQueuePtr * MsgQueuePtrList_findByName(MsgQueuePtrList *l, const char *name)`, che verrà usata in [**disastrOS_msgQueueUnlink.c**](https://github.com/vanicole/disastrOS/blob/main/disastrOS_msgQueueUnlink.c).
 Tutte le funzioni ivi dichiarate vengono implementate in [**disastrOS_msg_queue.c**](https://github.com/vanicole/disastrOS/blob/main/disastrOS_msg_queue.c). Qua viene inserita la costante DSOS_MSG_QUEUE_RESOURCE per impostare il tipo di risorsa.
 
 
@@ -95,14 +95,14 @@ In particolare, MAX_NUM_MESSAGES_PER_MSG_QUEUE rappresenta il numero massimo di 
 
    - **int disastrOS_msgQueueOpen(const char *name)**: prende in input il nome della coda da aprire e alloca il descrittore associato alla coda di messaggi aperta. Ritorna il file descriptor associato al descrittore del processo in caso di successo, altrimenti un codice di errore (DSOS_EMQ_NOFD e DSOS_EMQ_NOEXIST).
 
-   - **int disastrOS_msgQueueClose(int mqdes)**: prende in input il descrittore mqdes associato alla coda di messaggi da chiudere. Ritorna 0 in caso di successo, DSOS_EMQ_CLOSE altrimenti.
+   - **int disastrOS_msgQueueClose(int mqdes)**: prende in input il descrittore mqdes associato alla coda di messaggi da chiudere. Ritorna 0 in caso di successo, DSOS_EMQ_CLOSE altrimenti. Se tutte le risorse hanno chiuso il descrittore associato alla coda, allora viene eseguita [**disastrOS_msgQueueUnlink.c**](https://github.com/vanicole/disastrOS/blob/main/disastrOS_msgQueueUnlink.c)
 
    - **int disastrOS_msgQueueUnlink(const char *name)**: prende in input il nome della coda di messaggi da rimuovere immediatamente. La coda verrà distrutta una volta che tutti i processi che l'hanno aperta chiudono i propri descrittori associati alla coda. Ritorna 0 in caso di successo, DSOS_EMQ_UNLINK altrimenti.
 
    - **int disastrOS_msgQueueRead(int mqdes, char *msg_ptr, int unsigned msg_len)**: se ci sono messaggi nella coda identificata da mqdes, rimuove quello con priorità più alta e lo inserisce nel buffer a cui punta msg_ptr tramite la funzione `char* strcpy(char *dest, const char *src)`. Viene inoltre specificata la dimensione del buffer puntato da msg_ptr (256) per poter verificare che la dimensione del messaggio da scrivere sia entro questo valore. Questa funzione ritorna la lunghezza del messaggio letto in caso di successo, altrimenti DSOS_EMQ_READ.
 
    - **int disastrOS_msgQueueWrite(int mqdes, const char *msg_ptr, unsigned msg_len, unsigned int priority)**: prende in input il messaggio, puntato da msg_ptr, da inserire nella coda di messaggi identificata dal descrittore mqdes; viene specificata la lunghezza del messaggio puntato da msg_ptr e la priorità assegnata al messaggio. Ritorna la lunghezza del messaggio in caso di successo, DSOS_EMQ_WRITE altrimenti.
-In particolare, viene allocato il messaggio tramite Message_alloc (vedi [*disastrOS_msgQueue.c*](https://github.com/vanicole/disastrOS/blob/main/disastrOS_msg_queue.c)) e inserito nella lista di messaggi associata alla sottocoda con quella priorità tramite List_insert (vedi [*linked_list.c*](https://github.com/vanicole/disastrOS/blob/main/disastrOS_msgQueueCreate.c)).
+In particolare, viene allocato il messaggio tramite Message_alloc (vedi [*disastrOS_msgQueue.c*](https://github.com/vanicole/disastrOS/blob/main/disastrOS_msg_queue.c)) e inserito nella lista di messaggi associata alla sottocoda con quella priorità.
 
 7. in [**disastrOS_test.c**](https://github.com/vanicole/disastrOS/blob/main/disastrOS_test.c) viene implementata la comunicazione tra un producer ed un consumer.
 E' definita una costante ITERATIONS per settare il numero di iterazioni.
