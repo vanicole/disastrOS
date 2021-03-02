@@ -292,7 +292,7 @@ void MsgQueuePtr_init() {
                                                 MSG_QUEUE_PTR_BUFFER_SIZE);
 
     if (res != Success) {
-        printf("[ERROR] Failed initialize message queue ptr allocator!\n");
+        printf("[E0RROR] Failed initialize message queue ptr allocator!\n");
         assert(res == Success);
     }
 }

@@ -31,6 +31,8 @@ void internal_msgQueueOpen() {
 
     running->last_fd++; // we increment the fd value for the next call
     DescriptorPtr *descPtr = DescriptorPtr_alloc(desc);
+
+    // inserisce il nuovo descrittore nella lista dei descrittori aperti del PCB
     List_insert(&running->descriptors, running->descriptors.last, (ListItem *) desc);
 
     // add to the resource, in the descriptor ptr list, a pointer to the newly created descriptor

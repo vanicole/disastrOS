@@ -8,7 +8,7 @@
 
 
 void internal_openResource(){
-  //1 get from the PCB the resource id of the resource to open
+  //1 get from the PCB the name of the resource to open
   const char *name = (const char *) running->syscall_args[0];
   int id=running->syscall_args[1];
   int type=running->syscall_args[2];
