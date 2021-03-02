@@ -11,7 +11,7 @@
 
 
 2. [**disastrOS_msg_queue.h**](https://github.com/vanicole/disastrOS/blob/main/disastrOS_msg_queue.h) contiene tutte le strutture dati necessarie per implementare una coda di messaggi: Text, Message, Subqueue, MsgQueue e MsgQueuePtr. Vengono allocate tramite SLAB allocator.
-Viene aggiunta una funzione per ricercare la coda tramite il nome: `MsgQueuePtr * MsgQueuePtrList_findByName(MsgQueuePtrList *l, const char *name)`, che verrà usata in [**disastrOS_msgQueueUnlink.c**](https://github.com/vanicole/disastrOS/blob/main/disastrOS_msgQueueUnlink.c).
+Viene aggiunta una funzione per ricercare la coda tramite il nome: `MsgQueuePtr * MsgQueuePtrList_findByName(MsgQueuePtrList *l, const char *name)`.
 Tutte le funzioni ivi dichiarate vengono implementate in [**disastrOS_msg_queue.c**](https://github.com/vanicole/disastrOS/blob/main/disastrOS_msg_queue.c). Qua viene inserita la costante DSOS_MSG_QUEUE_RESOURCE per impostare il tipo di risorsa.
 
 

@@ -66,7 +66,7 @@ In particolare, MAX_NUM_MESSAGES_PER_MSG_QUEUE rappresenta il numero massimo di 
    - [**disastrOS_msgQueueUnlink.c**](https://github.com/vanicole/disastrOS/blob/main/disastrOS_msgQueueUnlink.c)
 
 
-5. In [**disastrOS.c**](https://github.com/vanicole/disastrOS/blob/main/disastrOS.c) vengono installate le nuove syscalls: vengono aggiunte al vettore delle syscall del sistema operativo (syscall_vector)e viene specificato il numero di argomenti ed il loro ordine nel vettore degli argomenti (syscall_numarg); viene dichiarata, inizializzata e stampata una lista di code di messaggi (msg_queues_list); vengono inizializzate le nuove strutture associate alla coda (riga 152 - 156). Vengono implementate le syscalls:
+5. In [**disastrOS.c**](https://github.com/vanicole/disastrOS/blob/main/disastrOS.c) vengono installate le nuove syscalls: vengono aggiunte al vettore delle syscall del sistema operativo (syscall_vector) e viene specificato il numero di argomenti ed il loro ordine nel vettore degli argomenti (syscall_numarg); viene dichiarata, inizializzata e stampata una lista di code di messaggi (msg_queues_list); vengono inizializzate le nuove strutture associate alla coda (riga 152 - 156). Vengono implementate le syscalls:
 
 ```c
    int disastrOS_msgQueueCreate(const char *name) {
