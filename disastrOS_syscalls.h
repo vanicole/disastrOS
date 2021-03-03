@@ -22,5 +22,5 @@ void internal_msgQueueClose();
 void internal_msgQueueUnlink();
 void internal_msgQueueRead();
 void internal_msgQueueWrite();
-
+void internal_msgQueueWait();
 

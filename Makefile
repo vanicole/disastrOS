@@ -1,5 +1,5 @@
 CC=gcc
-CCOPTS=--std=gnu99 -Wall 
+CCOPTS=--std=gnu99 -Wall
 AR=ar
 
 HEADERS=disastrOS_msg_queue.h\
@@ -38,11 +38,12 @@ OBJS=pool_allocator.o\
      disastrOS_msgQueueRead.o\
      disastrOS_msgQueueWrite.o\
      disastrOS_msgQueueUnlink.o\
+     disastrOS_msgQueueWait.o\
      disastrOS_msg_queue.o\
- 
+
 LIBS=libdisastrOS.a
 
-BINS=disastrOS_test 
+BINS=disastrOS_test
 
 #disastros_test
 
@@ -54,7 +55,7 @@ all:	$(LIBS) $(BINS)
 %.o:	%.c $(HEADERS)
 	$(CC) $(CCOPTS) -c -o $@  $<
 
-libdisastrOS.a: $(OBJS) $(HEADERS) 
+libdisastrOS.a: $(OBJS) $(HEADERS)
 	$(AR) -rcs $@ $^
 	$(RM) $(OBJS)
 

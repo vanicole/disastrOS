@@ -41,6 +41,7 @@
 #define DSOS_EMQ_WRITE  -18
 #define DSOS_EMQ_CLOSE  -19
 #define DSOS_EMQ_UNLINK -20
+#define DSOS_EMQ_WAIT   -21
 
 // syscall numbers
 #define DSOS_MAX_SYSCALLS 32
@@ -63,6 +64,7 @@
 #define DSOS_CALL_MQ_UNLINK  14
 #define DSOS_CALL_MQ_READ    15
 #define DSOS_CALL_MQ_WRITE   16
+#define DSOS_CALL_MQ_WAIT    17
 
 //resources
 #define DSOS_CREATE 0x1
