@@ -6,10 +6,10 @@
 #define MAX_NUM_DESCRIPTORS_PER_PROCESS 32
 
 // messages
-#define MAX_TEXT_LEN                     255        // dimensione massima del messaggio (MAX_TEXT_LEN < 6: ERROR)
-#define MAX_NUM_MESSAGES                1024        // numero massimo di messaggi che si possono scrivere (MAX_NUM_MESSAGES < 9: ERROR)
-#define MAX_NUM_MESSAGES_PER_MSG_QUEUE    64        // numero massimo di messaggi nella message queue (modificare per testare coda piena, MAX_NUM_MESSAGES_PER_MSG_QUEUE < 3)
-#define MAX_NUM_PRIORITIES                10        // numero di subqueue della msg queue (modificare per testare vari errori perchè la priorità è un intero tra 0 e 9)
+#define MAX_TEXT_LEN                     255        // dimensione massima del messaggio (se si imposta ad un valore inferiore a 6 è possibile testare errori)
+#define MAX_NUM_MESSAGES                1024
+#define MAX_NUM_MESSAGES_PER_MSG_QUEUE    64        // numero massimo di messaggi nella coda (modificare per testare coda piena)
+#define MAX_NUM_PRIORITIES                10        // numero di subqueue della msg queue (modificare per testare vari errori)
 
 #define STACK_SIZE        16384
 // signals
@@ -43,6 +43,7 @@
 #define DSOS_EMQ_UNLINK -20
 #define DSOS_EMQ_WAIT   -21
 
+
 // syscall numbers
 #define DSOS_MAX_SYSCALLS 32
 #define DSOS_MAX_SYSCALLS_ARGS 8
@@ -64,8 +65,6 @@
 #define DSOS_CALL_MQ_UNLINK  14
 #define DSOS_CALL_MQ_READ    15
 #define DSOS_CALL_MQ_WRITE   16
-#define DSOS_CALL_MQ_WAIT    17
-
 //resources
 #define DSOS_CREATE 0x1
 #define DSOS_READ   0x2

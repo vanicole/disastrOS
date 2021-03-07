@@ -38,7 +38,6 @@ OBJS=pool_allocator.o\
      disastrOS_msgQueueRead.o\
      disastrOS_msgQueueWrite.o\
      disastrOS_msgQueueUnlink.o\
-     disastrOS_msgQueueWait.o\
      disastrOS_msg_queue.o\
 
 LIBS=libdisastrOS.a

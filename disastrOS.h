@@ -44,7 +44,7 @@ int disastrOS_msgQueueClose(int mqdes);
 int disastrOS_msgQueueUnlink(const char *name);
 int disastrOS_msgQueueRead(int mqdes, char *msg_ptr, unsigned msg_len);
 int disastrOS_msgQueueWrite(int mqdes, const char *msg_ptr, unsigned msg_len, unsigned priority);
-int disastrOS_msgQueueWait(int mqdes);
+
 
 // debug function, prints the state of the internal system
 void disastrOS_printStatus();

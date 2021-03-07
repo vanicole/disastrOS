@@ -33,3 +33,5 @@ DescriptorPtr* DescriptorPtr_alloc(Descriptor* descriptor);
 int DescriptorPtr_free(DescriptorPtr* d);
 void DescriptorPtrList_print(ListHead* l);
 
+// ricerca tramite PCB
+DescriptorPtr * DescriptorPtrList_findByPCB(DescriptorPtrList *listPtr, PCB *pcbPtr);

@@ -211,9 +211,6 @@ void disastrOS_start(void (*f)(void*), void* f_args, char* logfile){
     syscall_vector[DSOS_CALL_MQ_WRITE]          = internal_msgQueueWrite;
     syscall_numarg[DSOS_CALL_MQ_WRITE]          = 4;
 
-    syscall_vector[DSOS_CALL_MQ_WAIT]           = internal_msgQueueWait;
-    syscall_numarg[DSOS_CALL_MQ_WAIT]           = 1;
-
     // setup the scheduling lists
     running=0;
     List_init(&ready_list);
@@ -326,7 +323,6 @@ int disastrOS_destroyResource(int resource_id) {
 
 /** MSG QUEUE SYSCALLS IMPLEMENTATION **/
 
-// Prende in input il nome della coda di messaggi da creare
 int disastrOS_msgQueueCreate(const char *name) {
     return disastrOS_syscall(DSOS_CALL_MQ_CREATE, name);
 }
@@ -364,9 +360,6 @@ int disastrOS_msgQueueWrite(int mqdes, const char *msg_ptr, unsigned msg_len, un
     return disastrOS_syscall(DSOS_CALL_MQ_WRITE, mqdes, msg_ptr, msg_len, priority);
 }
 
-int disastrOS_msgQueueWait(int mqdes) {
-    return disastrOS_syscall(DSOS_CALL_MQ_WAIT, mqdes);
-}
 
 void disastrOS_printStatus(){
     printf("\n****************** DisastrOS *****************************************\n");

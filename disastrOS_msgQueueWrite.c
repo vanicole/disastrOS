@@ -7,6 +7,7 @@
 #include "disastrOS_syscalls.h"
 #include "disastrOS_msg_queue.h"
 #include "disastrOS_descriptor.h"
+#include "disastrOS_globals.h"
 
 void internal_msgQueueWrite() {
 
@@ -27,7 +28,27 @@ void internal_msgQueueWrite() {
 
     if (mq->size == MAX_NUM_MESSAGES_PER_MSG_QUEUE) { // coda piena
         printf("[ERROR] Unable to write msg: the msg queue (fd =% d) is full!\n", mqdes);
-        running->syscall_retvalue = 0;
+        PCB* old_running = running;
+        running->status = Ready;
+        printf("[WAIT] process (pid = %d) -> from Running to Ready \n", running->pid);
+
+        // alloco il ptr alla coda per inserirlo nella lista di descrittori in waiting
+        DescriptorPtr *descPtr = DescriptorPtr_alloc(desc);
+        assert(descPtr);
+
+        List_insert((ListHead*)&mq->waiting_descriptors, (ListItem*)mq->waiting_descriptors.last, (ListItem*)descPtr);
+        printf("[WAIT] Inserimento processo running (pid = %d) in waiting descriptors\n", descPtr->descriptor->pcb->pid);
+
+        List_insert((ListHead*)&ready_list, (ListItem*)ready_list.last, (ListItem*)running);
+        printf("[WAIT] Inserimento processo running (pid = %d) in ready list\n", running->pid);
+
+        PCB* pcb_next = (PCB*)List_detach(&ready_list, ready_list.first);
+        printf("[WAIT] Rimozione processo (pid = %d) da ready list \n", pcb_next->pid);
+        running = pcb_next;
+        printf("[WAIT] Imposto processo (pid = %d) in running\n", running->pid);
+        //disastrOS_printStatus();
+        old_running->syscall_retvalue = 0;
+        printf("[WRITE] Terminated after waiting \n\n");
         return;
     }
 
@@ -51,6 +72,35 @@ void internal_msgQueueWrite() {
     List_insert(&(msgSubqueue->messages), msgSubqueue->messages.last, (ListItem *) msg);
     ++(mq->size);
 
-    printf(">> Message '%s' written!\n", msg->msg_ptr);
+    printf(">> Message '%s' written!\n\n", msg->msg_ptr);
+
+    if (mq->waiting_descriptors.size > 0) {
+        printf("[WAKE] Ci sono processi in waiting descriptors da risvegliare\n");
+
+        DescriptorPtr *descPtr_next = (DescriptorPtr*)List_detach(&mq->waiting_descriptors, mq->waiting_descriptors.first);
+        printf("[WAKE] Descrittore tolto da waiting descriptors: pid = %d \n", descPtr_next->descriptor->pcb->pid);
+
+        PCB* next_pcb = descPtr_next->descriptor->pcb;
+        next_pcb->status = Ready;
+
+        List_detach((ListHead*)&waiting_list, (ListItem*)next_pcb);
+        printf("[WAKE] Processo tolto dalla waiting list: pid = %d \n", next_pcb->pid);
+
+        //disastrOS_printStatus();
+
+        List_insert((ListHead*)&ready_list, (ListItem*)ready_list.last, (ListItem*)next_pcb);
+        printf("[WAKE] Processo messo in ready: pid = %d \n", next_pcb->pid);
+
+        DescriptorPtr_free(descPtr_next);
+
+        //disastrOS_printStatus();
+
+        //PCB* pcb_next = (PCB*)List_detach(&ready_list, ready_list.first);
+        //running = pcb_next;
+
+    } else {
+        printf("\n Non ci sono processi bloccati in waiting descriptors\n");
+    }
+
     running->syscall_retvalue = msg_len;
 }
