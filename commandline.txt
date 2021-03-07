@@ -258,7 +258,6 @@ Zombie: {
 [PRODUCER pid = 3] preempt(): CPU to CONSUMER 
 
 [CONSUMER] Running!
-Consumer riprende da PRIMA del ciclo for 
 
 ****************** DisastrOS *****************************************
 Running: [pid: 2, child: ()]
@@ -310,7 +309,6 @@ Zombie: {
 
 **********************************************************************
 
-Dopo scrittura, riparte da DENTRO il ciclo for 
 [CONSUMER pid = 2] Reading first msg in the message queue
 [ERROR] Unable to read msg: the msg queue (fd = 0) is empty!
 [WAIT] process (pid = 2) -> from Running to Waiting 
@@ -372,7 +370,6 @@ Zombie: {
 
 [CONSUMER pid = 2] preempt(): CPU to PRODUCER
 [PRODUCER] in running
-Producer riprende da PRIMA del ciclo for 
 
 ****************** DisastrOS *****************************************
 Running: [pid: 3, child: ()]
@@ -424,7 +421,6 @@ Zombie: {
 
 **********************************************************************
 
-Producer riprende da DENTRO il ciclo for 
 [PRODUCER pid = 3] Writing msg: 'Msg #1', priority: 3, size: 6
 
 >> Allocating a new msg message in the subqueue with priority 3
@@ -671,7 +667,6 @@ Zombie: {
 [PRODUCER pid = 3] preempt(): CPU to CONSUMER
 
 [CONSUMER] in running
-Dopo scrittura, riparte da DENTRO il ciclo for 
 [CONSUMER pid = 2] Reading first msg in the message queue
 >> Message 'Msg #2' read!
 >> Message 'Msg #2' deallocated correctly!
@@ -734,7 +729,6 @@ Zombie: {
 
 [CONSUMER pid = 2] preempt(): CPU to PRODUCER
 [PRODUCER] in running
-Producer riprende da DENTRO il ciclo for 
 [PRODUCER pid = 3] Writing msg: 'Msg #1', priority: 5, size: 6
 
 >> Allocating a new msg message in the subqueue with priority 5
@@ -979,7 +973,6 @@ Zombie: {
 [PRODUCER pid = 3] preempt(): CPU to CONSUMER
 
 [CONSUMER] in running
-Dopo scrittura, riparte da DENTRO il ciclo for 
 [CONSUMER pid = 2] Reading first msg in the message queue
 >> Message 'Msg #2' read!
 >> Message 'Msg #2' deallocated correctly!
@@ -1042,7 +1035,6 @@ Zombie: {
 
 [CONSUMER pid = 2] preempt(): CPU to PRODUCER
 [PRODUCER] in running
-Producer riprende da DENTRO il ciclo for 
 [PRODUCER pid = 3] Writing msg: 'Msg #1', priority: 6, size: 6
 
 >> Allocating a new msg message in the subqueue with priority 6
@@ -1288,6 +1280,10 @@ Zombie: {
 
 [CONSUMER] in running
 [CONSUMER pid = 2] Msg queue (fd = 0) closed
+[WAKE BEFORE CLOSE] Ci sono processi in waiting descriptors da risvegliare prima di terminare
+[WAKE BEFORE CLOSE] Descrittore tolto da waiting descriptors: pid = 3 
+[WAKE BEFORE CLOSE] Processo tolto dalla waiting list: pid = 3 
+[WAKE BEFORE CLOSE] Processo messo in ready: pid = 3 
 
 ****************** DisastrOS *****************************************
 Running: [pid: 2, child: ()]
@@ -1321,17 +1317,17 @@ Message Queues: {
 
 		 {priority: 9, messages: {}, count: 0}
 
-	Waiting descriptors: [(pid: 3, fd: 0)]
+	Waiting descriptors: []
 	]
 }
 
 Ready: {
+	[pid: 3, child: ()]
 }
 
 Waiting: {
 	[pid: 0, child: (1)],
-	[pid: 1, child: (2, 3)],
-	[pid: 3, child: ()]
+	[pid: 1, child: (2, 3)]
 }
 
 Zombie: {
@@ -1362,4 +1358,121 @@ Message Queues: {
 
 		 {priority: 3, messages: {}, count: 0},
 
-		 {priority: 4, messages: 
+		 {priority: 4, messages: {}, count: 0},
+
+		 {priority: 5, messages: {}, count: 0},
+
+		 {priority: 6, messages: {}, count: 0},
+
+		 {priority: 7, messages: {}, count: 0},
+
+		 {priority: 8, messages: {}, count: 0},
+
+		 {priority: 9, messages: {}, count: 0}
+
+	Waiting descriptors: []
+	]
+}
+
+Ready: {
+	[pid: 3, child: ()]
+}
+
+Waiting: {
+	[pid: 0, child: (1)]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[childFunc pid = 1] Goes to waiting list: waiting for termination of next child process
+
+[PRODUCER (pid = 3)] Deallocating subqueues and msg queue. Closing msg queue (fd = 0)
+All descriptors associated with the message queue have been closed: the queue will be unlinked!
+
+>> Subqueue with priority 0 deallocated correctly!
+>> Subqueue with priority 1 deallocated correctly!
+>> Message 'Msg #2' deallocated correctly!
+>> Subqueue with priority 2 deallocated correctly!
+>> Subqueue with priority 3 deallocated correctly!
+>> Subqueue with priority 4 deallocated correctly!
+>> Subqueue with priority 5 deallocated correctly!
+>> Subqueue with priority 6 deallocated correctly!
+>> Subqueue with priority 7 deallocated correctly!
+>> Subqueue with priority 8 deallocated correctly!
+>> Subqueue with priority 9 deallocated correctly!
+Message queue (fd = 0) closed and unlinked
+
+****************** DisastrOS *****************************************
+Running: [pid: 3, child: ()]
+
+Resources: {
+}
+
+Message Queues: {
+}
+
+Ready: {
+}
+
+Waiting: {
+	[pid: 0, child: (1)],
+	[pid: 1, child: (3)]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[PRODUCER pid = 3] exit(0)
+[childFunc pid = 1] wait(0, NULL) -> reads the retvalue of terminated child
+
+****************** DisastrOS *****************************************
+Running: [pid: 1, child: ()]
+
+Resources: {
+}
+
+Message Queues: {
+}
+
+Ready: {
+}
+
+Waiting: {
+	[pid: 0, child: (1)]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[childFunc pid = 1] exit(0)
+[init] wait(0, NULL) --> reads the retvalue of terminated childFunc
+
+****************** DisastrOS *****************************************
+Running: [pid: 0, child: ()]
+
+Resources: {
+}
+
+Message Queues: {
+}
+
+Ready: {
+}
+
+Waiting: {
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[init] Shutdown!
+

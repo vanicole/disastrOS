@@ -10,7 +10,6 @@
 void producer() {
     char buf[256];
 
-    // 2
     printf("[PRODUCER pid = %d] Start!\n", disastrOS_getpid());
     int mqdes = disastrOS_msgQueueOpen("/mq");
     printf("[PRODUCER pid = %d] Msg queue with fd = %d opened. Descriptor mqdes allocated. \n", disastrOS_getpid(), mqdes);
@@ -19,15 +18,9 @@ void producer() {
     printf("[CONSUMER] Running!\n");
     disastrOS_preempt();
 
-
-
-    // 4
-    printf("Producer riprende da PRIMA del ciclo for \n");
     disastrOS_printStatus();
     unsigned int priority;
     for (unsigned int i = 0; i < ITERATIONS; ++i) {
-        // 6 - 8
-        printf("Producer riprende da DENTRO il ciclo for \n");
 
         memset(buf, 0, 256);
         priority = rand() % 10; // MODIFICARE per impostare priorità precisa
@@ -40,8 +33,6 @@ void producer() {
         printf("[CONSUMER] in running\n");
         disastrOS_preempt();
 
-
-        // nuova parte
         memset(buf, 0, 256);
         priority = rand() % 10; // MODIFICARE per impostare priorità precisa
         sprintf(buf, "Msg #%d", 2);
@@ -60,13 +51,8 @@ void producer() {
         printf("[CONSUMER] in running\n");
         disastrOS_preempt();
 
-
-
     }
 
-
-
-    // 10
     printf("[PRODUCER (pid = %d)] Deallocating subqueues and msg queue. Closing msg queue (fd = %d)\n", disastrOS_getpid(), mqdes);
     disastrOS_msgQueueClose(mqdes);
     disastrOS_printStatus();
@@ -79,7 +65,6 @@ void producer() {
 void consumer() {
     char buf[256];
 
-    // 1
     printf("[CONSUMER pid = %d] Start!\n", disastrOS_getpid());
     int mqdes = disastrOS_msgQueueOpen("/mq");
     printf("[CONSUMER pid = %d] Msg queue with fd = %d opened. Descriptor mqdes allocated. \n", disastrOS_getpid(), mqdes);
@@ -89,15 +74,9 @@ void consumer() {
     disastrOS_preempt();
 
 
-
-
-
-    // 3
-    printf("Consumer riprende da PRIMA del ciclo for \n");
     disastrOS_printStatus();
     for (unsigned i = 0; i < ITERATIONS; ++i) {
-        // 5 - 7
-        printf("Dopo scrittura, riparte da DENTRO il ciclo for \n");
+
         memset(buf, 0, 256);
         printf("[CONSUMER pid = %d] Reading first msg in the message queue\n", disastrOS_getpid());
         disastrOS_msgQueueRead(mqdes, buf, 256);
@@ -106,8 +85,6 @@ void consumer() {
         printf("[PRODUCER] in running\n");
         disastrOS_preempt();
 
-
-        // nuovo
         memset(buf, 0, 256);
         printf("[CONSUMER pid = %d] Reading second msg in the message queue\n", disastrOS_getpid());
         disastrOS_msgQueueRead(mqdes, buf, 256);
@@ -117,10 +94,6 @@ void consumer() {
         disastrOS_preempt();
     }
 
-
-
-
-    // 9
     printf("[CONSUMER pid = %d] Msg queue (fd = %d) closed\n", disastrOS_getpid(), mqdes);
     disastrOS_msgQueueClose(mqdes);
     disastrOS_printStatus();
