@@ -9,8 +9,9 @@
 
 
 void internal_msgQueueCreate() {
-   // get from the PCB the name of the resource to create
+
     const char *name = (const char*)running->syscall_args[0];
+
     int rid = last_rid++;
 
     if (!name) {
@@ -19,7 +20,6 @@ void internal_msgQueueCreate() {
         return;
     }
 
-    // Allocazione coda di messaggi da parte del processo running
     MsgQueue *mqdes = MsgQueue_alloc(name, rid, running);
     if (!mqdes) {
         printf("[ERROR] Unable to allocate a new msg queue %s\n", name);
@@ -35,7 +35,6 @@ void internal_msgQueueCreate() {
     }
 
     printf(">> Inserted message queue (rid = %d) in resources list\n", rid);
-    // inserisce la risorsa da aprire nella resources list
     List_insert(&resources_list, resources_list.last, (ListItem *)mqdes);
     printf(">> Inserted ptr to the msg queue in msg queues list\n");
     List_insert(&msg_queues_list, msg_queues_list.last, (ListItem *)mqPtr);

@@ -98,7 +98,7 @@ Zombie: {
 Running: [pid: 1, child: (2, 3)]
 
 Resources: {
-	id: 0, type: 3, pids:[]
+	id: 0, type:1, pids:[]
 }
 
 Message Queues: {
@@ -125,6 +125,8 @@ Message Queues: {
 		 {priority: 8, messages: {}, count: 0},
 
 		 {priority: 9, messages: {}, count: 0}
+
+	Waiting descriptors: []
 	]
 }
 
@@ -151,7 +153,7 @@ Zombie: {
 Running: [pid: 2, child: ()]
 
 Resources: {
-	id: 0, type: 3, pids:[(pid: 2, fd: 0)]
+	id: 0, type:1, pids:[(pid: 2, fd: 0)]
 }
 
 Message Queues: {
@@ -178,6 +180,8 @@ Message Queues: {
 		 {priority: 8, messages: {}, count: 0},
 
 		 {priority: 9, messages: {}, count: 0}
+
+	Waiting descriptors: []
 	]
 }
 
@@ -205,7 +209,7 @@ Zombie: {
 Running: [pid: 3, child: ()]
 
 Resources: {
-	id: 0, type: 3, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
 }
 
 Message Queues: {
@@ -232,6 +236,8 @@ Message Queues: {
 		 {priority: 8, messages: {}, count: 0},
 
 		 {priority: 9, messages: {}, count: 0}
+
+	Waiting descriptors: []
 	]
 }
 
@@ -252,12 +258,13 @@ Zombie: {
 [PRODUCER pid = 3] preempt(): CPU to CONSUMER 
 
 [CONSUMER] Running!
+Consumer riprende da PRIMA del ciclo for 
 
 ****************** DisastrOS *****************************************
 Running: [pid: 2, child: ()]
 
 Resources: {
-	id: 0, type: 3, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
 }
 
 Message Queues: {
@@ -284,6 +291,8 @@ Message Queues: {
 		 {priority: 8, messages: {}, count: 0},
 
 		 {priority: 9, messages: {}, count: 0}
+
+	Waiting descriptors: []
 	]
 }
 
@@ -301,14 +310,20 @@ Zombie: {
 
 **********************************************************************
 
+Dopo scrittura, riparte da DENTRO il ciclo for 
 [CONSUMER pid = 2] Reading first msg in the message queue
 [ERROR] Unable to read msg: the msg queue (fd = 0) is empty!
+[WAIT] process (pid = 2) -> from Running to Waiting 
+[WAIT] Inserimento processo running (pid = 2) in waiting descriptors
+[WAIT] Inserimento processo running (pid = 2) in waiting list
+[READ] Terminated after blocking the running process 
+
 
 ****************** DisastrOS *****************************************
 Running: [pid: 2, child: ()]
 
 Resources: {
-	id: 0, type: 3, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
 }
 
 Message Queues: {
@@ -335,6 +350,8 @@ Message Queues: {
 		 {priority: 8, messages: {}, count: 0},
 
 		 {priority: 9, messages: {}, count: 0}
+
+	Waiting descriptors: [(pid: 2, fd: 0)]
 	]
 }
 
@@ -344,109 +361,8 @@ Ready: {
 
 Waiting: {
 	[pid: 0, child: (1)],
-	[pid: 1, child: (2, 3)]
-}
-
-Zombie: {
-}
-
-**********************************************************************
-
-[CONSUMER pid = 2] Readind second msg in the message queue
-[ERROR] Unable to read msg: the msg queue (fd = 0) is empty!
-
-****************** DisastrOS *****************************************
-Running: [pid: 2, child: ()]
-
-Resources: {
-	id: 0, type: 3, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
-}
-
-Message Queues: {
-	[name: '/mq', 
-	 resource id: 0, 
-	 descriptors: [(pid: 2, fd: 0), (pid: 3, fd: 0)],  
-	 subqueues: 
-		 {priority: 0, messages: {}, count: 0},
-
-		 {priority: 1, messages: {}, count: 0},
-
-		 {priority: 2, messages: {}, count: 0},
-
-		 {priority: 3, messages: {}, count: 0},
-
-		 {priority: 4, messages: {}, count: 0},
-
-		 {priority: 5, messages: {}, count: 0},
-
-		 {priority: 6, messages: {}, count: 0},
-
-		 {priority: 7, messages: {}, count: 0},
-
-		 {priority: 8, messages: {}, count: 0},
-
-		 {priority: 9, messages: {}, count: 0}
-	]
-}
-
-Ready: {
-	[pid: 3, child: ()]
-}
-
-Waiting: {
-	[pid: 0, child: (1)],
-	[pid: 1, child: (2, 3)]
-}
-
-Zombie: {
-}
-
-**********************************************************************
-
-[CONSUMER pid = 2] Reading third msg in the message queue
-[ERROR] Unable to read msg: the msg queue (fd = 0) is empty!
-
-****************** DisastrOS *****************************************
-Running: [pid: 2, child: ()]
-
-Resources: {
-	id: 0, type: 3, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
-}
-
-Message Queues: {
-	[name: '/mq', 
-	 resource id: 0, 
-	 descriptors: [(pid: 2, fd: 0), (pid: 3, fd: 0)],  
-	 subqueues: 
-		 {priority: 0, messages: {}, count: 0},
-
-		 {priority: 1, messages: {}, count: 0},
-
-		 {priority: 2, messages: {}, count: 0},
-
-		 {priority: 3, messages: {}, count: 0},
-
-		 {priority: 4, messages: {}, count: 0},
-
-		 {priority: 5, messages: {}, count: 0},
-
-		 {priority: 6, messages: {}, count: 0},
-
-		 {priority: 7, messages: {}, count: 0},
-
-		 {priority: 8, messages: {}, count: 0},
-
-		 {priority: 9, messages: {}, count: 0}
-	]
-}
-
-Ready: {
-	[pid: 3, child: ()]
-}
-
-Waiting: {
-	[pid: 0, child: (1)],
-	[pid: 1, child: (2, 3)]
+	[pid: 1, child: (2, 3)],
+	[pid: 2, child: ()]
 }
 
 Zombie: {
@@ -456,12 +372,13 @@ Zombie: {
 
 [CONSUMER pid = 2] preempt(): CPU to PRODUCER
 [PRODUCER] in running
+Producer riprende da PRIMA del ciclo for 
 
 ****************** DisastrOS *****************************************
 Running: [pid: 3, child: ()]
 
 Resources: {
-	id: 0, type: 3, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
 }
 
 Message Queues: {
@@ -488,16 +405,18 @@ Message Queues: {
 		 {priority: 8, messages: {}, count: 0},
 
 		 {priority: 9, messages: {}, count: 0}
+
+	Waiting descriptors: [(pid: 2, fd: 0)]
 	]
 }
 
 Ready: {
-	[pid: 2, child: ()]
 }
 
 Waiting: {
 	[pid: 0, child: (1)],
-	[pid: 1, child: (2, 3)]
+	[pid: 1, child: (2, 3)],
+	[pid: 2, child: ()]
 }
 
 Zombie: {
@@ -505,17 +424,23 @@ Zombie: {
 
 **********************************************************************
 
+Producer riprende da DENTRO il ciclo for 
 [PRODUCER pid = 3] Writing msg: 'Msg #1', priority: 3, size: 6
 
 >> Allocating a new msg message in the subqueue with priority 3
 >> Message 'Msg #1' allocated correctly!
 >> Message 'Msg #1' written!
 
+[WAKE] Ci sono processi in waiting descriptors da risvegliare
+[WAKE] Descrittore tolto da waiting descriptors: pid = 2 
+[WAKE] Processo tolto dalla waiting list: pid = 2 
+[WAKE] Processo messo in ready: pid = 2 
+
 ****************** DisastrOS *****************************************
 Running: [pid: 3, child: ()]
 
 Resources: {
-	id: 0, type: 3, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
 }
 
 Message Queues: {
@@ -542,6 +467,8 @@ Message Queues: {
 		 {priority: 8, messages: {}, count: 0},
 
 		 {priority: 9, messages: {}, count: 0}
+
+	Waiting descriptors: []
 	]
 }
 
@@ -559,17 +486,83 @@ Zombie: {
 
 **********************************************************************
 
+[PRODUCER pid = 3] preempt(): CPU to CONSUMER
+
+[CONSUMER] in running
+[CONSUMER pid = 2] Reading second msg in the message queue
+>> Message 'Msg #1' read!
+>> Message 'Msg #1' deallocated correctly!
+[READ] Terminated correctly!
+
+
+ Non ci sono processi bloccati in waiting descriptors
+
+****************** DisastrOS *****************************************
+Running: [pid: 2, child: ()]
+
+Resources: {
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+}
+
+Message Queues: {
+	[name: '/mq', 
+	 resource id: 0, 
+	 descriptors: [(pid: 2, fd: 0), (pid: 3, fd: 0)],  
+	 subqueues: 
+		 {priority: 0, messages: {}, count: 0},
+
+		 {priority: 1, messages: {}, count: 0},
+
+		 {priority: 2, messages: {}, count: 0},
+
+		 {priority: 3, messages: {}, count: 0},
+
+		 {priority: 4, messages: {}, count: 0},
+
+		 {priority: 5, messages: {}, count: 0},
+
+		 {priority: 6, messages: {}, count: 0},
+
+		 {priority: 7, messages: {}, count: 0},
+
+		 {priority: 8, messages: {}, count: 0},
+
+		 {priority: 9, messages: {}, count: 0}
+
+	Waiting descriptors: []
+	]
+}
+
+Ready: {
+	[pid: 3, child: ()]
+}
+
+Waiting: {
+	[pid: 0, child: (1)],
+	[pid: 1, child: (2, 3)]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[CONSUMER pid = 2] preempt(): CPU to PRODUCER
+[PRODUCER] in running
 [PRODUCER pid = 3] Writing msg: 'Msg #2', priority: 6, size: 6
 
 >> Allocating a new msg message in the subqueue with priority 6
 >> Message 'Msg #2' allocated correctly!
 >> Message 'Msg #2' written!
 
+
+ Non ci sono processi bloccati in waiting descriptors
+
 ****************** DisastrOS *****************************************
 Running: [pid: 3, child: ()]
 
 Resources: {
-	id: 0, type: 3, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
 }
 
 Message Queues: {
@@ -583,7 +576,7 @@ Message Queues: {
 
 		 {priority: 2, messages: {}, count: 0},
 
-		 {priority: 3, messages: {(msg: 'Msg #1', size: 6) }, count: 1},
+		 {priority: 3, messages: {}, count: 0},
 
 		 {priority: 4, messages: {}, count: 0},
 
@@ -596,6 +589,8 @@ Message Queues: {
 		 {priority: 8, messages: {}, count: 0},
 
 		 {priority: 9, messages: {}, count: 0}
+
+	Waiting descriptors: []
 	]
 }
 
@@ -613,17 +608,20 @@ Zombie: {
 
 **********************************************************************
 
-[PRODUCER pid = 3] Writing msg: 'Msg #3', priority: 7, size: 6 
+[PRODUCER pid = 3] Writing msg: 'Msg #3', priority: 7, size: 6
 
->> Allocating a new msg message in the subqueue with priority 7
->> Message 'Msg #3' allocated correctly!
->> Message 'Msg #3' written!
+[ERROR] Unable to write msg: the msg queue (fd = 0) is full!
+[WAIT] process (pid = 3) -> from Running to Waiting 
+[WAIT] Inserimento processo running (pid = 3) in waiting descriptors
+[WAIT] Inserimento processo running (pid = 3) in waiting list
+[WRITE] Terminated after blocking the running process 
+
 
 ****************** DisastrOS *****************************************
 Running: [pid: 3, child: ()]
 
 Resources: {
-	id: 0, type: 3, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
 }
 
 Message Queues: {
@@ -637,7 +635,7 @@ Message Queues: {
 
 		 {priority: 2, messages: {}, count: 0},
 
-		 {priority: 3, messages: {(msg: 'Msg #1', size: 6) }, count: 1},
+		 {priority: 3, messages: {}, count: 0},
 
 		 {priority: 4, messages: {}, count: 0},
 
@@ -645,11 +643,13 @@ Message Queues: {
 
 		 {priority: 6, messages: {(msg: 'Msg #2', size: 6) }, count: 1},
 
-		 {priority: 7, messages: {(msg: 'Msg #3', size: 6) }, count: 1},
+		 {priority: 7, messages: {}, count: 0},
 
 		 {priority: 8, messages: {}, count: 0},
 
 		 {priority: 9, messages: {}, count: 0}
+
+	Waiting descriptors: [(pid: 3, fd: 0)]
 	]
 }
 
@@ -659,7 +659,8 @@ Ready: {
 
 Waiting: {
 	[pid: 0, child: (1)],
-	[pid: 1, child: (2, 3)]
+	[pid: 1, child: (2, 3)],
+	[pid: 3, child: ()]
 }
 
 Zombie: {
@@ -670,119 +671,22 @@ Zombie: {
 [PRODUCER pid = 3] preempt(): CPU to CONSUMER
 
 [CONSUMER] in running
+Dopo scrittura, riparte da DENTRO il ciclo for 
 [CONSUMER pid = 2] Reading first msg in the message queue
->> Message 'Msg #1' read!
->> Message 'Msg #1' deallocated correctly!
-
-****************** DisastrOS *****************************************
-Running: [pid: 2, child: ()]
-
-Resources: {
-	id: 0, type: 3, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
-}
-
-Message Queues: {
-	[name: '/mq', 
-	 resource id: 0, 
-	 descriptors: [(pid: 2, fd: 0), (pid: 3, fd: 0)],  
-	 subqueues: 
-		 {priority: 0, messages: {}, count: 0},
-
-		 {priority: 1, messages: {}, count: 0},
-
-		 {priority: 2, messages: {}, count: 0},
-
-		 {priority: 3, messages: {}, count: 0},
-
-		 {priority: 4, messages: {}, count: 0},
-
-		 {priority: 5, messages: {}, count: 0},
-
-		 {priority: 6, messages: {(msg: 'Msg #2', size: 6) }, count: 1},
-
-		 {priority: 7, messages: {(msg: 'Msg #3', size: 6) }, count: 1},
-
-		 {priority: 8, messages: {}, count: 0},
-
-		 {priority: 9, messages: {}, count: 0}
-	]
-}
-
-Ready: {
-	[pid: 3, child: ()]
-}
-
-Waiting: {
-	[pid: 0, child: (1)],
-	[pid: 1, child: (2, 3)]
-}
-
-Zombie: {
-}
-
-**********************************************************************
-
-[CONSUMER pid = 2] Readind second msg in the message queue
 >> Message 'Msg #2' read!
 >> Message 'Msg #2' deallocated correctly!
+[READ] Terminated correctly!
+
+[WAKE] Ci sono processi in waiting descriptors da risvegliare
+[WAKE] Descrittore tolto da waiting descriptors: pid = 3 
+[WAKE] Processo tolto dalla waiting list: pid = 3 
+[WAKE] Processo messo in ready: pid = 3 
 
 ****************** DisastrOS *****************************************
 Running: [pid: 2, child: ()]
 
 Resources: {
-	id: 0, type: 3, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
-}
-
-Message Queues: {
-	[name: '/mq', 
-	 resource id: 0, 
-	 descriptors: [(pid: 2, fd: 0), (pid: 3, fd: 0)],  
-	 subqueues: 
-		 {priority: 0, messages: {}, count: 0},
-
-		 {priority: 1, messages: {}, count: 0},
-
-		 {priority: 2, messages: {}, count: 0},
-
-		 {priority: 3, messages: {}, count: 0},
-
-		 {priority: 4, messages: {}, count: 0},
-
-		 {priority: 5, messages: {}, count: 0},
-
-		 {priority: 6, messages: {}, count: 0},
-
-		 {priority: 7, messages: {(msg: 'Msg #3', size: 6) }, count: 1},
-
-		 {priority: 8, messages: {}, count: 0},
-
-		 {priority: 9, messages: {}, count: 0}
-	]
-}
-
-Ready: {
-	[pid: 3, child: ()]
-}
-
-Waiting: {
-	[pid: 0, child: (1)],
-	[pid: 1, child: (2, 3)]
-}
-
-Zombie: {
-}
-
-**********************************************************************
-
-[CONSUMER pid = 2] Reading third msg in the message queue
->> Message 'Msg #3' read!
->> Message 'Msg #3' deallocated correctly!
-
-****************** DisastrOS *****************************************
-Running: [pid: 2, child: ()]
-
-Resources: {
-	id: 0, type: 3, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
 }
 
 Message Queues: {
@@ -809,6 +713,8 @@ Message Queues: {
 		 {priority: 8, messages: {}, count: 0},
 
 		 {priority: 9, messages: {}, count: 0}
+
+	Waiting descriptors: []
 	]
 }
 
@@ -828,17 +734,21 @@ Zombie: {
 
 [CONSUMER pid = 2] preempt(): CPU to PRODUCER
 [PRODUCER] in running
+Producer riprende da DENTRO il ciclo for 
 [PRODUCER pid = 3] Writing msg: 'Msg #1', priority: 5, size: 6
 
 >> Allocating a new msg message in the subqueue with priority 5
 >> Message 'Msg #1' allocated correctly!
 >> Message 'Msg #1' written!
 
+
+ Non ci sono processi bloccati in waiting descriptors
+
 ****************** DisastrOS *****************************************
 Running: [pid: 3, child: ()]
 
 Resources: {
-	id: 0, type: 3, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
 }
 
 Message Queues: {
@@ -865,114 +775,8 @@ Message Queues: {
 		 {priority: 8, messages: {}, count: 0},
 
 		 {priority: 9, messages: {}, count: 0}
-	]
-}
 
-Ready: {
-	[pid: 2, child: ()]
-}
-
-Waiting: {
-	[pid: 0, child: (1)],
-	[pid: 1, child: (2, 3)]
-}
-
-Zombie: {
-}
-
-**********************************************************************
-
-[PRODUCER pid = 3] Writing msg: 'Msg #2', priority: 3, size: 6
-
->> Allocating a new msg message in the subqueue with priority 3
->> Message 'Msg #2' allocated correctly!
->> Message 'Msg #2' written!
-
-****************** DisastrOS *****************************************
-Running: [pid: 3, child: ()]
-
-Resources: {
-	id: 0, type: 3, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
-}
-
-Message Queues: {
-	[name: '/mq', 
-	 resource id: 0, 
-	 descriptors: [(pid: 2, fd: 0), (pid: 3, fd: 0)],  
-	 subqueues: 
-		 {priority: 0, messages: {}, count: 0},
-
-		 {priority: 1, messages: {}, count: 0},
-
-		 {priority: 2, messages: {}, count: 0},
-
-		 {priority: 3, messages: {(msg: 'Msg #2', size: 6) }, count: 1},
-
-		 {priority: 4, messages: {}, count: 0},
-
-		 {priority: 5, messages: {(msg: 'Msg #1', size: 6) }, count: 1},
-
-		 {priority: 6, messages: {}, count: 0},
-
-		 {priority: 7, messages: {}, count: 0},
-
-		 {priority: 8, messages: {}, count: 0},
-
-		 {priority: 9, messages: {}, count: 0}
-	]
-}
-
-Ready: {
-	[pid: 2, child: ()]
-}
-
-Waiting: {
-	[pid: 0, child: (1)],
-	[pid: 1, child: (2, 3)]
-}
-
-Zombie: {
-}
-
-**********************************************************************
-
-[PRODUCER pid = 3] Writing msg: 'Msg #3', priority: 5, size: 6 
-
->> Allocating a new msg message in the subqueue with priority 5
->> Message 'Msg #3' allocated correctly!
->> Message 'Msg #3' written!
-
-****************** DisastrOS *****************************************
-Running: [pid: 3, child: ()]
-
-Resources: {
-	id: 0, type: 3, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
-}
-
-Message Queues: {
-	[name: '/mq', 
-	 resource id: 0, 
-	 descriptors: [(pid: 2, fd: 0), (pid: 3, fd: 0)],  
-	 subqueues: 
-		 {priority: 0, messages: {}, count: 0},
-
-		 {priority: 1, messages: {}, count: 0},
-
-		 {priority: 2, messages: {}, count: 0},
-
-		 {priority: 3, messages: {(msg: 'Msg #2', size: 6) }, count: 1},
-
-		 {priority: 4, messages: {}, count: 0},
-
-		 {priority: 5, messages: {(msg: 'Msg #1', size: 6) ,(msg: 'Msg #3', size: 6) }, count: 2},
-
-		 {priority: 6, messages: {}, count: 0},
-
-		 {priority: 7, messages: {}, count: 0},
-
-		 {priority: 8, messages: {}, count: 0},
-
-		 {priority: 9, messages: {}, count: 0}
+	Waiting descriptors: []
 	]
 }
 
@@ -993,119 +797,19 @@ Zombie: {
 [PRODUCER pid = 3] preempt(): CPU to CONSUMER
 
 [CONSUMER] in running
-[CONSUMER pid = 2] Reading first msg in the message queue
->> Message 'Msg #2' read!
->> Message 'Msg #2' deallocated correctly!
-
-****************** DisastrOS *****************************************
-Running: [pid: 2, child: ()]
-
-Resources: {
-	id: 0, type: 3, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
-}
-
-Message Queues: {
-	[name: '/mq', 
-	 resource id: 0, 
-	 descriptors: [(pid: 2, fd: 0), (pid: 3, fd: 0)],  
-	 subqueues: 
-		 {priority: 0, messages: {}, count: 0},
-
-		 {priority: 1, messages: {}, count: 0},
-
-		 {priority: 2, messages: {}, count: 0},
-
-		 {priority: 3, messages: {}, count: 0},
-
-		 {priority: 4, messages: {}, count: 0},
-
-		 {priority: 5, messages: {(msg: 'Msg #1', size: 6) ,(msg: 'Msg #3', size: 6) }, count: 2},
-
-		 {priority: 6, messages: {}, count: 0},
-
-		 {priority: 7, messages: {}, count: 0},
-
-		 {priority: 8, messages: {}, count: 0},
-
-		 {priority: 9, messages: {}, count: 0}
-	]
-}
-
-Ready: {
-	[pid: 3, child: ()]
-}
-
-Waiting: {
-	[pid: 0, child: (1)],
-	[pid: 1, child: (2, 3)]
-}
-
-Zombie: {
-}
-
-**********************************************************************
-
-[CONSUMER pid = 2] Readind second msg in the message queue
+[CONSUMER pid = 2] Reading second msg in the message queue
 >> Message 'Msg #1' read!
 >> Message 'Msg #1' deallocated correctly!
+[READ] Terminated correctly!
+
+
+ Non ci sono processi bloccati in waiting descriptors
 
 ****************** DisastrOS *****************************************
 Running: [pid: 2, child: ()]
 
 Resources: {
-	id: 0, type: 3, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
-}
-
-Message Queues: {
-	[name: '/mq', 
-	 resource id: 0, 
-	 descriptors: [(pid: 2, fd: 0), (pid: 3, fd: 0)],  
-	 subqueues: 
-		 {priority: 0, messages: {}, count: 0},
-
-		 {priority: 1, messages: {}, count: 0},
-
-		 {priority: 2, messages: {}, count: 0},
-
-		 {priority: 3, messages: {}, count: 0},
-
-		 {priority: 4, messages: {}, count: 0},
-
-		 {priority: 5, messages: {(msg: 'Msg #3', size: 6) }, count: 1},
-
-		 {priority: 6, messages: {}, count: 0},
-
-		 {priority: 7, messages: {}, count: 0},
-
-		 {priority: 8, messages: {}, count: 0},
-
-		 {priority: 9, messages: {}, count: 0}
-	]
-}
-
-Ready: {
-	[pid: 3, child: ()]
-}
-
-Waiting: {
-	[pid: 0, child: (1)],
-	[pid: 1, child: (2, 3)]
-}
-
-Zombie: {
-}
-
-**********************************************************************
-
-[CONSUMER pid = 2] Reading third msg in the message queue
->> Message 'Msg #3' read!
->> Message 'Msg #3' deallocated correctly!
-
-****************** DisastrOS *****************************************
-Running: [pid: 2, child: ()]
-
-Resources: {
-	id: 0, type: 3, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
 }
 
 Message Queues: {
@@ -1132,6 +836,8 @@ Message Queues: {
 		 {priority: 8, messages: {}, count: 0},
 
 		 {priority: 9, messages: {}, count: 0}
+
+	Waiting descriptors: []
 	]
 }
 
@@ -1151,17 +857,206 @@ Zombie: {
 
 [CONSUMER pid = 2] preempt(): CPU to PRODUCER
 [PRODUCER] in running
+[PRODUCER pid = 3] Writing msg: 'Msg #2', priority: 3, size: 6
+
+>> Allocating a new msg message in the subqueue with priority 3
+>> Message 'Msg #2' allocated correctly!
+>> Message 'Msg #2' written!
+
+
+ Non ci sono processi bloccati in waiting descriptors
+
+****************** DisastrOS *****************************************
+Running: [pid: 3, child: ()]
+
+Resources: {
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+}
+
+Message Queues: {
+	[name: '/mq', 
+	 resource id: 0, 
+	 descriptors: [(pid: 2, fd: 0), (pid: 3, fd: 0)],  
+	 subqueues: 
+		 {priority: 0, messages: {}, count: 0},
+
+		 {priority: 1, messages: {}, count: 0},
+
+		 {priority: 2, messages: {}, count: 0},
+
+		 {priority: 3, messages: {(msg: 'Msg #2', size: 6) }, count: 1},
+
+		 {priority: 4, messages: {}, count: 0},
+
+		 {priority: 5, messages: {}, count: 0},
+
+		 {priority: 6, messages: {}, count: 0},
+
+		 {priority: 7, messages: {}, count: 0},
+
+		 {priority: 8, messages: {}, count: 0},
+
+		 {priority: 9, messages: {}, count: 0}
+
+	Waiting descriptors: []
+	]
+}
+
+Ready: {
+	[pid: 2, child: ()]
+}
+
+Waiting: {
+	[pid: 0, child: (1)],
+	[pid: 1, child: (2, 3)]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[PRODUCER pid = 3] Writing msg: 'Msg #3', priority: 5, size: 6
+
+[ERROR] Unable to write msg: the msg queue (fd = 0) is full!
+[WAIT] process (pid = 3) -> from Running to Waiting 
+[WAIT] Inserimento processo running (pid = 3) in waiting descriptors
+[WAIT] Inserimento processo running (pid = 3) in waiting list
+[WRITE] Terminated after blocking the running process 
+
+
+****************** DisastrOS *****************************************
+Running: [pid: 3, child: ()]
+
+Resources: {
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+}
+
+Message Queues: {
+	[name: '/mq', 
+	 resource id: 0, 
+	 descriptors: [(pid: 2, fd: 0), (pid: 3, fd: 0)],  
+	 subqueues: 
+		 {priority: 0, messages: {}, count: 0},
+
+		 {priority: 1, messages: {}, count: 0},
+
+		 {priority: 2, messages: {}, count: 0},
+
+		 {priority: 3, messages: {(msg: 'Msg #2', size: 6) }, count: 1},
+
+		 {priority: 4, messages: {}, count: 0},
+
+		 {priority: 5, messages: {}, count: 0},
+
+		 {priority: 6, messages: {}, count: 0},
+
+		 {priority: 7, messages: {}, count: 0},
+
+		 {priority: 8, messages: {}, count: 0},
+
+		 {priority: 9, messages: {}, count: 0}
+
+	Waiting descriptors: [(pid: 3, fd: 0)]
+	]
+}
+
+Ready: {
+	[pid: 2, child: ()]
+}
+
+Waiting: {
+	[pid: 0, child: (1)],
+	[pid: 1, child: (2, 3)],
+	[pid: 3, child: ()]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[PRODUCER pid = 3] preempt(): CPU to CONSUMER
+
+[CONSUMER] in running
+Dopo scrittura, riparte da DENTRO il ciclo for 
+[CONSUMER pid = 2] Reading first msg in the message queue
+>> Message 'Msg #2' read!
+>> Message 'Msg #2' deallocated correctly!
+[READ] Terminated correctly!
+
+[WAKE] Ci sono processi in waiting descriptors da risvegliare
+[WAKE] Descrittore tolto da waiting descriptors: pid = 3 
+[WAKE] Processo tolto dalla waiting list: pid = 3 
+[WAKE] Processo messo in ready: pid = 3 
+
+****************** DisastrOS *****************************************
+Running: [pid: 2, child: ()]
+
+Resources: {
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+}
+
+Message Queues: {
+	[name: '/mq', 
+	 resource id: 0, 
+	 descriptors: [(pid: 2, fd: 0), (pid: 3, fd: 0)],  
+	 subqueues: 
+		 {priority: 0, messages: {}, count: 0},
+
+		 {priority: 1, messages: {}, count: 0},
+
+		 {priority: 2, messages: {}, count: 0},
+
+		 {priority: 3, messages: {}, count: 0},
+
+		 {priority: 4, messages: {}, count: 0},
+
+		 {priority: 5, messages: {}, count: 0},
+
+		 {priority: 6, messages: {}, count: 0},
+
+		 {priority: 7, messages: {}, count: 0},
+
+		 {priority: 8, messages: {}, count: 0},
+
+		 {priority: 9, messages: {}, count: 0}
+
+	Waiting descriptors: []
+	]
+}
+
+Ready: {
+	[pid: 3, child: ()]
+}
+
+Waiting: {
+	[pid: 0, child: (1)],
+	[pid: 1, child: (2, 3)]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[CONSUMER pid = 2] preempt(): CPU to PRODUCER
+[PRODUCER] in running
+Producer riprende da DENTRO il ciclo for 
 [PRODUCER pid = 3] Writing msg: 'Msg #1', priority: 6, size: 6
 
 >> Allocating a new msg message in the subqueue with priority 6
 >> Message 'Msg #1' allocated correctly!
 >> Message 'Msg #1' written!
 
+
+ Non ci sono processi bloccati in waiting descriptors
+
 ****************** DisastrOS *****************************************
 Running: [pid: 3, child: ()]
 
 Resources: {
-	id: 0, type: 3, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
 }
 
 Message Queues: {
@@ -1188,6 +1083,8 @@ Message Queues: {
 		 {priority: 8, messages: {}, count: 0},
 
 		 {priority: 9, messages: {}, count: 0}
+
+	Waiting descriptors: []
 	]
 }
 
@@ -1205,17 +1102,22 @@ Zombie: {
 
 **********************************************************************
 
-[PRODUCER pid = 3] Writing msg: 'Msg #2', priority: 2, size: 6
+[PRODUCER pid = 3] preempt(): CPU to CONSUMER
 
->> Allocating a new msg message in the subqueue with priority 2
->> Message 'Msg #2' allocated correctly!
->> Message 'Msg #2' written!
+[CONSUMER] in running
+[CONSUMER pid = 2] Reading second msg in the message queue
+>> Message 'Msg #1' read!
+>> Message 'Msg #1' deallocated correctly!
+[READ] Terminated correctly!
+
+
+ Non ci sono processi bloccati in waiting descriptors
 
 ****************** DisastrOS *****************************************
-Running: [pid: 3, child: ()]
+Running: [pid: 2, child: ()]
 
 Resources: {
-	id: 0, type: 3, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
 }
 
 Message Queues: {
@@ -1227,7 +1129,7 @@ Message Queues: {
 
 		 {priority: 1, messages: {}, count: 0},
 
-		 {priority: 2, messages: {(msg: 'Msg #2', size: 6) }, count: 1},
+		 {priority: 2, messages: {}, count: 0},
 
 		 {priority: 3, messages: {}, count: 0},
 
@@ -1235,18 +1137,20 @@ Message Queues: {
 
 		 {priority: 5, messages: {}, count: 0},
 
-		 {priority: 6, messages: {(msg: 'Msg #1', size: 6) }, count: 1},
+		 {priority: 6, messages: {}, count: 0},
 
 		 {priority: 7, messages: {}, count: 0},
 
 		 {priority: 8, messages: {}, count: 0},
 
 		 {priority: 9, messages: {}, count: 0}
+
+	Waiting descriptors: []
 	]
 }
 
 Ready: {
-	[pid: 2, child: ()]
+	[pid: 3, child: ()]
 }
 
 Waiting: {
@@ -1259,17 +1163,22 @@ Zombie: {
 
 **********************************************************************
 
-[PRODUCER pid = 3] Writing msg: 'Msg #3', priority: 9, size: 6 
+[CONSUMER pid = 2] preempt(): CPU to PRODUCER
+[PRODUCER] in running
+[PRODUCER pid = 3] Writing msg: 'Msg #2', priority: 2, size: 6
 
->> Allocating a new msg message in the subqueue with priority 9
->> Message 'Msg #3' allocated correctly!
->> Message 'Msg #3' written!
+>> Allocating a new msg message in the subqueue with priority 2
+>> Message 'Msg #2' allocated correctly!
+>> Message 'Msg #2' written!
+
+
+ Non ci sono processi bloccati in waiting descriptors
 
 ****************** DisastrOS *****************************************
 Running: [pid: 3, child: ()]
 
 Resources: {
-	id: 0, type: 3, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
 }
 
 Message Queues: {
@@ -1289,13 +1198,15 @@ Message Queues: {
 
 		 {priority: 5, messages: {}, count: 0},
 
-		 {priority: 6, messages: {(msg: 'Msg #1', size: 6) }, count: 1},
+		 {priority: 6, messages: {}, count: 0},
 
 		 {priority: 7, messages: {}, count: 0},
 
 		 {priority: 8, messages: {}, count: 0},
 
-		 {priority: 9, messages: {(msg: 'Msg #3', size: 6) }, count: 1}
+		 {priority: 9, messages: {}, count: 0}
+
+	Waiting descriptors: []
 	]
 }
 
@@ -1306,6 +1217,66 @@ Ready: {
 Waiting: {
 	[pid: 0, child: (1)],
 	[pid: 1, child: (2, 3)]
+}
+
+Zombie: {
+}
+
+**********************************************************************
+
+[PRODUCER pid = 3] Writing msg: 'Msg #3', priority: 9, size: 6
+
+[ERROR] Unable to write msg: the msg queue (fd = 0) is full!
+[WAIT] process (pid = 3) -> from Running to Waiting 
+[WAIT] Inserimento processo running (pid = 3) in waiting descriptors
+[WAIT] Inserimento processo running (pid = 3) in waiting list
+[WRITE] Terminated after blocking the running process 
+
+
+****************** DisastrOS *****************************************
+Running: [pid: 3, child: ()]
+
+Resources: {
+	id: 0, type:1, pids:[(pid: 2, fd: 0), (pid: 3, fd: 0)]
+}
+
+Message Queues: {
+	[name: '/mq', 
+	 resource id: 0, 
+	 descriptors: [(pid: 2, fd: 0), (pid: 3, fd: 0)],  
+	 subqueues: 
+		 {priority: 0, messages: {}, count: 0},
+
+		 {priority: 1, messages: {}, count: 0},
+
+		 {priority: 2, messages: {(msg: 'Msg #2', size: 6) }, count: 1},
+
+		 {priority: 3, messages: {}, count: 0},
+
+		 {priority: 4, messages: {}, count: 0},
+
+		 {priority: 5, messages: {}, count: 0},
+
+		 {priority: 6, messages: {}, count: 0},
+
+		 {priority: 7, messages: {}, count: 0},
+
+		 {priority: 8, messages: {}, count: 0},
+
+		 {priority: 9, messages: {}, count: 0}
+
+	Waiting descriptors: [(pid: 3, fd: 0)]
+	]
+}
+
+Ready: {
+	[pid: 2, child: ()]
+}
+
+Waiting: {
+	[pid: 0, child: (1)],
+	[pid: 1, child: (2, 3)],
+	[pid: 3, child: ()]
 }
 
 Zombie: {
@@ -1322,7 +1293,7 @@ Zombie: {
 Running: [pid: 2, child: ()]
 
 Resources: {
-	id: 0, type: 3, pids:[(pid: 3, fd: 0)]
+	id: 0, type:1, pids:[(pid: 3, fd: 0)]
 }
 
 Message Queues: {
@@ -1342,23 +1313,25 @@ Message Queues: {
 
 		 {priority: 5, messages: {}, count: 0},
 
-		 {priority: 6, messages: {(msg: 'Msg #1', size: 6) }, count: 1},
+		 {priority: 6, messages: {}, count: 0},
 
 		 {priority: 7, messages: {}, count: 0},
 
 		 {priority: 8, messages: {}, count: 0},
 
-		 {priority: 9, messages: {(msg: 'Msg #3', size: 6) }, count: 1}
+		 {priority: 9, messages: {}, count: 0}
+
+	Waiting descriptors: [(pid: 3, fd: 0)]
 	]
 }
 
 Ready: {
-	[pid: 3, child: ()]
 }
 
 Waiting: {
 	[pid: 0, child: (1)],
-	[pid: 1, child: (2, 3)]
+	[pid: 1, child: (2, 3)],
+	[pid: 3, child: ()]
 }
 
 Zombie: {
@@ -1373,7 +1346,7 @@ Zombie: {
 Running: [pid: 1, child: (3)]
 
 Resources: {
-	id: 0, type: 3, pids:[(pid: 3, fd: 0)]
+	id: 0, type:1, pids:[(pid: 3, fd: 0)]
 }
 
 Message Queues: {
@@ -1389,121 +1362,4 @@ Message Queues: {
 
 		 {priority: 3, messages: {}, count: 0},
 
-		 {priority: 4, messages: {}, count: 0},
-
-		 {priority: 5, messages: {}, count: 0},
-
-		 {priority: 6, messages: {(msg: 'Msg #1', size: 6) }, count: 1},
-
-		 {priority: 7, messages: {}, count: 0},
-
-		 {priority: 8, messages: {}, count: 0},
-
-		 {priority: 9, messages: {(msg: 'Msg #3', size: 6) }, count: 1}
-	]
-}
-
-Ready: {
-	[pid: 3, child: ()]
-}
-
-Waiting: {
-	[pid: 0, child: (1)]
-}
-
-Zombie: {
-}
-
-**********************************************************************
-
-[childFunc pid = 1] Goes to waiting list: waiting for termination of next child process
-
-[PRODUCER (pid = 3)] Deallocating subqueues and msg queue. Closing msg queue (fd = 0)
-All descriptors associated with the message queue have been closed: the queue will be unlinked!
-
->> Subqueue with priority 0 deallocated correctly!
->> Subqueue with priority 1 deallocated correctly!
->> Message 'Msg #2' deallocated correctly!
->> Subqueue with priority 2 deallocated correctly!
->> Subqueue with priority 3 deallocated correctly!
->> Subqueue with priority 4 deallocated correctly!
->> Subqueue with priority 5 deallocated correctly!
->> Message 'Msg #1' deallocated correctly!
->> Subqueue with priority 6 deallocated correctly!
->> Subqueue with priority 7 deallocated correctly!
->> Subqueue with priority 8 deallocated correctly!
->> Message 'Msg #3' deallocated correctly!
->> Subqueue with priority 9 deallocated correctly!
-Message queue (fd = 0) closed and unlinked
-
-****************** DisastrOS *****************************************
-Running: [pid: 3, child: ()]
-
-Resources: {
-}
-
-Message Queues: {
-}
-
-Ready: {
-}
-
-Waiting: {
-	[pid: 0, child: (1)],
-	[pid: 1, child: (3)]
-}
-
-Zombie: {
-}
-
-**********************************************************************
-
-[PRODUCER pid = 3] exit(0)
-[childFunc pid = 1] wait(0, NULL) -> reads the retvalue of terminated child
-
-****************** DisastrOS *****************************************
-Running: [pid: 1, child: ()]
-
-Resources: {
-}
-
-Message Queues: {
-}
-
-Ready: {
-}
-
-Waiting: {
-	[pid: 0, child: (1)]
-}
-
-Zombie: {
-}
-
-**********************************************************************
-
-[childFunc pid = 1] exit(0)
-[init] wait(0, NULL) --> reads the retvalue of terminated childFunc
-
-****************** DisastrOS *****************************************
-Running: [pid: 0, child: ()]
-
-Resources: {
-}
-
-Message Queues: {
-}
-
-Ready: {
-}
-
-Waiting: {
-}
-
-Zombie: {
-}
-
-**********************************************************************
-
-[init] Shutdown!
-
+		 {priority: 4, messages: 
